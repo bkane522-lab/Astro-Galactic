@@ -4,127 +4,151 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Astro Galactic — Ton horoscope cosmique</title>
-<meta name="description" content="Horoscope quotidien, thème astral et compatibilité amoureuse générés par IA. Par DJ Kizomba Galactic.">
-<meta name="theme-color" content="#1a0b2e">
+<meta name="description" content="Horoscope quotidien, thème astral et compatibilité amoureuse générés par IA.">
+<meta name="theme-color" content="#0b1521">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
 <style>
   :root{
-    --gold:#f5c542;
-    --gold-soft:#e8b923;
-    --purple-deep:#1a0b2e;
-    --purple-mid:#2d1550;
-    --purple-glow:#6b2fb3;
-    --violet:#9d4edd;
-    --text:#f4ecff;
-    --text-dim:#b9a8d9;
+    --gold:#d4af37;
+    --gold-bright:#f0c956;
+    --gold-soft:#c49a2c;
+    --night:#0b1521;
+    --night-mid:#132436;
+    --emerald:#1b4b43;
+    --emerald-soft:#2d6b5f;
+    --text:#f2ead3;
+    --text-dim:#a9b8c4;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-    background:radial-gradient(ellipse at top,var(--purple-mid) 0%,var(--purple-deep) 60%,#0d0518 100%);
+    background:radial-gradient(ellipse at top,var(--night-mid) 0%,var(--night) 65%,#060c14 100%);
     color:var(--text);
     min-height:100vh;
     overflow-x:hidden;
     position:relative;
   }
+  /* motif géométrique cryptique discret en fond, pas des étoiles génériques */
   body::before{
     content:'';
     position:fixed;inset:0;
     background-image:
-      radial-gradient(2px 2px at 20% 30%, white, transparent),
-      radial-gradient(2px 2px at 60% 70%, white, transparent),
-      radial-gradient(1px 1px at 80% 20%, white, transparent),
-      radial-gradient(1px 1px at 40% 85%, white, transparent),
-      radial-gradient(2px 2px at 90% 55%, white, transparent),
-      radial-gradient(1px 1px at 10% 65%, white, transparent);
-    background-size:200% 200%;
-    opacity:0.4;
+      repeating-linear-gradient(60deg, rgba(212,175,55,0.035) 0px, rgba(212,175,55,0.035) 1px, transparent 1px, transparent 60px),
+      repeating-linear-gradient(-60deg, rgba(27,75,67,0.06) 0px, rgba(27,75,67,0.06) 1px, transparent 1px, transparent 60px),
+      radial-gradient(1px 1px at 20% 30%, rgba(242,234,211,0.5), transparent),
+      radial-gradient(1px 1px at 70% 60%, rgba(242,234,211,0.4), transparent),
+      radial-gradient(1px 1px at 40% 85%, rgba(242,234,211,0.3), transparent);
     pointer-events:none;
     z-index:0;
   }
-  .app{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:24px 20px 60px;}
-  header{text-align:center;margin-bottom:28px;}
-  .logo{font-size:2.2rem;margin-bottom:4px;}
+  .app{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:24px 20px 40px;}
+  header{text-align:center;margin-bottom:20px;}
+  .logo{font-size:2.2rem;margin-bottom:4px;filter:drop-shadow(0 0 6px rgba(212,175,55,0.4));}
   h1{
-    font-size:1.5rem;
-    background:linear-gradient(90deg,var(--gold),var(--violet));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-size:1.6rem;
+    font-family:Georgia,'Times New Roman',serif;
+    color:var(--gold-bright);
     font-weight:700;
+    letter-spacing:0.5px;
   }
-  .tagline{color:var(--text-dim);font-size:0.8rem;font-style:italic;margin-top:4px;}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    margin:12px auto 14px;width:80%;max-width:220px;
+  }
+  .divider::before,.divider::after{
+    content:'';flex:1;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(212,175,55,0.6));
+  }
+  .divider::after{background:linear-gradient(90deg,rgba(212,175,55,0.6),transparent);}
+  .divider-mark{
+    width:6px;height:6px;border:1px solid var(--gold);border-radius:50%;
+    transform:rotate(45deg);
+  }
+  .tagline{color:var(--text-dim);font-size:0.78rem;margin-top:2px;letter-spacing:0.3px;}
 
   .card{
-    background:linear-gradient(160deg,rgba(157,78,221,0.12),rgba(245,197,66,0.05));
-    border:1px solid rgba(245,197,66,0.25);
-    border-radius:20px;
+    background:linear-gradient(160deg,rgba(27,75,67,0.22),rgba(212,175,55,0.05));
+    border:1px solid rgba(212,175,55,0.25);
+    border-radius:18px;
     padding:22px;
     margin-bottom:20px;
     backdrop-filter:blur(6px);
-    box-shadow:0 8px 32px rgba(107,47,179,0.25);
+    box-shadow:0 8px 28px rgba(0,0,0,0.35);
   }
 
   .setup-card label{
-    display:block;font-size:0.85rem;color:var(--gold);margin-bottom:6px;margin-top:14px;font-weight:600;
+    display:block;font-size:0.85rem;color:var(--gold-bright);margin-bottom:6px;margin-top:14px;font-weight:600;
   }
   .setup-card label:first-child{margin-top:0;}
   input[type="date"], input[type="time"], input[type="text"]{
-    width:100%;padding:12px 14px;border-radius:12px;
-    border:1px solid rgba(245,197,66,0.3);
-    background:rgba(13,5,24,0.6);color:var(--text);font-size:1rem;
+    width:100%;padding:12px 14px;border-radius:10px;
+    border:1px solid rgba(212,175,55,0.3);
+    background:rgba(6,12,20,0.6);color:var(--text);font-size:1rem;
   }
-  input::-webkit-calendar-picker-indicator{filter:invert(1);}
+  input::-webkit-calendar-picker-indicator{filter:invert(1) sepia(1) saturate(3) hue-rotate(10deg);}
   .optional-tag{color:var(--text-dim);font-weight:400;font-size:0.75rem;}
 
   .btn-primary{
-    width:100%;margin-top:20px;padding:14px;border:none;border-radius:14px;
-    background:linear-gradient(90deg,var(--gold-soft),var(--gold));
-    color:#1a0b2e;font-weight:700;font-size:1rem;cursor:pointer;
-    box-shadow:0 4px 18px rgba(245,197,66,0.35);
+    width:100%;margin-top:20px;padding:14px;border:none;border-radius:12px;
+    background:linear-gradient(90deg,var(--gold-soft),var(--gold-bright));
+    color:#0b1521;font-weight:700;font-size:1rem;cursor:pointer;
+    box-shadow:0 4px 18px rgba(212,175,55,0.3);
     transition:transform 0.15s ease;
   }
   .btn-primary:active{transform:scale(0.97);}
-  .btn-primary:disabled{opacity:0.6;}
 
   .sign-badge{
-    display:flex;align-items:center;gap:12px;margin-bottom:16px;
+    display:flex;align-items:center;gap:12px;margin-bottom:14px;
+    padding-bottom:14px;border-bottom:1px solid rgba(212,175,55,0.15);
   }
-  .sign-emoji{font-size:2.4rem;}
-  .sign-name{font-size:1.3rem;font-weight:700;color:var(--gold);}
+  .sign-emoji{font-size:2.4rem;filter:drop-shadow(0 0 5px rgba(212,175,55,0.3));}
+  .sign-name{font-size:1.25rem;font-weight:700;color:var(--gold-bright);font-family:Georgia,serif;}
   .sign-dates{font-size:0.75rem;color:var(--text-dim);}
 
-  .horoscope-text{line-height:1.6;font-size:0.95rem;color:var(--text);white-space:pre-wrap;}
+  .day-tabs{
+    display:flex;gap:6px;margin-bottom:16px;
+    background:rgba(6,12,20,0.5);border-radius:10px;padding:4px;
+  }
+  .day-tab{
+    flex:1;text-align:center;padding:8px 4px;border-radius:8px;
+    font-size:0.8rem;color:var(--text-dim);cursor:pointer;font-weight:600;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .day-tab.active{background:linear-gradient(90deg,var(--gold-soft),var(--gold-bright));color:#0b1521;}
+
+  .horoscope-text{line-height:1.65;font-size:0.95rem;color:var(--text);white-space:pre-wrap;}
   .loading{display:flex;align-items:center;gap:10px;color:var(--text-dim);font-size:0.9rem;}
   .spinner{
     width:18px;height:18px;border-radius:50%;
-    border:2px solid rgba(245,197,66,0.3);border-top-color:var(--gold);
+    border:2px solid rgba(212,175,55,0.3);border-top-color:var(--gold-bright);
     animation:spin 0.8s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg);}}
 
-  .section-title{font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--violet);margin-bottom:10px;font-weight:700;}
+  .section-title{font-size:0.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--emerald-soft);margin-bottom:10px;font-weight:700;}
 
   .premium-teaser{
     display:flex;justify-content:space-between;align-items:center;
-    padding:16px;border-radius:16px;
-    background:linear-gradient(120deg,rgba(157,78,221,0.25),rgba(245,197,66,0.15));
-    border:1px solid rgba(245,197,66,0.4);
+    padding:16px;border-radius:14px;
+    background:linear-gradient(120deg,rgba(27,75,67,0.35),rgba(212,175,55,0.12));
+    border:1px solid rgba(212,175,55,0.35);
   }
   .premium-teaser div{flex:1;}
-  .premium-title{font-weight:700;color:var(--gold);font-size:0.95rem;}
+  .premium-title{font-weight:700;color:var(--gold-bright);font-size:0.95rem;font-family:Georgia,serif;}
   .premium-desc{font-size:0.78rem;color:var(--text-dim);margin-top:2px;}
   .btn-premium{
-    padding:10px 16px;border:none;border-radius:10px;
-    background:var(--gold);color:#1a0b2e;font-weight:700;font-size:0.85rem;
+    padding:10px 16px;border:none;border-radius:9px;
+    background:var(--gold-bright);color:#0b1521;font-weight:700;font-size:0.85rem;
     white-space:nowrap;cursor:pointer;
   }
 
   .hidden{display:none !important;}
   .change-birthdate{
     background:none;border:none;color:var(--text-dim);font-size:0.78rem;
-    text-decoration:underline;margin-top:14px;cursor:pointer;
+    text-decoration:underline;margin-top:2px;cursor:pointer;display:block;
+    margin-left:auto;margin-right:auto;
   }
-  footer{text-align:center;margin-top:30px;font-size:0.7rem;color:var(--text-dim);}
 </style>
 </head>
 <body>
@@ -133,7 +157,8 @@
   <header>
     <div class="logo">🦁✨</div>
     <h1>Astro Galactic</h1>
-    <div class="tagline">Sounds from elsewhere, never heard, never known</div>
+    <div class="divider"><span class="divider-mark"></span></div>
+    <div class="tagline">Ton ciel, tes réponses</div>
   </header>
 
   <!-- ÉCRAN 1 : Saisie date de naissance -->
@@ -152,7 +177,7 @@
     <button class="btn-primary" id="revealBtn">Révéler mon signe ✨</button>
   </section>
 
-  <!-- ÉCRAN 2 : Horoscope du jour -->
+  <!-- ÉCRAN 2 : Horoscope -->
   <section id="resultScreen" class="hidden">
 
     <div class="card">
@@ -163,7 +188,13 @@
           <div class="sign-dates" id="signDates">—</div>
         </div>
       </div>
-      <div class="section-title">Horoscope du jour</div>
+
+      <div class="day-tabs">
+        <div class="day-tab active" data-day="today">Aujourd'hui</div>
+        <div class="day-tab" data-day="tomorrow">Demain</div>
+        <div class="day-tab" data-day="week">Cette semaine</div>
+      </div>
+
       <div id="horoscopeContent">
         <div class="loading"><div class="spinner"></div> Consultation des étoiles...</div>
       </div>
@@ -180,7 +211,6 @@
     <button class="change-birthdate" id="changeBtn">Changer ma date de naissance</button>
   </section>
 
-  <footer>DJ Kizomba Galactic · Astro Galactic 🌌</footer>
 </div>
 
 <script src="/app.js"></script>
