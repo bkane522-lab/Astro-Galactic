@@ -79,6 +79,7 @@ const portalIntro = document.getElementById("portalIntro");
 const portalForm = document.getElementById("portalForm");
 const startBtn = document.getElementById("startBtn");
 const knowSignBtn = document.getElementById("knowSignBtn");
+const wheelWrap = document.getElementById("wheelWrap");
 
 const birthDateInput = document.getElementById("birthDate");
 const birthTimeInput = document.getElementById("birthTime");

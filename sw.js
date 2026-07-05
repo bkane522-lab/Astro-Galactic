@@ -1,4 +1,4 @@
-const CACHE_NAME = "astro-galactic-v1";
+const CACHE_NAME = "astro-galactic-v2";
 const STATIC_ASSETS = ["/", "/index.html", "/app.js", "/manifest.json"];
 
 self.addEventListener("install", (event) => {
@@ -18,9 +18,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  // Ne jamais mettre en cache les appels API (horoscope personnalisé à chaque visite)
   if (event.request.url.includes("/api/")) return;
-
   event.respondWith(
     caches.match(event.request).then((cached) => cached || fetch(event.request))
   );
