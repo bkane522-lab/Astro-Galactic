@@ -1,3 +1,3 @@
-# Astro Galactic V10 Polish UI
+# Astro Galactic V11 Ultra Simple
 
-Polish de la V9 : moins de vide, plus responsive tablette, CTA remonté, sélecteur plus premium.
+Accueil réduit : signe actif, guidance, changement de signe dans un panneau.

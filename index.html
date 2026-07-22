@@ -1,10 +1,240 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#070714"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Astro Galactic</title><meta name="description" content="Astro Galactic — horoscope quotidien, thème astral, compatibilité, numérologie et cristaux."><link rel="manifest" href="/manifest.json"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="icon" href="/icon-192.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070714">
+<title>Astro Galactic</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/icon-192.png">
 <style>
-:root{--void:#070714;--night:#0D1026;--panel:#141832;--gold:#E8C56B;--gold2:#F7DEA0;--ivory:#F7F1E2;--muted:#AAA2BF;--line:rgba(232,197,107,.20);--violet:#6B4FCF;--safeTop:env(safe-area-inset-top,0px);--safeBottom:env(safe-area-inset-bottom,0px)}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-variant-emoji:text}html,body{height:100%;overflow:hidden;background:#000;color:var(--ivory);font-family:Inter,Manrope,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,select{font:inherit}button{border:0;background:none;color:inherit;cursor:pointer}body{display:grid;place-items:center}.app{width:min(100vw,520px);height:100dvh;max-height:932px;position:relative;overflow:hidden;background:radial-gradient(700px 460px at 50% -8%,rgba(107,79,207,.32),transparent 62%),radial-gradient(650px 430px at 100% 100%,rgba(232,197,107,.10),transparent 58%),linear-gradient(180deg,#070714 0%,#0C1027 54%,#070714 100%)}@media(min-width:720px){.app{height:min(100vh,920px);border-radius:34px;border:1px solid rgba(232,197,107,.16);box-shadow:0 0 0 1px rgba(255,255,255,.03),0 28px 90px rgba(0,0,0,.55)}}.stars{position:absolute;inset:0;pointer-events:none;opacity:.46;background-image:radial-gradient(circle at 10% 13%,#F7DEA0 0 1px,transparent 1.8px),radial-gradient(circle at 30% 18%,#F7DEA0 0 1px,transparent 1.8px),radial-gradient(circle at 78% 12%,#F7DEA0 0 1px,transparent 1.8px),radial-gradient(circle at 92% 36%,#F7DEA0 0 1px,transparent 1.8px),radial-gradient(circle at 12% 60%,#F7DEA0 0 1px,transparent 1.8px),radial-gradient(circle at 49% 68%,#F7DEA0 0 1px,transparent 1.8px),radial-gradient(circle at 84% 84%,#F7DEA0 0 1px,transparent 1.8px)}.screen{position:absolute;inset:0;display:none;overflow:hidden;padding:calc(12px + var(--safeTop)) 22px calc(12px + var(--safeBottom))}.screen.active{display:flex;flex-direction:column}.portal{justify-content:flex-start;gap:10px}.header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;min-height:40px;margin-bottom:2px}.brandMini small{display:block;font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);font-weight:800}.brandMini strong{display:block;font-family:Georgia,serif;color:var(--gold2);font-size:24px;line-height:.95;letter-spacing:.01em}.brandMini em{font-style:italic;color:var(--ivory)}.menu{width:40px;height:40px;border-radius:15px;border:1px solid var(--line);display:grid;place-items:center;color:var(--gold);background:rgba(255,255,255,.035);font-size:20px}.hero{min-height:0;flex:0 0 auto;display:block}.titleBlock{text-align:center;margin-top:2px}.titleBlock .eyebrow{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);font-weight:800;padding-left:.42em}.titleBlock h1{margin-top:4px;font-family:Georgia,serif;font-size:clamp(31px,8.6vw,43px);line-height:.92;font-weight:400}.titleBlock h1 em{font-style:italic;color:var(--gold2)}.titleBlock p{max-width:30ch;margin:6px auto 0;color:var(--muted);font-family:Georgia,serif;font-style:italic;font-size:14px;line-height:1.22}.zodiacFocus{position:relative;width:clamp(205px,54vw,282px);aspect-ratio:1;margin:14px auto 4px;display:grid;place-items:center}.zodiacFocus:before{content:"";position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle,rgba(232,197,107,.12),rgba(107,79,207,.12) 48%,transparent 70%);filter:blur(.2px)}.zodiacFocus svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.ringGlyph{font-family:Georgia,serif;fill:var(--gold);font-size:9.8px}.ringStar{font-family:Georgia,serif;fill:rgba(247,222,160,.66);font-size:7px}.selectedOrb{position:relative;width:32%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 28%,rgba(247,222,160,.42),rgba(107,79,207,.20) 55%,rgba(8,8,22,.80) 74%);border:1px solid rgba(232,197,107,.28);box-shadow:0 0 58px rgba(107,79,207,.34), inset 0 0 24px rgba(247,222,160,.12);color:var(--gold2);font-family:Georgia,serif;font-size:clamp(28px,5vh,42px)}.selectedName{position:absolute;bottom:3%;left:50%;transform:translateX(-50%);white-space:nowrap;height:29px;padding:0 14px;border-radius:999px;border:1px solid rgba(232,197,107,.23);background:rgba(7,7,20,.62);display:flex;align-items:center;justify-content:center;color:var(--gold2);font-size:12px;font-weight:700}.pickerPanel{flex-shrink:0;border:1px solid rgba(232,197,107,.22);border-radius:24px;margin-top:2px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01)),rgba(13,16,38,.78);padding:11px;box-shadow:0 16px 45px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.035)}.pickerTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:0 2px}.pickerTop span{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted)}.pickerTop b{color:var(--gold2);font-family:Georgia,serif;font-size:16px;font-weight:500}.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}.zbtn{min-height:47px;border-radius:16px;border:1px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--muted)}.zbtn .g{font-family:Georgia,serif;color:var(--gold);font-size:20px;line-height:1}.zbtn .n{font-size:8.7px;line-height:1}.zbtn.sel{background:linear-gradient(160deg,rgba(107,79,207,.42),rgba(232,197,107,.16));border-color:rgba(232,197,107,.78);color:var(--ivory);box-shadow:0 0 20px rgba(232,197,107,.12)}.zbtn.sel .n{color:var(--ivory)}.cta{flex-shrink:0;width:100%;height:50px;margin-top:9px;border-radius:999px;background:linear-gradient(100deg,var(--gold),var(--gold2));color:#090714;font-weight:900;font-size:15px;box-shadow:0 13px 30px -9px rgba(232,197,107,.55)}.cta:disabled{background:transparent;border:1px solid rgba(232,197,107,.42);color:rgba(232,197,107,.65);box-shadow:none}.galaxy{gap:12px}.topbar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between}.profile{display:flex;align-items:center;gap:10px}.profileOrb{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:var(--gold2);font-family:Georgia,serif;font-size:25px;border:1px solid var(--line);background:radial-gradient(circle at 35% 28%,rgba(247,222,160,.32),rgba(107,79,207,.18))}.profile small{display:block;color:var(--muted);font-size:10px;letter-spacing:.27em;text-transform:uppercase}.profile b{display:block;font-family:Georgia,serif;font-size:22px;font-weight:500}.back{color:var(--muted);font-size:13px}.modules{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}.mod{min-height:74px;border:1px solid var(--line);border-radius:20px;background:rgba(14,16,39,.82);display:flex;align-items:center;gap:13px;padding:13px;text-align:left}.mod .ico{flex:none;width:42px;height:42px;border-radius:14px;border:1px solid var(--line);display:grid;place-items:center;color:var(--gold);font-family:Georgia,serif;font-size:22px;background:linear-gradient(150deg,rgba(107,79,207,.24),rgba(232,197,107,.08))}.mod h3{font-family:Georgia,serif;font-size:20px;font-weight:500;line-height:1.05}.mod p{color:var(--muted);font-size:12.2px;line-height:1.32;margin-top:3px}.mod .txt{flex:1}.mod .arrow{font-size:20px;color:var(--muted)}.premium{flex-shrink:0;height:48px;border-radius:999px;border:1px solid var(--line);color:var(--gold2);background:rgba(14,16,39,.72);font-size:14px;font-weight:700}.scrim{position:absolute;inset:0;background:rgba(5,4,13,.74);backdrop-filter:blur(8px);display:none;align-items:flex-end;z-index:30}.scrim.open{display:flex}.sheet{width:100%;max-height:78dvh;overflow:auto;border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:0;background:linear-gradient(180deg,var(--panel),var(--night));padding:13px 22px calc(22px + var(--safeBottom))}.grab{width:42px;height:4px;border-radius:99px;background:var(--line);margin:6px auto 17px}.sheet .eyebrow{text-align:center;color:var(--gold);font-size:10px;letter-spacing:.35em;text-transform:uppercase}.sheet h2{text-align:center;font-family:Georgia,serif;font-weight:400;font-size:31px;margin:5px 0}.sheet .sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:16px}.reading{border:1px solid var(--line);border-radius:18px;background:var(--void);padding:17px;font-family:Georgia,serif;font-size:18px;line-height:1.55;color:var(--ivory)}.facets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.facet{border:1px solid var(--line);border-radius:14px;background:var(--void);text-align:center;padding:10px 6px}.facet small{display:block;color:var(--muted);font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}.facet b{font-family:Georgia,serif;color:var(--gold);font-size:18px}.closeBtn{margin-top:13px}@media(max-height:760px){.screen{padding:calc(8px + var(--safeTop)) 13px calc(8px + var(--safeBottom))}.portal{gap:7px}.header{min-height:36px}.brandMini small{font-size:8.5px}.brandMini strong{font-size:21px}.menu{width:35px;height:35px}.titleBlock .eyebrow{font-size:8.5px}.titleBlock h1{font-size:31px}.titleBlock p{font-size:12.6px;margin-top:4px}.zodiacFocus{width:clamp(165px,48vw,205px);margin:8px auto 2px}.selectedName{height:24px;font-size:10px}.pickerPanel{padding:9px;border-radius:20px}.pickerTop{margin-bottom:5px}.pickerTop span{font-size:8.5px}.pickerTop b{font-size:13px}.grid{gap:3px}.zbtn{min-height:38px;border-radius:12px}.zbtn .g{font-size:16px}.zbtn .n{font-size:7.4px}.cta{height:44px;font-size:13.5px;margin-top:6px}.modules{gap:7px}.mod{min-height:63px;padding:10px}.mod .ico{width:38px;height:38px}.mod h3{font-size:17px}.mod p{font-size:11px}}
-</style></head><body><main class="app"><div class="stars"></div><section id="portal" class="screen portal active"><div class="header"><div class="brandMini"><small>HOROSCOPE</small><strong>Astro <em>Galactic</em></strong></div><button class="menu" onclick="quickLast()">✦</button></div><div class="hero"><div class="titleBlock"><div class="eyebrow">Portail céleste</div><h1>Choisissez<br>votre signe</h1><p>Choisissez un signe. Le reste s’ouvre naturellement.</p></div><div class="zodiacFocus"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="none" stroke="rgba(232,197,107,.16)" stroke-width=".45"/><circle cx="50" cy="50" r="36" fill="none" stroke="rgba(232,197,107,.12)" stroke-width=".45"/><circle cx="50" cy="50" r="25" fill="none" stroke="rgba(107,79,207,.24)" stroke-width=".45"/><g id="ringGlyphs"></g><g id="ringStars"></g></svg><div class="selectedOrb" id="coreGlyph">✦</div><div class="selectedName" id="selectedName">Aucun signe</div></div><div></div></div><div class="pickerPanel"><div class="pickerTop"><span>Votre signe</span><b id="selectedMini">—</b></div><div class="grid" id="signGrid"></div></div><button class="cta" id="enterBtn" disabled>Ouvrir mon ciel</button></section><section id="galaxy" class="screen galaxy"><div class="topbar"><div class="profile"><div class="profileOrb" id="youGlyph">✦</div><div><small id="youDates">—</small><b id="youName">—</b></div></div><button class="back" onclick="show('portal')">Changer</button></div><div class="modules" id="modules"></div><button class="premium" onclick="openPremium()">✦ Astro Galactic Premium</button></section><div class="scrim" id="scrim" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet"></div></div></main><script>
-const SIGNS=[{k:'belier',n:'Bélier',g:'♈︎',d:'21 mar – 19 avr'},{k:'taureau',n:'Taureau',g:'♉︎',d:'20 avr – 20 mai'},{k:'gemeaux',n:'Gémeaux',g:'♊︎',d:'21 mai – 20 juin'},{k:'cancer',n:'Cancer',g:'♋︎',d:'21 juin – 22 juil'},{k:'lion',n:'Lion',g:'♌︎',d:'23 juil – 22 août'},{k:'vierge',n:'Vierge',g:'♍︎',d:'23 août – 22 sep'},{k:'balance',n:'Balance',g:'♎︎',d:'23 sep – 22 oct'},{k:'scorpion',n:'Scorpion',g:'♏︎',d:'23 oct – 21 nov'},{k:'sagittaire',n:'Sagittaire',g:'♐︎',d:'22 nov – 21 déc'},{k:'capricorne',n:'Capricorne',g:'♑︎',d:'22 déc – 19 jan'},{k:'verseau',n:'Verseau',g:'♒︎',d:'20 jan – 18 fév'},{k:'poissons',n:'Poissons',g:'♓︎',d:'19 fév – 20 mar'}];const MODULES=[{id:'daily',ico:'☀︎',title:'Message du jour',desc:'Guidance claire, courte et quotidienne.'},{id:'theme',ico:'✦',title:'Thème astral',desc:'Portrait céleste et énergie profonde.'},{id:'compat',ico:'♥',title:'Compatibilité',desc:'Affinité et vibration relationnelle.'},{id:'numbers',ico:'7',title:'Numérologie',desc:'Nombre, couleur et intention du jour.'},{id:'crystals',ico:'◇',title:'Cristaux',desc:'Pierre, couleur et rituel rapide.'}];let current=null;const $=s=>document.querySelector(s);function buildWheel(){const g=$('#ringGlyphs'),st=$('#ringStars');SIGNS.forEach((s,i)=>{const a=(i/12)*Math.PI*2-Math.PI/2;const x=50+43*Math.cos(a),y=50+43*Math.sin(a);g.innerHTML+=`<text class="ringGlyph" x="${x.toFixed(2)}" y="${y.toFixed(2)}" text-anchor="middle" dominant-baseline="middle">${s.g}</text>`;const a2=((i+.5)/12)*Math.PI*2-Math.PI/2;const x2=50+33*Math.cos(a2),y2=50+33*Math.sin(a2);st.innerHTML+=`<text class="ringStar" x="${x2.toFixed(2)}" y="${y2.toFixed(2)}" text-anchor="middle" dominant-baseline="middle">✦</text>`})}function buildGrid(){$('#signGrid').innerHTML=SIGNS.map(s=>`<button class="zbtn" data-k="${s.k}" onclick="selectSign('${s.k}')"><span class="g">${s.g}</span><span class="n">${s.n}</span></button>`).join('')}function selectSign(k){current=SIGNS.find(s=>s.k===k);document.querySelectorAll('.zbtn').forEach(b=>b.classList.toggle('sel',b.dataset.k===k));$('#coreGlyph').textContent=current.g;$('#selectedName').textContent=current.n;$('#selectedMini').textContent=current.n;$('#enterBtn').disabled=false;$('#enterBtn').textContent='Ouvrir le ciel du '+current.n;localStorage.setItem('astro-galactic-v10-sign',k)}function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active')}function enterGalaxy(){if(!current)return;$('#youGlyph').textContent=current.g;$('#youName').textContent=current.n;$('#youDates').textContent=current.d;$('#modules').innerHTML=MODULES.map(m=>`<button class="mod" onclick="openModule('${m.id}')"><span class="ico">${m.ico}</span><span class="txt"><h3>${m.title}</h3><p>${m.desc}</p></span><span class="arrow">→</span></button>`).join('');show('galaxy')}function quickLast(){if(current)enterGalaxy()}function today(){return new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}function openSheet(html){$('#sheet').innerHTML='<div class="grab"></div>'+html;$('#scrim').classList.add('open')}function closeSheet(){$('#scrim').classList.remove('open')}function openModule(id){const data={daily:{t:'Message du jour',s:'Votre guidance cosmique',p:'Le ciel vous invite à ralentir pour mieux viser. Une action simple, posée avec calme, peut remettre votre journée dans le bon axe.',f:['Amour 87','Chance 72','Humeur 90']},theme:{t:'Thème astral',s:'Portrait céleste',p:'Votre signe révèle votre manière de rayonner. Cette lecture ouvre la porte vers votre énergie profonde, vos forces et votre direction intérieure.',f:['Soleil '+current.n,'Force Clarté','Élément Feu']},compat:{t:'Compatibilité',s:'Affinité du jour',p:'Une connexion douce se renforce quand chacun garde sa vérité. Cherchez la simplicité, la présence et les mots justes.',f:['Affinité Taureau','Vibration 87','Conseil Écouter']},numbers:{t:'Numérologie',s:'Nombre du jour',p:'Le nombre 7 vous invite à observer avant d’agir. La bonne décision vient après un moment de silence.',f:['Nombre 7','Couleur Or','Intention Calme']},crystals:{t:'Cristaux',s:'Pierre du jour',p:'La citrine solaire accompagne la clarté, la confiance et le passage à l’action. Gardez une intention simple.',f:['Pierre Citrine','Couleur Or','Rituel 60 s']}}[id];openSheet(`<div class="eyebrow">${today()}</div><h2>${current.g} ${data.t}</h2><p class="sub">${data.s}</p><div class="reading">${data.p}</div><div class="facets">${data.f.map(x=>{const [a,...b]=x.split(' ');return `<div class="facet"><small>${a}</small><b>${b.join(' ')}</b></div>`}).join('')}</div><button class="cta closeBtn" onclick="closeSheet()">Fermer</button>`)}function openPremium(){openSheet(`<div class="eyebrow">Premium</div><h2>Astro Galactic complet</h2><p class="sub">Une offre claire, prête pour Gumroad ou Stripe.</p><div class="reading">Débloquez les lectures longues, les prévisions mensuelles, les compatibilités avancées et les cartes de partage.</div><button class="cta closeBtn" onclick="closeSheet()">Compris</button>`)}buildWheel();buildGrid();$('#enterBtn').addEventListener('click',enterGalaxy);const last=localStorage.getItem('astro-galactic-v10-sign');if(last)selectSign(last);if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}</script></body></html>
+:root{
+  --void:#070714;
+  --night:#0d1026;
+  --panel:#141832;
+  --gold:#e8c56b;
+  --gold2:#f7dea0;
+  --ivory:#f7f1e2;
+  --muted:#aaa2bf;
+  --line:rgba(232,197,107,.20);
+  --violet:#6b4fcf;
+  --safeTop:env(safe-area-inset-top,0px);
+  --safeBottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-variant-emoji:text}
+html,body{height:100%;overflow:hidden;background:#000;color:var(--ivory);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button{border:0;background:none;color:inherit;font:inherit}
+body{display:grid;place-items:center}
+.app{
+  width:min(100vw,430px);
+  height:100dvh;
+  max-height:932px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(650px 430px at 50% -12%,rgba(107,79,207,.30),transparent 62%),
+    radial-gradient(600px 360px at 50% 102%,rgba(232,197,107,.12),transparent 58%),
+    linear-gradient(180deg,#070714 0%,#0c1027 55%,#070714 100%);
+}
+@media(min-width:720px){.app{height:min(100vh,920px);border-radius:34px;border:1px solid rgba(232,197,107,.16)}}
+.app:before{
+  content:"";
+  position:absolute;inset:0;opacity:.42;pointer-events:none;
+  background-image:
+  radial-gradient(circle at 12% 14%,#f7dea0 0 1px,transparent 1.8px),
+  radial-gradient(circle at 26% 28%,#f7dea0 0 1px,transparent 1.8px),
+  radial-gradient(circle at 78% 12%,#f7dea0 0 1px,transparent 1.8px),
+  radial-gradient(circle at 90% 36%,#f7dea0 0 1px,transparent 1.8px),
+  radial-gradient(circle at 15% 63%,#f7dea0 0 1px,transparent 1.8px),
+  radial-gradient(circle at 52% 78%,#f7dea0 0 1px,transparent 1.8px),
+  radial-gradient(circle at 84% 86%,#f7dea0 0 1px,transparent 1.8px);
+}
+.screen{position:absolute;inset:0;display:none;overflow:hidden;padding:calc(14px + var(--safeTop)) 18px calc(14px + var(--safeBottom))}
+.screen.active{display:flex;flex-direction:column}
+.home{justify-content:space-between;gap:12px}
+.top{
+  display:flex;align-items:center;justify-content:space-between;z-index:2;min-height:46px;
+}
+.brand small{display:block;font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);font-weight:900}
+.brand strong{display:block;font-family:Georgia,serif;font-size:27px;line-height:.95;color:var(--ivory);font-weight:400}
+.brand em{font-style:italic;color:var(--gold2)}
+.iconBtn{
+  width:42px;height:42px;border-radius:16px;border:1px solid var(--line);
+  background:rgba(255,255,255,.035);display:grid;place-items:center;color:var(--gold);font-size:18px;
+}
+.center{
+  flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;
+}
+.kicker{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);font-weight:900;padding-left:.42em}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(36px,10vw,50px);line-height:.94;color:var(--ivory)}
+h1 em{color:var(--gold2);font-style:italic}
+.orbWrap{
+  position:relative;width:min(70vw,300px,35vh);aspect-ratio:1;display:grid;place-items:center;margin:4px 0;
+}
+.orbWrap svg{position:absolute;inset:0;width:100%;height:100%}
+.ringGlyph{font-family:Georgia,serif;fill:rgba(232,197,107,.82);font-size:8.7px}
+.mainOrb{
+  width:43%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  font-family:Georgia,serif;font-size:clamp(50px,9vh,78px);color:var(--gold2);
+  background:radial-gradient(circle at 35% 28%,rgba(247,222,160,.34),rgba(107,79,207,.22) 56%,rgba(8,8,22,.88) 74%);
+  border:1px solid rgba(232,197,107,.28);
+  box-shadow:0 0 68px rgba(107,79,207,.34),inset 0 0 26px rgba(247,222,160,.12);
+}
+.signName{
+  font-family:Georgia,serif;font-size:32px;color:var(--gold2);line-height:1
+}
+.signDates{color:var(--muted);font-size:13px;margin-top:5px}
+.micro{max-width:28ch;color:var(--muted);font-family:Georgia,serif;font-style:italic;font-size:15px;line-height:1.3}
+.actions{display:grid;gap:10px}
+.cta{
+  height:56px;border-radius:999px;background:linear-gradient(100deg,var(--gold),var(--gold2));
+  color:#090714;font-weight:900;font-size:16px;box-shadow:0 14px 32px -10px rgba(232,197,107,.58);
+}
+.secondary{
+  height:48px;border-radius:999px;border:1px solid var(--line);color:var(--gold2);
+  background:rgba(14,16,39,.72);font-weight:700;font-size:14px;
+}
+.modules{gap:12px}
+.modulesHead{display:flex;align-items:center;justify-content:space-between;min-height:46px}
+.profile{display:flex;align-items:center;gap:10px}
+.profileOrb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);color:var(--gold2);font-family:Georgia,serif;font-size:24px;background:rgba(14,16,39,.74)}
+.profile small{display:block;color:var(--muted);font-size:10px;letter-spacing:.27em;text-transform:uppercase}
+.profile b{display:block;font-family:Georgia,serif;font-size:22px;font-weight:400}
+.list{flex:1;min-height:0;display:grid;gap:10px}
+.mod{border:1px solid var(--line);border-radius:20px;background:rgba(14,16,39,.82);padding:13px;display:flex;align-items:center;gap:13px;text-align:left}
+.mod .ico{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--line);color:var(--gold);font-family:Georgia,serif;font-size:22px;background:linear-gradient(150deg,rgba(107,79,207,.24),rgba(232,197,107,.08))}
+.mod h3{font-family:Georgia,serif;font-size:20px;font-weight:400}.mod p{color:var(--muted);font-size:12px;margin-top:3px}.mod .txt{flex:1}.arrow{color:var(--muted)}
+.scrim{position:absolute;inset:0;background:rgba(5,4,13,.74);backdrop-filter:blur(8px);display:none;align-items:flex-end;z-index:20}
+.scrim.open{display:flex}
+.sheet{width:100%;max-height:74dvh;overflow:auto;border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:0;background:linear-gradient(180deg,var(--panel),var(--night));padding:13px 22px calc(22px + var(--safeBottom))}
+.grab{width:42px;height:4px;border-radius:99px;background:var(--line);margin:6px auto 17px}.sheet .eyebrow{text-align:center;color:var(--gold);font-size:10px;letter-spacing:.35em;text-transform:uppercase}.sheet h2{text-align:center;font-family:Georgia,serif;font-weight:400;font-size:31px;margin:5px 0}.sheet .sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:16px}.reading{border:1px solid var(--line);border-radius:18px;background:var(--void);padding:17px;font-family:Georgia,serif;font-size:18px;line-height:1.55;color:var(--ivory)}.facets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.facet{border:1px solid var(--line);border-radius:14px;background:var(--void);text-align:center;padding:10px 6px}.facet small{display:block;color:var(--muted);font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}.facet b{font-family:Georgia,serif;color:var(--gold);font-size:18px}.closeBtn{margin-top:13px}
+.picker{position:absolute;inset:0;display:none;align-items:flex-end;background:rgba(5,4,13,.70);backdrop-filter:blur(8px);z-index:30}
+.picker.open{display:flex}
+.pickPanel{width:100%;border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:0;background:linear-gradient(180deg,var(--panel),var(--night));padding:13px 18px calc(20px + var(--safeBottom))}
+.pickTitle{text-align:center;margin-bottom:12px}.pickTitle small{display:block;color:var(--gold);font-size:10px;letter-spacing:.35em;text-transform:uppercase}.pickTitle b{font-family:Georgia,serif;font-size:28px;font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.zbtn{min-height:62px;border-radius:17px;border:1px solid rgba(232,197,107,.12);background:rgba(7,7,20,.36);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.zbtn .g{font-family:Georgia,serif;color:var(--gold);font-size:24px}.zbtn .n{font-size:10px;color:var(--muted)}.zbtn.sel{border-color:rgba(232,197,107,.72);background:linear-gradient(160deg,rgba(107,79,207,.36),rgba(232,197,107,.12))}.zbtn.sel .n{color:var(--ivory)}
+@media(max-height:760px){
+  .screen{padding:calc(8px + var(--safeTop)) 14px calc(8px + var(--safeBottom))}
+  .brand strong{font-size:23px}.brand small{font-size:9px}.iconBtn{width:36px;height:36px}
+  .center{gap:10px}.kicker{font-size:8.5px}h1{font-size:32px}.orbWrap{width:min(57vw,210px,26vh)}.signName{font-size:27px}.micro{font-size:12.5px}.cta{height:46px}.secondary{height:42px}
+  .grid{gap:5px}.zbtn{min-height:50px}.zbtn .g{font-size:20px}.zbtn .n{font-size:8.7px}
+  .list{gap:7px}.mod{padding:10px}.mod h3{font-size:17px}.mod p{font-size:11px}
+}
+</style>
+</head>
+<body>
+<main class="app">
+<section id="home" class="screen home active">
+  <div class="top">
+    <div class="brand"><small>HOROSCOPE</small><strong>Astro <em>Galactic</em></strong></div>
+    <button class="iconBtn" onclick="openPicker()">♓</button>
+  </div>
+
+  <div class="center">
+    <div>
+      <div class="kicker">Votre portail</div>
+      <h1>Ouvrez<br>votre ciel</h1>
+    </div>
+
+    <div class="orbWrap">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(232,197,107,.16)" stroke-width=".45"/>
+        <circle cx="50" cy="50" r="34" fill="none" stroke="rgba(232,197,107,.11)" stroke-width=".45"/>
+        <circle cx="50" cy="50" r="23" fill="none" stroke="rgba(107,79,207,.24)" stroke-width=".45"/>
+        <g id="ringGlyphs"></g>
+      </svg>
+      <div class="mainOrb" id="mainGlyph">♓︎</div>
+    </div>
+
+    <div>
+      <div class="signName" id="signName">Poissons</div>
+      <div class="signDates" id="signDates">19 fév – 20 mar</div>
+    </div>
+
+    <p class="micro">Une guidance claire, calme et personnelle pour aujourd’hui.</p>
+  </div>
+
+  <div class="actions">
+    <button class="cta" onclick="enter()">Lire ma guidance</button>
+    <button class="secondary" onclick="openPicker()">Changer de signe</button>
+  </div>
+</section>
+
+<section id="modules" class="screen modules">
+  <div class="modulesHead">
+    <div class="profile">
+      <div class="profileOrb" id="youGlyph">♓︎</div>
+      <div><small id="youDates">19 fév – 20 mar</small><b id="youName">Poissons</b></div>
+    </div>
+    <button class="iconBtn" onclick="show('home')">←</button>
+  </div>
+  <div class="list" id="modList"></div>
+  <button class="secondary" onclick="openPremium()">✦ Astro Galactic Premium</button>
+</section>
+
+<div class="scrim" id="scrim" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet"></div></div>
+<div class="picker" id="picker" onclick="if(event.target===this)closePicker()">
+  <div class="pickPanel">
+    <div class="grab"></div>
+    <div class="pickTitle"><small>Votre signe</small><b>Choisir</b></div>
+    <div class="grid" id="signGrid"></div>
+    <button class="cta closeBtn" onclick="closePicker()">Valider</button>
+  </div>
+</div>
+</main>
+
+<script>
+const SIGNS=[
+{k:'belier',n:'Bélier',g:'♈︎',d:'21 mar – 19 avr'},
+{k:'taureau',n:'Taureau',g:'♉︎',d:'20 avr – 20 mai'},
+{k:'gemeaux',n:'Gémeaux',g:'♊︎',d:'21 mai – 20 juin'},
+{k:'cancer',n:'Cancer',g:'♋︎',d:'21 juin – 22 juil'},
+{k:'lion',n:'Lion',g:'♌︎',d:'23 juil – 22 août'},
+{k:'vierge',n:'Vierge',g:'♍︎',d:'23 août – 22 sep'},
+{k:'balance',n:'Balance',g:'♎︎',d:'23 sep – 22 oct'},
+{k:'scorpion',n:'Scorpion',g:'♏︎',d:'23 oct – 21 nov'},
+{k:'sagittaire',n:'Sagittaire',g:'♐︎',d:'22 nov – 21 déc'},
+{k:'capricorne',n:'Capricorne',g:'♑︎',d:'22 déc – 19 jan'},
+{k:'verseau',n:'Verseau',g:'♒︎',d:'20 jan – 18 fév'},
+{k:'poissons',n:'Poissons',g:'♓︎',d:'19 fév – 20 mar'}
+];
+const MODULES=[
+{id:'daily',ico:'☀︎',title:'Message du jour',desc:'Guidance claire et quotidienne.'},
+{id:'theme',ico:'✦',title:'Thème astral',desc:'Portrait céleste personnel.'},
+{id:'compat',ico:'♥',title:'Compatibilité',desc:'Affinité et vibration.'},
+{id:'numbers',ico:'7',title:'Numérologie',desc:'Nombre et intention.'},
+{id:'crystals',ico:'◇',title:'Cristaux',desc:'Pierre et rituel.'}
+];
+let current=SIGNS[11]; const $=s=>document.querySelector(s);
+function buildRing(){const g=$('#ringGlyphs');SIGNS.forEach((s,i)=>{const a=(i/12)*Math.PI*2-Math.PI/2;const x=50+43*Math.cos(a),y=50+43*Math.sin(a);g.innerHTML+=`<text class="ringGlyph" x="${x.toFixed(2)}" y="${y.toFixed(2)}" text-anchor="middle" dominant-baseline="middle">${s.g}</text>`})}
+function buildPicker(){ $('#signGrid').innerHTML=SIGNS.map(s=>`<button class="zbtn" data-k="${s.k}" onclick="selectSign('${s.k}')"><span class="g">${s.g}</span><span class="n">${s.n}</span></button>`).join('') }
+function selectSign(k){current=SIGNS.find(s=>s.k===k);localStorage.setItem('astro-v11-sign',k);refresh()}
+function refresh(){
+  $('#mainGlyph').textContent=current.g;$('#signName').textContent=current.n;$('#signDates').textContent=current.d;
+  $('#youGlyph').textContent=current.g;$('#youName').textContent=current.n;$('#youDates').textContent=current.d;
+  document.querySelectorAll('.zbtn').forEach(b=>b.classList.toggle('sel',b.dataset.k===current.k));
+}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active')}
+function enter(){ $('#modList').innerHTML=MODULES.map(m=>`<button class="mod" onclick="openModule('${m.id}')"><span class="ico">${m.ico}</span><span class="txt"><h3>${m.title}</h3><p>${m.desc}</p></span><span class="arrow">→</span></button>`).join(''); show('modules') }
+function openPicker(){ $('#picker').classList.add('open') } function closePicker(){ $('#picker').classList.remove('open') }
+function today(){return new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}
+function openSheet(html){$('#sheet').innerHTML='<div class="grab"></div>'+html;$('#scrim').classList.add('open')} function closeSheet(){$('#scrim').classList.remove('open')}
+function openModule(id){
+const data={
+daily:{t:'Message du jour',s:'Votre guidance cosmique',p:'Le ciel vous invite à ralentir pour mieux viser. Une action simple peut remettre votre journée dans le bon axe.',f:['Amour 87','Chance 72','Humeur 90']},
+theme:{t:'Thème astral',s:'Portrait céleste',p:'Votre signe révèle votre manière de rayonner et votre direction intérieure.',f:['Soleil '+current.n,'Force Clarté','Élément Eau']},
+compat:{t:'Compatibilité',s:'Affinité du jour',p:'Une connexion douce se renforce quand chacun garde sa vérité.',f:['Affinité Taureau','Vibration 87','Conseil Écouter']},
+numbers:{t:'Numérologie',s:'Nombre du jour',p:'Le nombre 7 invite à observer avant d’agir.',f:['Nombre 7','Couleur Or','Intention Calme']},
+crystals:{t:'Cristaux',s:'Pierre du jour',p:'La citrine solaire accompagne la clarté, la confiance et le passage à l’action.',f:['Pierre Citrine','Couleur Or','Rituel 60 s']}
+}[id];
+openSheet(`<div class="eyebrow">${today()}</div><h2>${current.g} ${data.t}</h2><p class="sub">${data.s}</p><div class="reading">${data.p}</div><div class="facets">${data.f.map(x=>{const [a,...b]=x.split(' ');return `<div class="facet"><small>${a}</small><b>${b.join(' ')}</b></div>`}).join('')}</div><button class="cta closeBtn" onclick="closeSheet()">Fermer</button>`)
+}
+function openPremium(){openSheet(`<div class="eyebrow">Premium</div><h2>Astro Galactic complet</h2><p class="sub">Prévisions longues, compatibilités avancées et cartes de partage.</p><div class="reading">La page premium est prête à connecter à Gumroad ou Stripe plus tard.</div><button class="cta closeBtn" onclick="closeSheet()">Compris</button>`)}
+buildRing();buildPicker();const last=localStorage.getItem('astro-v11-sign');if(last)current=SIGNS.find(s=>s.k===last)||current;refresh();
+if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
+</script>
+</body>
+</html>

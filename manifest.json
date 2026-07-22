@@ -1,7 +1,7 @@
 {
   "name": "Astro Galactic",
   "short_name": "Galactic",
-  "description": "Astro Galactic — horoscope quotidien, thème astral, compatibilité, numérologie et cristaux.",
+  "description": "Astro Galactic — horoscope premium.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
