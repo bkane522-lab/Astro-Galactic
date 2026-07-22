@@ -10,38 +10,23 @@
 <link rel="icon" href="/icon-192.png">
 <style>
 :root{
-  --void:#070714;
-  --night:#0d1026;
-  --panel:#141832;
-  --gold:#e8c56b;
-  --gold2:#f7dea0;
-  --ivory:#f7f1e2;
-  --muted:#aaa2bf;
-  --line:rgba(232,197,107,.20);
-  --violet:#6b4fcf;
-  --safeTop:env(safe-area-inset-top,0px);
-  --safeBottom:env(safe-area-inset-bottom,0px);
+  --void:#070714;--night:#0d1026;--panel:#141832;--gold:#e8c56b;--gold2:#f7dea0;--ivory:#f7f1e2;
+  --muted:#aaa2bf;--line:rgba(232,197,107,.20);--violet:#6b4fcf;
+  --safeTop:env(safe-area-inset-top,0px);--safeBottom:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-variant-emoji:text}
 html,body{height:100%;overflow:hidden;background:#000;color:var(--ivory);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-button{border:0;background:none;color:inherit;font:inherit}
+button{border:0;background:none;color:inherit;font:inherit;cursor:pointer}
 body{display:grid;place-items:center}
 .app{
-  width:min(100vw,430px);
-  height:100dvh;
-  max-height:932px;
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(650px 430px at 50% -12%,rgba(107,79,207,.30),transparent 62%),
-    radial-gradient(600px 360px at 50% 102%,rgba(232,197,107,.12),transparent 58%),
-    linear-gradient(180deg,#070714 0%,#0c1027 55%,#070714 100%);
+  width:min(100vw,430px);height:100dvh;max-height:932px;position:relative;overflow:hidden;
+  background:radial-gradient(650px 430px at 50% -12%,rgba(107,79,207,.30),transparent 62%),
+  radial-gradient(600px 360px at 50% 102%,rgba(232,197,107,.12),transparent 58%),
+  linear-gradient(180deg,#070714 0%,#0c1027 55%,#070714 100%);
 }
 @media(min-width:720px){.app{height:min(100vh,920px);border-radius:34px;border:1px solid rgba(232,197,107,.16)}}
 .app:before{
-  content:"";
-  position:absolute;inset:0;opacity:.42;pointer-events:none;
-  background-image:
+  content:"";position:absolute;inset:0;opacity:.42;pointer-events:none;background-image:
   radial-gradient(circle at 12% 14%,#f7dea0 0 1px,transparent 1.8px),
   radial-gradient(circle at 26% 28%,#f7dea0 0 1px,transparent 1.8px),
   radial-gradient(circle at 78% 12%,#f7dea0 0 1px,transparent 1.8px),
@@ -50,78 +35,83 @@ body{display:grid;place-items:center}
   radial-gradient(circle at 52% 78%,#f7dea0 0 1px,transparent 1.8px),
   radial-gradient(circle at 84% 86%,#f7dea0 0 1px,transparent 1.8px);
 }
-.screen{position:absolute;inset:0;display:none;overflow:hidden;padding:calc(14px + var(--safeTop)) 18px calc(14px + var(--safeBottom))}
+.screen{position:absolute;inset:0;display:none;overflow:hidden;padding:calc(13px + var(--safeTop)) 18px calc(13px + var(--safeBottom));}
 .screen.active{display:flex;flex-direction:column}
-.home{justify-content:space-between;gap:12px}
-.top{
-  display:flex;align-items:center;justify-content:space-between;z-index:2;min-height:46px;
-}
-.brand small{display:block;font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);font-weight:900}
-.brand strong{display:block;font-family:Georgia,serif;font-size:27px;line-height:.95;color:var(--ivory);font-weight:400}
+.home{gap:12px}
+.top{display:flex;align-items:center;justify-content:space-between;z-index:2;min-height:44px;flex-shrink:0}
+.brand small{display:block;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:900}
+.brand strong{display:block;font-family:Georgia,serif;font-size:26px;line-height:.95;color:var(--ivory);font-weight:400}
 .brand em{font-style:italic;color:var(--gold2)}
-.iconBtn{
-  width:42px;height:42px;border-radius:16px;border:1px solid var(--line);
-  background:rgba(255,255,255,.035);display:grid;place-items:center;color:var(--gold);font-size:18px;
+.iconBtn{width:42px;height:42px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.035);display:grid;place-items:center;color:var(--gold);font-size:18px}
+.hero{flex:1;min-height:0;display:grid;grid-template-rows:auto 1fr auto;gap:10px}
+.todayCard{
+  border:1px solid rgba(232,197,107,.20);border-radius:28px;padding:16px;background:
+  radial-gradient(circle at 88% 4%,rgba(232,197,107,.10),transparent 34%),
+  linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.012)),rgba(13,16,38,.76);
+  box-shadow:0 18px 48px rgba(0,0,0,.28);
 }
-.center{
-  flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;
-}
-.kicker{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);font-weight:900;padding-left:.42em}
-h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(36px,10vw,50px);line-height:.94;color:var(--ivory)}
-h1 em{color:var(--gold2);font-style:italic}
-.orbWrap{
-  position:relative;width:min(70vw,300px,35vh);aspect-ratio:1;display:grid;place-items:center;margin:4px 0;
-}
+.cardTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.pill{height:30px;border-radius:999px;border:1px solid var(--line);display:flex;align-items:center;padding:0 11px;color:var(--gold2);font-size:12px;background:rgba(255,255,255,.035)}
+.date{font-size:12px;color:var(--muted)}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(31px,8.8vw,42px);line-height:.98;color:var(--ivory);letter-spacing:-.02em}
+h1 em{font-style:italic;color:var(--gold2)}
+.message{margin-top:10px;color:var(--muted);font-family:Georgia,serif;font-size:16px;line-height:1.34}
+.focus{display:flex;align-items:center;justify-content:center;min-height:0}
+.orbWrap{position:relative;width:min(64vw,265px,30vh);aspect-ratio:1;display:grid;place-items:center}
 .orbWrap svg{position:absolute;inset:0;width:100%;height:100%}
-.ringGlyph{font-family:Georgia,serif;fill:rgba(232,197,107,.82);font-size:8.7px}
+.ringGlyph{font-family:Georgia,serif;fill:rgba(232,197,107,.78);font-size:8.4px}
 .mainOrb{
   width:43%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
-  font-family:Georgia,serif;font-size:clamp(50px,9vh,78px);color:var(--gold2);
+  font-family:Georgia,serif;font-size:clamp(48px,8vh,72px);color:var(--gold2);
   background:radial-gradient(circle at 35% 28%,rgba(247,222,160,.34),rgba(107,79,207,.22) 56%,rgba(8,8,22,.88) 74%);
-  border:1px solid rgba(232,197,107,.28);
-  box-shadow:0 0 68px rgba(107,79,207,.34),inset 0 0 26px rgba(247,222,160,.12);
+  border:1px solid rgba(232,197,107,.28);box-shadow:0 0 66px rgba(107,79,207,.34),inset 0 0 26px rgba(247,222,160,.12);
 }
-.signName{
-  font-family:Georgia,serif;font-size:32px;color:var(--gold2);line-height:1
+.summary{display:grid;gap:9px;flex-shrink:0}
+.signBar{
+  height:56px;border-radius:20px;border:1px solid var(--line);background:rgba(13,16,38,.78);
+  display:flex;align-items:center;justify-content:space-between;padding:0 14px;
 }
-.signDates{color:var(--muted);font-size:13px;margin-top:5px}
-.micro{max-width:28ch;color:var(--muted);font-family:Georgia,serif;font-style:italic;font-size:15px;line-height:1.3}
-.actions{display:grid;gap:10px}
-.cta{
-  height:56px;border-radius:999px;background:linear-gradient(100deg,var(--gold),var(--gold2));
-  color:#090714;font-weight:900;font-size:16px;box-shadow:0 14px 32px -10px rgba(232,197,107,.58);
-}
-.secondary{
-  height:48px;border-radius:999px;border:1px solid var(--line);color:var(--gold2);
-  background:rgba(14,16,39,.72);font-weight:700;font-size:14px;
-}
+.signBar span{color:var(--muted);font-size:12px}
+.signBar b{font-family:Georgia,serif;color:var(--gold2);font-size:22px;font-weight:400}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{border:1px solid rgba(232,197,107,.16);border-radius:18px;background:rgba(7,7,20,.35);padding:10px 6px;text-align:center}
+.stat small{display:block;color:var(--muted);font-size:9px;letter-spacing:.18em;text-transform:uppercase}.stat b{display:block;color:var(--gold);font-family:Georgia,serif;font-size:20px;margin-top:3px}
+.actions{display:grid;grid-template-columns:1fr auto;gap:9px;flex-shrink:0}
+.cta{height:55px;border-radius:999px;background:linear-gradient(100deg,var(--gold),var(--gold2));color:#090714;font-weight:900;font-size:15.5px;box-shadow:0 14px 32px -10px rgba(232,197,107,.58)}
+.secondary{height:55px;min-width:55px;border-radius:999px;border:1px solid var(--line);color:var(--gold2);background:rgba(14,16,39,.72);font-weight:800}
 .modules{gap:12px}
-.modulesHead{display:flex;align-items:center;justify-content:space-between;min-height:46px}
-.profile{display:flex;align-items:center;gap:10px}
-.profileOrb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);color:var(--gold2);font-family:Georgia,serif;font-size:24px;background:rgba(14,16,39,.74)}
-.profile small{display:block;color:var(--muted);font-size:10px;letter-spacing:.27em;text-transform:uppercase}
-.profile b{display:block;font-family:Georgia,serif;font-size:22px;font-weight:400}
-.list{flex:1;min-height:0;display:grid;gap:10px}
-.mod{border:1px solid var(--line);border-radius:20px;background:rgba(14,16,39,.82);padding:13px;display:flex;align-items:center;gap:13px;text-align:left}
-.mod .ico{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--line);color:var(--gold);font-family:Georgia,serif;font-size:22px;background:linear-gradient(150deg,rgba(107,79,207,.24),rgba(232,197,107,.08))}
-.mod h3{font-family:Georgia,serif;font-size:20px;font-weight:400}.mod p{color:var(--muted);font-size:12px;margin-top:3px}.mod .txt{flex:1}.arrow{color:var(--muted)}
-.scrim{position:absolute;inset:0;background:rgba(5,4,13,.74);backdrop-filter:blur(8px);display:none;align-items:flex-end;z-index:20}
-.scrim.open{display:flex}
-.sheet{width:100%;max-height:74dvh;overflow:auto;border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:0;background:linear-gradient(180deg,var(--panel),var(--night));padding:13px 22px calc(22px + var(--safeBottom))}
-.grab{width:42px;height:4px;border-radius:99px;background:var(--line);margin:6px auto 17px}.sheet .eyebrow{text-align:center;color:var(--gold);font-size:10px;letter-spacing:.35em;text-transform:uppercase}.sheet h2{text-align:center;font-family:Georgia,serif;font-weight:400;font-size:31px;margin:5px 0}.sheet .sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:16px}.reading{border:1px solid var(--line);border-radius:18px;background:var(--void);padding:17px;font-family:Georgia,serif;font-size:18px;line-height:1.55;color:var(--ivory)}.facets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.facet{border:1px solid var(--line);border-radius:14px;background:var(--void);text-align:center;padding:10px 6px}.facet small{display:block;color:var(--muted);font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}.facet b{font-family:Georgia,serif;color:var(--gold);font-size:18px}.closeBtn{margin-top:13px}
-.picker{position:absolute;inset:0;display:none;align-items:flex-end;background:rgba(5,4,13,.70);backdrop-filter:blur(8px);z-index:30}
-.picker.open{display:flex}
-.pickPanel{width:100%;border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:0;background:linear-gradient(180deg,var(--panel),var(--night));padding:13px 18px calc(20px + var(--safeBottom))}
+.modulesHead{display:flex;align-items:center;justify-content:space-between;min-height:46px;flex-shrink:0}
+.profile{display:flex;align-items:center;gap:10px}.profileOrb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);color:var(--gold2);font-family:Georgia,serif;font-size:24px;background:rgba(14,16,39,.74)}
+.profile small{display:block;color:var(--muted);font-size:10px;letter-spacing:.27em;text-transform:uppercase}.profile b{display:block;font-family:Georgia,serif;font-size:22px;font-weight:400}
+.list{flex:1;min-height:0;display:grid;gap:10px}.mod{border:1px solid var(--line);border-radius:20px;background:rgba(14,16,39,.82);padding:13px;display:flex;align-items:center;gap:13px;text-align:left}.mod .ico{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--line);color:var(--gold);font-family:Georgia,serif;font-size:22px;background:linear-gradient(150deg,rgba(107,79,207,.24),rgba(232,197,107,.08))}.mod h3{font-family:Georgia,serif;font-size:20px;font-weight:400}.mod p{color:var(--muted);font-size:12px;margin-top:3px}.mod .txt{flex:1}.arrow{color:var(--muted)}
+.scrim,.picker{position:absolute;inset:0;background:rgba(5,4,13,.74);backdrop-filter:blur(8px);display:none;align-items:flex-end;z-index:20}.scrim.open,.picker.open{display:flex}
+.sheet,.pickPanel{width:100%;max-height:72dvh;overflow:auto;border-radius:30px 30px 0 0;border:1px solid rgba(232,197,107,.22);border-bottom:0;background:
+linear-gradient(180deg,rgba(20,24,50,.96),rgba(13,16,38,.98));
+padding:13px 22px calc(22px + var(--safeBottom));box-shadow:0 -24px 70px rgba(0,0,0,.42)}
+.grab{width:42px;height:4px;border-radius:99px;background:rgba(232,197,107,.25);margin:6px auto 16px}
+.sheet .eyebrow{text-align:center;color:var(--gold);font-size:10px;letter-spacing:.35em;text-transform:uppercase}
+.sheet h2{text-align:center;font-family:Georgia,serif;font-weight:400;font-size:31px;margin:5px 0}
+.sheet .sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:15px}
+.reading{
+  border:1px solid rgba(232,197,107,.18);
+  border-radius:20px;
+  background:radial-gradient(circle at 50% 0%,rgba(232,197,107,.06),transparent 52%),var(--void);
+  padding:18px 16px;
+  font-family:Georgia,serif;
+  font-size:18px;
+  line-height:1.52;
+  color:var(--ivory);
+  text-align:center;
+}
+.facets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.facet{border:1px solid rgba(232,197,107,.16);border-radius:16px;background:rgba(7,7,20,.82);text-align:center;padding:10px 6px}
+.facet small{display:block;color:var(--muted);font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}
+.facet b{font-family:Georgia,serif;color:var(--gold);font-size:18px}
+.closeBtn{margin-top:13px;width:100%}
 .pickTitle{text-align:center;margin-bottom:12px}.pickTitle small{display:block;color:var(--gold);font-size:10px;letter-spacing:.35em;text-transform:uppercase}.pickTitle b{font-family:Georgia,serif;font-size:28px;font-weight:400}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.zbtn{min-height:62px;border-radius:17px;border:1px solid rgba(232,197,107,.12);background:rgba(7,7,20,.36);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
-.zbtn .g{font-family:Georgia,serif;color:var(--gold);font-size:24px}.zbtn .n{font-size:10px;color:var(--muted)}.zbtn.sel{border-color:rgba(232,197,107,.72);background:linear-gradient(160deg,rgba(107,79,207,.36),rgba(232,197,107,.12))}.zbtn.sel .n{color:var(--ivory)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.zbtn{min-height:62px;border-radius:17px;border:1px solid rgba(232,197,107,.12);background:rgba(7,7,20,.36);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.zbtn .g{font-family:Georgia,serif;color:var(--gold);font-size:24px}.zbtn .n{font-size:10px;color:var(--muted)}.zbtn.sel{border-color:rgba(232,197,107,.72);background:linear-gradient(160deg,rgba(107,79,207,.36),rgba(232,197,107,.12))}.zbtn.sel .n{color:var(--ivory)}
 @media(max-height:760px){
-  .screen{padding:calc(8px + var(--safeTop)) 14px calc(8px + var(--safeBottom))}
-  .brand strong{font-size:23px}.brand small{font-size:9px}.iconBtn{width:36px;height:36px}
-  .center{gap:10px}.kicker{font-size:8.5px}h1{font-size:32px}.orbWrap{width:min(57vw,210px,26vh)}.signName{font-size:27px}.micro{font-size:12.5px}.cta{height:46px}.secondary{height:42px}
-  .grid{gap:5px}.zbtn{min-height:50px}.zbtn .g{font-size:20px}.zbtn .n{font-size:8.7px}
-  .list{gap:7px}.mod{padding:10px}.mod h3{font-size:17px}.mod p{font-size:11px}
+  .screen{padding:calc(8px + var(--safeTop)) 14px calc(8px + var(--safeBottom));gap:8px}.brand strong{font-size:23px}.brand small{font-size:9px}.iconBtn{width:36px;height:36px}.todayCard{padding:12px;border-radius:24px}.pill{height:26px;font-size:10.5px}.date{font-size:10.5px}h1{font-size:28px}.message{font-size:13px;margin-top:6px}.orbWrap{width:min(53vw,205px,24vh)}.signBar{height:48px}.signBar b{font-size:19px}.stat{padding:7px 4px}.cta,.secondary{height:45px}.list{gap:7px}.mod{padding:10px}.mod h3{font-size:17px}.mod p{font-size:11px}
 }
 </style>
 </head>
@@ -130,45 +120,38 @@ h1 em{color:var(--gold2);font-style:italic}
 <section id="home" class="screen home active">
   <div class="top">
     <div class="brand"><small>HOROSCOPE</small><strong>Astro <em>Galactic</em></strong></div>
-    <button class="iconBtn" onclick="openPicker()">♓</button>
+    <button class="iconBtn" onclick="openPicker()" id="topGlyph">♓</button>
   </div>
 
-  <div class="center">
-    <div>
-      <div class="kicker">Votre portail</div>
-      <h1>Ouvrez<br>votre ciel</h1>
+  <div class="hero">
+    <div class="todayCard">
+      <div class="cardTop"><span class="pill">✦ Guidance du jour</span><span class="date" id="dateText">Aujourd’hui</span></div>
+      <h1>Votre message est prêt</h1>
+      <p class="message">Votre guidance du jour, claire et directe.</p>
     </div>
 
-    <div class="orbWrap">
-      <svg viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(232,197,107,.16)" stroke-width=".45"/>
-        <circle cx="50" cy="50" r="34" fill="none" stroke="rgba(232,197,107,.11)" stroke-width=".45"/>
-        <circle cx="50" cy="50" r="23" fill="none" stroke="rgba(107,79,207,.24)" stroke-width=".45"/>
-        <g id="ringGlyphs"></g>
-      </svg>
-      <div class="mainOrb" id="mainGlyph">♓︎</div>
+    <div class="focus">
+      <div class="orbWrap">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" fill="none" stroke="rgba(232,197,107,.16)" stroke-width=".45"/><circle cx="50" cy="50" r="34" fill="none" stroke="rgba(232,197,107,.11)" stroke-width=".45"/><circle cx="50" cy="50" r="23" fill="none" stroke="rgba(107,79,207,.24)" stroke-width=".45"/><g id="ringGlyphs"></g></svg>
+        <div class="mainOrb" id="mainGlyph">♓︎</div>
+      </div>
     </div>
 
-    <div>
-      <div class="signName" id="signName">Poissons</div>
-      <div class="signDates" id="signDates">19 fév – 20 mar</div>
+    <div class="summary">
+      <div class="signBar"><span>Signe actif</span><b id="signName">Poissons</b></div>
+      <div class="stats"><div class="stat"><small>Amour</small><b>87</b></div><div class="stat"><small>Chance</small><b>72</b></div><div class="stat"><small>Énergie</small><b>90</b></div></div>
     </div>
-
-    <p class="micro">Une guidance claire, calme et personnelle pour aujourd’hui.</p>
   </div>
 
   <div class="actions">
-    <button class="cta" onclick="enter()">Lire ma guidance</button>
-    <button class="secondary" onclick="openPicker()">Changer de signe</button>
+    <button class="cta" onclick="openModule('daily')">Lire mon message</button>
+    <button class="secondary" onclick="openPicker()">♒</button>
   </div>
 </section>
 
 <section id="modules" class="screen modules">
   <div class="modulesHead">
-    <div class="profile">
-      <div class="profileOrb" id="youGlyph">♓︎</div>
-      <div><small id="youDates">19 fév – 20 mar</small><b id="youName">Poissons</b></div>
-    </div>
+    <div class="profile"><div class="profileOrb" id="youGlyph">♓︎</div><div><small id="youDates">19 fév – 20 mar</small><b id="youName">Poissons</b></div></div>
     <button class="iconBtn" onclick="show('home')">←</button>
   </div>
   <div class="list" id="modList"></div>
@@ -176,64 +159,28 @@ h1 em{color:var(--gold2);font-style:italic}
 </section>
 
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet"></div></div>
-<div class="picker" id="picker" onclick="if(event.target===this)closePicker()">
-  <div class="pickPanel">
-    <div class="grab"></div>
-    <div class="pickTitle"><small>Votre signe</small><b>Choisir</b></div>
-    <div class="grid" id="signGrid"></div>
-    <button class="cta closeBtn" onclick="closePicker()">Valider</button>
-  </div>
-</div>
+<div class="picker" id="picker" onclick="if(event.target===this)closePicker()"><div class="pickPanel"><div class="grab"></div><div class="pickTitle"><small>Votre signe</small><b>Choisir</b></div><div class="grid" id="signGrid"></div><button class="cta closeBtn" onclick="closePicker()">Valider</button></div></div>
 </main>
 
 <script>
-const SIGNS=[
-{k:'belier',n:'Bélier',g:'♈︎',d:'21 mar – 19 avr'},
-{k:'taureau',n:'Taureau',g:'♉︎',d:'20 avr – 20 mai'},
-{k:'gemeaux',n:'Gémeaux',g:'♊︎',d:'21 mai – 20 juin'},
-{k:'cancer',n:'Cancer',g:'♋︎',d:'21 juin – 22 juil'},
-{k:'lion',n:'Lion',g:'♌︎',d:'23 juil – 22 août'},
-{k:'vierge',n:'Vierge',g:'♍︎',d:'23 août – 22 sep'},
-{k:'balance',n:'Balance',g:'♎︎',d:'23 sep – 22 oct'},
-{k:'scorpion',n:'Scorpion',g:'♏︎',d:'23 oct – 21 nov'},
-{k:'sagittaire',n:'Sagittaire',g:'♐︎',d:'22 nov – 21 déc'},
-{k:'capricorne',n:'Capricorne',g:'♑︎',d:'22 déc – 19 jan'},
-{k:'verseau',n:'Verseau',g:'♒︎',d:'20 jan – 18 fév'},
-{k:'poissons',n:'Poissons',g:'♓︎',d:'19 fév – 20 mar'}
-];
-const MODULES=[
-{id:'daily',ico:'☀︎',title:'Message du jour',desc:'Guidance claire et quotidienne.'},
-{id:'theme',ico:'✦',title:'Thème astral',desc:'Portrait céleste personnel.'},
-{id:'compat',ico:'♥',title:'Compatibilité',desc:'Affinité et vibration.'},
-{id:'numbers',ico:'7',title:'Numérologie',desc:'Nombre et intention.'},
-{id:'crystals',ico:'◇',title:'Cristaux',desc:'Pierre et rituel.'}
-];
+const SIGNS=[{k:'belier',n:'Bélier',g:'♈︎',d:'21 mar – 19 avr'},{k:'taureau',n:'Taureau',g:'♉︎',d:'20 avr – 20 mai'},{k:'gemeaux',n:'Gémeaux',g:'♊︎',d:'21 mai – 20 juin'},{k:'cancer',n:'Cancer',g:'♋︎',d:'21 juin – 22 juil'},{k:'lion',n:'Lion',g:'♌︎',d:'23 juil – 22 août'},{k:'vierge',n:'Vierge',g:'♍︎',d:'23 août – 22 sep'},{k:'balance',n:'Balance',g:'♎︎',d:'23 sep – 22 oct'},{k:'scorpion',n:'Scorpion',g:'♏︎',d:'23 oct – 21 nov'},{k:'sagittaire',n:'Sagittaire',g:'♐︎',d:'22 nov – 21 déc'},{k:'capricorne',n:'Capricorne',g:'♑︎',d:'22 déc – 19 jan'},{k:'verseau',n:'Verseau',g:'♒︎',d:'20 jan – 18 fév'},{k:'poissons',n:'Poissons',g:'♓︎',d:'19 fév – 20 mar'}];
+const MODULES=[{id:'daily',ico:'☀︎',title:'Message du jour',desc:'Guidance claire et quotidienne.'},{id:'theme',ico:'✦',title:'Thème astral',desc:'Portrait céleste personnel.'},{id:'compat',ico:'♥',title:'Compatibilité',desc:'Affinité et vibration.'},{id:'numbers',ico:'7',title:'Numérologie',desc:'Nombre et intention.'},{id:'crystals',ico:'◇',title:'Cristaux',desc:'Pierre et rituel.'}];
 let current=SIGNS[11]; const $=s=>document.querySelector(s);
 function buildRing(){const g=$('#ringGlyphs');SIGNS.forEach((s,i)=>{const a=(i/12)*Math.PI*2-Math.PI/2;const x=50+43*Math.cos(a),y=50+43*Math.sin(a);g.innerHTML+=`<text class="ringGlyph" x="${x.toFixed(2)}" y="${y.toFixed(2)}" text-anchor="middle" dominant-baseline="middle">${s.g}</text>`})}
 function buildPicker(){ $('#signGrid').innerHTML=SIGNS.map(s=>`<button class="zbtn" data-k="${s.k}" onclick="selectSign('${s.k}')"><span class="g">${s.g}</span><span class="n">${s.n}</span></button>`).join('') }
-function selectSign(k){current=SIGNS.find(s=>s.k===k);localStorage.setItem('astro-v11-sign',k);refresh()}
-function refresh(){
-  $('#mainGlyph').textContent=current.g;$('#signName').textContent=current.n;$('#signDates').textContent=current.d;
-  $('#youGlyph').textContent=current.g;$('#youName').textContent=current.n;$('#youDates').textContent=current.d;
-  document.querySelectorAll('.zbtn').forEach(b=>b.classList.toggle('sel',b.dataset.k===current.k));
-}
+function selectSign(k){current=SIGNS.find(s=>s.k===k);localStorage.setItem('astro-v13-sign',k);refresh()}
+function refresh(){const d=new Date();$('#dateText').textContent=d.toLocaleDateString('fr-FR',{day:'numeric',month:'long'});$('#mainGlyph').textContent=current.g;$('#topGlyph').textContent=current.g.replace('︎','');$('#signName').textContent=current.n;$('#youGlyph').textContent=current.g;$('#youName').textContent=current.n;$('#youDates').textContent=current.d;document.querySelectorAll('.zbtn').forEach(b=>b.classList.toggle('sel',b.dataset.k===current.k));}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active')}
-function enter(){ $('#modList').innerHTML=MODULES.map(m=>`<button class="mod" onclick="openModule('${m.id}')"><span class="ico">${m.ico}</span><span class="txt"><h3>${m.title}</h3><p>${m.desc}</p></span><span class="arrow">→</span></button>`).join(''); show('modules') }
 function openPicker(){ $('#picker').classList.add('open') } function closePicker(){ $('#picker').classList.remove('open') }
 function today(){return new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}
 function openSheet(html){$('#sheet').innerHTML='<div class="grab"></div>'+html;$('#scrim').classList.add('open')} function closeSheet(){$('#scrim').classList.remove('open')}
 function openModule(id){
-const data={
-daily:{t:'Message du jour',s:'Votre guidance cosmique',p:'Le ciel vous invite à ralentir pour mieux viser. Une action simple peut remettre votre journée dans le bon axe.',f:['Amour 87','Chance 72','Humeur 90']},
-theme:{t:'Thème astral',s:'Portrait céleste',p:'Votre signe révèle votre manière de rayonner et votre direction intérieure.',f:['Soleil '+current.n,'Force Clarté','Élément Eau']},
-compat:{t:'Compatibilité',s:'Affinité du jour',p:'Une connexion douce se renforce quand chacun garde sa vérité.',f:['Affinité Taureau','Vibration 87','Conseil Écouter']},
-numbers:{t:'Numérologie',s:'Nombre du jour',p:'Le nombre 7 invite à observer avant d’agir.',f:['Nombre 7','Couleur Or','Intention Calme']},
-crystals:{t:'Cristaux',s:'Pierre du jour',p:'La citrine solaire accompagne la clarté, la confiance et le passage à l’action.',f:['Pierre Citrine','Couleur Or','Rituel 60 s']}
-}[id];
+const data={daily:{t:'Message du jour',s:'Votre guidance cosmique',p:'Le ciel vous invite à ralentir pour mieux viser. Une action simple peut remettre votre journée dans le bon axe.',f:['Amour 87','Chance 72','Humeur 90']},theme:{t:'Thème astral',s:'Portrait céleste',p:'Votre signe révèle votre manière de rayonner et votre direction intérieure.',f:['Soleil '+current.n,'Force Clarté','Élément Eau']},compat:{t:'Compatibilité',s:'Affinité du jour',p:'Une connexion douce se renforce quand chacun garde sa vérité.',f:['Affinité Taureau','Vibration 87','Conseil Écouter']},numbers:{t:'Numérologie',s:'Nombre du jour',p:'Le nombre 7 invite à observer avant d’agir.',f:['Nombre 7','Couleur Or','Intention Calme']},crystals:{t:'Cristaux',s:'Pierre du jour',p:'La citrine solaire accompagne la clarté, la confiance et le passage à l’action.',f:['Pierre Citrine','Couleur Or','Rituel 60 s']}}[id];
 openSheet(`<div class="eyebrow">${today()}</div><h2>${current.g} ${data.t}</h2><p class="sub">${data.s}</p><div class="reading">${data.p}</div><div class="facets">${data.f.map(x=>{const [a,...b]=x.split(' ');return `<div class="facet"><small>${a}</small><b>${b.join(' ')}</b></div>`}).join('')}</div><button class="cta closeBtn" onclick="closeSheet()">Fermer</button>`)
 }
 function openPremium(){openSheet(`<div class="eyebrow">Premium</div><h2>Astro Galactic complet</h2><p class="sub">Prévisions longues, compatibilités avancées et cartes de partage.</p><div class="reading">La page premium est prête à connecter à Gumroad ou Stripe plus tard.</div><button class="cta closeBtn" onclick="closeSheet()">Compris</button>`)}
-buildRing();buildPicker();const last=localStorage.getItem('astro-v11-sign');if(last)current=SIGNS.find(s=>s.k===last)||current;refresh();
+function enterModules(){ $('#modList').innerHTML=MODULES.map(m=>`<button class="mod" onclick="openModule('${m.id}')"><span class="ico">${m.ico}</span><span class="txt"><h3>${m.title}</h3><p>${m.desc}</p></span><span class="arrow">→</span></button>`).join(''); show('modules') }
+buildRing();buildPicker();const last=localStorage.getItem('astro-v13-sign');if(last)current=SIGNS.find(s=>s.k===last)||current;refresh();
 if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
 </script>
 </body>

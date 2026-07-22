@@ -1,3 +1,3 @@
-# Astro Galactic V11 Ultra Simple
+# Astro Galactic V13 Centered Modal
 
-Accueil réduit : signe actif, guidance, changement de signe dans un panneau.
+V13 : modales plus centrées, message plus premium, UX accueil conservée.
