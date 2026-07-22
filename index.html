@@ -7,256 +7,351 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Astro Galactic</title>
-<meta name="description" content="Astro Galactic — Message des étoiles, horoscope quotidien premium.">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" href="/icon-192.png">
 <style>
 :root{
   --bg:#030914;
+  --panel:#071629;
+  --panel2:#091a31;
   --gold:#e6a936;
   --gold2:#ffd978;
   --cream:#fff0be;
+  --text:#fff7df;
+  --soft:rgba(255,247,223,.76);
+  --muted:rgba(255,247,223,.48);
+  --line:rgba(230,169,54,.33);
   --safeTop:env(safe-area-inset-top,0px);
   --safeBottom:env(safe-area-inset-bottom,0px);
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{
-  height:100%;
-  overflow:hidden;
-  background:#000;
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-}
-body{
-  display:grid;
-  place-items:center;
-}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-variant-emoji:text}
+html,body{height:100%;overflow:hidden;background:#000;color:var(--text);font-family:Inter,Manrope,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
+body{display:grid;place-items:center}
 .app{
-  position:relative;
   width:min(100vw,430px);
   height:100dvh;
   max-height:932px;
+  position:relative;
   overflow:hidden;
-  background:#030914;
+  background:
+    radial-gradient(420px 250px at 50% 4%,rgba(230,169,54,.14),transparent 64%),
+    radial-gradient(600px 470px at 50% 42%,rgba(15,56,91,.32),transparent 66%),
+    linear-gradient(180deg,#020812 0%,#071428 56%,#020812 100%);
 }
 @media(min-width:720px){
-  .app{
-    width:min(78vw,430px);
-    height:min(100vh,920px);
-    border-radius:34px;
-    border:1px solid rgba(230,169,54,.32);
-    box-shadow:0 30px 100px rgba(0,0,0,.72);
-  }
+  .app{height:min(100vh,920px);border-radius:34px;border:1px solid rgba(230,169,54,.28);box-shadow:0 30px 100px rgba(0,0,0,.72)}
 }
-.tableau{
+.app::before{
+  content:"";
+  position:absolute;inset:0;pointer-events:none;opacity:.75;
+  background-image:
+    radial-gradient(circle at 8% 10%,#ffd978 0 1px,transparent 1.7px),
+    radial-gradient(circle at 24% 19%,#fff0be 0 1px,transparent 1.7px),
+    radial-gradient(circle at 80% 13%,#ffd978 0 1px,transparent 1.8px),
+    radial-gradient(circle at 93% 34%,#fff0be 0 1px,transparent 1.8px),
+    radial-gradient(circle at 10% 58%,#ffd978 0 1px,transparent 1.8px),
+    radial-gradient(circle at 76% 60%,#fff0be 0 1px,transparent 1.8px),
+    radial-gradient(circle at 45% 88%,#ffd978 0 1px,transparent 1.8px);
+}
+.app::after{
+  content:"";
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  user-select:none;
+  inset:10px;
+  border:1px solid rgba(230,169,54,.24);
+  border-radius:32px;
   pointer-events:none;
 }
-.hotspot{
-  position:absolute;
-  border:0;
-  background:transparent;
-  color:transparent;
-  cursor:pointer;
-  z-index:3;
+.screen{
+  position:absolute;inset:0;display:none;overflow:hidden;
+  padding:calc(14px + var(--safeTop)) 18px calc(14px + var(--safeBottom));
 }
-.hotspot:active{
-  background:rgba(255,217,120,.08);
+.screen.active{display:flex;flex-direction:column}
+.home{gap:8px}
+.top{
+  min-height:40px;display:flex;align-items:center;justify-content:space-between;z-index:2;flex-shrink:0;
 }
-.menuHot{
-  left:4%;
-  top:2%;
-  width:14%;
-  height:8%;
+.iconBtn{
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--line);
+  display:grid;place-items:center;color:var(--gold2);background:rgba(3,9,20,.36);font-size:19px;
 }
-.profileHot{
-  right:4%;
-  top:2%;
-  width:14%;
-  height:8%;
+.brand{
+  text-align:center;flex:1;
 }
-.ctaHot{
-  left:10%;
-  right:10%;
-  bottom:4.8%;
-  height:7.5%;
-  border-radius:999px;
+.brand small{
+  display:block;color:var(--gold2);font-size:10px;letter-spacing:.38em;text-transform:uppercase;font-weight:900;
 }
-.shareHot{
-  left:22%;
-  right:22%;
-  bottom:.7%;
-  height:3.8%;
-  border-radius:999px;
+.brand strong{
+  font-family:Georgia,serif;font-size:31px;line-height:.95;font-weight:400;color:var(--gold2);
+  text-shadow:0 0 18px rgba(230,169,54,.22);
 }
-.overlay{
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  background:rgba(2,8,18,.72);
-  backdrop-filter:blur(10px);
-  z-index:10;
+.hero{text-align:center;flex-shrink:0;margin-top:-2px}
+.hero h1{
+  font-family:Georgia,serif;font-weight:400;color:var(--gold2);
+  font-size:clamp(35px,9.8vw,48px);line-height:.95;
 }
-.overlay.open{display:flex}
-.modal{
+.hero p{
+  margin-top:5px;color:var(--cream);font-family:Georgia,serif;font-size:16px;line-height:1.15;
+}
+.cosmic{
+  position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+}
+.zodiacArc{
+  position:absolute;width:min(104vw,440px,48vh);aspect-ratio:1;top:-12px;left:50%;transform:translateX(-50%);
+  opacity:.95;pointer-events:none;
+}
+.zodiacArc svg{width:100%;height:100%;overflow:visible}
+.glyph{font-family:Georgia,serif;fill:rgba(230,169,54,.86);font-size:6.4px}
+.frame{
   width:100%;
-  max-width:390px;
-  border-radius:30px;
-  border:1px solid rgba(230,169,54,.32);
+  position:relative;
+  margin-top:40px;
+  border:1px solid rgba(230,169,54,.42);
+  border-radius:25px;
   background:
-    radial-gradient(circle at 50% 0%,rgba(230,169,54,.16),transparent 42%),
-    linear-gradient(180deg,rgba(7,22,41,.98),rgba(4,11,24,.98));
-  color:var(--cream);
-  padding:22px 20px 20px;
+    radial-gradient(circle at 50% -2%,rgba(255,217,120,.12),transparent 42%),
+    linear-gradient(180deg,rgba(7,22,41,.86),rgba(3,9,20,.90));
+  padding:46px 16px 15px;
   text-align:center;
-  box-shadow:0 24px 80px rgba(0,0,0,.54);
+  box-shadow:0 20px 60px rgba(0,0,0,.42),inset 0 0 0 1px rgba(255,255,255,.03);
 }
-.modal small{
-  display:block;
-  color:var(--gold2);
-  letter-spacing:.34em;
-  text-transform:uppercase;
-  font-size:10px;
-  margin-bottom:10px;
+.seal{
+  position:absolute;left:50%;top:-38px;transform:translateX(-50%);
+  width:76px;height:76px;border-radius:50%;
+  border:1px solid rgba(230,169,54,.46);
+  background:radial-gradient(circle at 50% 38%,rgba(255,217,120,.32),rgba(7,22,41,.80) 67%);
+  display:grid;place-items:center;color:var(--gold2);font-family:Georgia,serif;font-size:39px;
+  box-shadow:0 0 45px rgba(230,169,54,.25);
 }
-.modal h2{
-  font-family:Georgia,serif;
-  font-size:34px;
-  font-weight:400;
-  line-height:1.05;
-  margin-bottom:12px;
+.dateLine{
+  color:var(--gold2);font-size:12px;letter-spacing:.14em;font-family:Georgia,serif;margin-bottom:9px;
 }
-.modal p{
-  font-family:Georgia,serif;
-  color:#fff3c9;
-  font-size:20px;
-  line-height:1.45;
-  margin-bottom:16px;
+.mainMsg{
+  font-family:Georgia,serif;color:var(--cream);
+  font-size:clamp(22px,5.8vw,30px);line-height:1.18;max-width:28ch;margin:0 auto;
 }
-.premiumLine{
-  border:1px solid rgba(230,169,54,.24);
-  border-radius:18px;
-  padding:12px;
-  margin:12px 0;
-  color:rgba(255,247,223,.72);
-  font-size:13px;
+.subMsg{
+  margin:10px auto 0;max-width:31ch;color:var(--soft);font-size:13.5px;line-height:1.25;
 }
-.btn{
-  width:100%;
-  height:54px;
-  border:0;
-  border-radius:999px;
+.stats{
+  flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;
+}
+.stat{
+  min-height:66px;border-radius:50%;border:1px solid rgba(230,169,54,.40);
+  background:radial-gradient(circle at 50% 0%,rgba(255,217,120,.12),transparent 52%),rgba(3,9,20,.60);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  box-shadow:0 0 20px rgba(230,169,54,.10);
+}
+.stat span{font-family:Georgia,serif;font-size:12px;color:var(--cream)}
+.stat b{font-family:Georgia,serif;font-size:18px;color:var(--gold2);margin-top:3px}
+.affinity{
+  flex-shrink:0;min-height:54px;border-radius:22px;border:1px solid rgba(230,169,54,.36);
+  background:rgba(3,9,20,.58);display:flex;align-items:center;gap:11px;padding:8px 12px;text-align:left;
+}
+.affinity .avatar{
+  width:42px;height:42px;border-radius:50%;border:1px solid rgba(230,169,54,.42);display:grid;place-items:center;color:var(--gold2);font-family:Georgia,serif;font-size:24px;
+}
+.affinity b{display:block;font-family:Georgia,serif;color:var(--gold2);font-size:18px;font-weight:400}
+.affinity small{display:block;color:var(--soft);font-size:12px;margin-top:2px}
+.luckyTitle{
+  text-align:center;color:var(--gold2);font-family:Georgia,serif;font-size:18px;line-height:1;flex-shrink:0;
+}
+.lucky{
+  flex-shrink:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(230,169,54,.28);border-radius:20px;background:rgba(3,9,20,.52);overflow:hidden;
+}
+.lucky div{
+  min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  border-right:1px solid rgba(230,169,54,.18);
+}
+.lucky div:last-child{border-right:0}
+.lucky small{font-size:10px;color:var(--cream);font-family:Georgia,serif}
+.lucky b{font-family:Georgia,serif;color:var(--gold2);font-size:18px;margin-top:3px}
+.actions{
+  flex-shrink:0;display:grid;grid-template-columns:1fr 45px;gap:8px;
+}
+.cta{
+  height:52px;border-radius:999px;
   background:linear-gradient(100deg,#d99221,#ffd978 55%,#fff0be);
-  color:#090714;
-  font-weight:900;
-  font-size:16px;
-  cursor:pointer;
+  color:#090714;font-weight:900;font-size:15.5px;
+  box-shadow:0 14px 30px -10px rgba(230,169,54,.62);
 }
-.btnGhost{
-  margin-top:10px;
-  background:transparent;
-  border:1px solid rgba(230,169,54,.28);
-  color:#ffd978;
+.share{
+  color:var(--gold2);font-size:20px;
 }
-.toast{
-  position:absolute;
-  left:18px;
-  right:18px;
-  bottom:calc(18px + var(--safeBottom));
-  min-height:48px;
-  border-radius:18px;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(4,11,24,.92);
-  border:1px solid rgba(230,169,54,.32);
-  color:#ffd978;
-  z-index:20;
-  font-weight:800;
+.scrim,.picker{
+  position:absolute;inset:0;background:rgba(2,8,18,.76);backdrop-filter:blur(10px);display:none;z-index:30;
 }
-.toast.show{display:flex}
+.scrim{align-items:center;justify-content:center;padding:18px}
+.picker{align-items:flex-end}
+.scrim.open,.picker.open{display:flex}
+.modal{
+  width:100%;max-width:390px;max-height:82dvh;overflow:auto;border-radius:30px;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(7,22,41,.98),rgba(3,9,20,.98));
+  padding:18px 20px 20px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.54);
+}
+.grab{width:42px;height:4px;border-radius:99px;background:rgba(230,169,54,.28);margin:2px auto 16px}
+.modal small,.pickTitle small{display:block;color:var(--gold2);font-size:10px;letter-spacing:.35em;text-transform:uppercase;margin-bottom:8px}
+.modal h2,.pickTitle b{display:block;font-family:Georgia,serif;font-size:31px;line-height:1.04;color:var(--cream);font-weight:400;margin-bottom:10px}
+.modal p{font-family:Georgia,serif;color:var(--cream);font-size:20px;line-height:1.4;margin-bottom:14px}
+.note{
+  border:1px solid rgba(230,169,54,.22);border-radius:18px;background:rgba(3,9,20,.50);
+  color:var(--soft);padding:12px;font-size:13px;line-height:1.32;margin-bottom:12px;
+}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.pickPanel{
+  width:100%;max-height:74dvh;overflow:auto;border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:0;
+  background:linear-gradient(180deg,rgba(7,22,41,.98),rgba(3,9,20,.98));
+  padding:13px 18px calc(22px + var(--safeBottom));box-shadow:0 -24px 70px rgba(0,0,0,.42);text-align:center;
+}
+.zbtn{
+  min-height:61px;border-radius:17px;border:1px solid rgba(230,169,54,.14);
+  background:rgba(3,9,20,.42);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+}
+.zbtn .g{font-family:Georgia,serif;color:var(--gold2);font-size:24px}.zbtn .n{font-size:10px;color:var(--muted)}
+.zbtn.sel{border-color:rgba(230,169,54,.78);background:linear-gradient(160deg,rgba(230,169,54,.20),rgba(7,22,41,.72))}
+.zbtn.sel .n{color:var(--text)}
+@media(max-height:760px){
+  .screen{padding:calc(7px + var(--safeTop)) 13px calc(7px + var(--safeBottom));gap:5px}
+  .top{min-height:34px}.iconBtn{width:32px;height:32px}.brand small{font-size:8px}.brand strong{font-size:25px}
+  .hero h1{font-size:29px}.hero p{font-size:12px;margin-top:2px}
+  .zodiacArc{width:min(101vw,330px,39vh);top:-5px}
+  .frame{margin-top:28px;padding:35px 12px 12px;border-radius:21px}.seal{width:58px;height:58px;top:-29px;font-size:29px}.dateLine{font-size:10px;margin-bottom:5px}.mainMsg{font-size:19px}.subMsg{font-size:11.5px;margin-top:6px}
+  .stat{min-height:52px}.stat span{font-size:10px}.stat b{font-size:14px}
+  .affinity{min-height:43px;border-radius:17px}.affinity .avatar{width:32px;height:32px;font-size:19px}.affinity b{font-size:15px}.affinity small{font-size:10px}
+  .luckyTitle{font-size:15px}.lucky div{min-height:42px}.lucky small{font-size:8px}.lucky b{font-size:14px}
+  .cta{height:44px;font-size:13px}.actions{grid-template-columns:1fr 44px}
+}
 </style>
 </head>
 <body>
 <main class="app">
-  <img class="tableau" src="/assets/message-des-etoiles.png" alt="Astro Galactic — Message des étoiles">
-
-  <button class="hotspot menuHot" onclick="openInfo()" aria-label="Menu">Menu</button>
-  <button class="hotspot profileHot" onclick="openProfile()" aria-label="Profil">Profil</button>
-  <button class="hotspot ctaHot" onclick="openConseil()" aria-label="Découvrir le conseil complet">Découvrir le conseil complet</button>
-  <button class="hotspot shareHot" onclick="shareMessage()" aria-label="Partager votre message du jour">Partager</button>
-
-  <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
-    <div class="modal" id="modal"></div>
+<section class="screen home active">
+  <div class="top">
+    <button class="iconBtn" onclick="openMenu()">☰</button>
+    <div class="brand"><small>Astro</small><strong>Galactic</strong></div>
+    <button class="iconBtn" onclick="openPicker()" id="topGlyph">♌</button>
   </div>
 
-  <div class="toast" id="toast">Message copié ✨</div>
+  <div class="hero">
+    <h1>Message des étoiles</h1>
+    <p>Votre rituel cosmique quotidien</p>
+  </div>
+
+  <div class="cosmic">
+    <div class="zodiacArc">
+      <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(230,169,54,.25)" stroke-width=".42"/>
+        <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(230,169,54,.18)" stroke-width=".36"/>
+        <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(230,169,54,.12)" stroke-width=".32"/>
+        <g id="ringGlyphs"></g>
+      </svg>
+    </div>
+
+    <div class="frame">
+      <div class="seal">✦</div>
+      <div class="dateLine" id="dateLine">Aujourd’hui</div>
+      <div class="mainMsg" id="mainMsg">Aujourd’hui, l’univers vous invite à ralentir pour mieux entendre votre véritable voix intérieure.</div>
+      <div class="subMsg" id="subMsg">Faites confiance à votre intuition, elle connaît le chemin.</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><span>Amour</span><b id="amour">87%</b></div>
+    <div class="stat"><span>Argent</span><b id="argent">72%</b></div>
+    <div class="stat"><span>Humeur</span><b id="humeur">90%</b></div>
+    <div class="stat"><span>Énergie</span><b id="energie">85%</b></div>
+  </div>
+
+  <button class="affinity" onclick="openPicker()">
+    <div class="avatar" id="affGlyph">♉</div>
+    <div>
+      <b>Affinité du jour : <span id="affinity">Taureau</span></b>
+      <small id="affinityText">Connexion solide et bienveillante.</small>
+    </div>
+  </button>
+
+  <div class="luckyTitle">Vos éléments chanceux</div>
+  <div class="lucky">
+    <div><small>Nombre</small><b id="number">7</b></div>
+    <div><small>Couleur</small><b id="color">Or solaire</b></div>
+    <div><small>Pierre</small><b id="stone">Citrine</b></div>
+  </div>
+
+  <div class="actions">
+    <button class="cta" onclick="openConseil()">Découvrir le conseil complet</button>
+    <button class="secondary share" onclick="shareMessage()">↗</button>
+  </div>
+</section>
+
+<div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal"></div>
+</div>
+
+<div class="picker" id="picker" onclick="if(event.target===this)closePicker()">
+  <div class="pickPanel">
+    <div class="grab"></div>
+    <div class="pickTitle"><small>Votre signe</small><b>Choisir</b></div>
+    <div class="grid" id="signGrid"></div>
+    <button class="cta" style="width:100%;margin-top:12px" onclick="closePicker()">Valider</button>
+  </div>
+</div>
 </main>
 
 <script>
-const $ = s => document.querySelector(s);
-
-function openModal(html){
-  $('#modal').innerHTML = html;
-  $('#overlay').classList.add('open');
+const DATA={
+belier:{n:'Bélier',g:'♈︎',msg:"Une impulsion juste peut ouvrir une porte aujourd’hui.",sub:"Agissez, mais gardez une intention claire.",amour:82,argent:74,humeur:86,energie:91,aff:'Lion',affG:'♌︎',affTxt:'Élan fort et confiance partagée.',num:3,color:'Rouge or',stone:'Grenat',conseil:"Choisissez une action simple et terminez-la avant d’en commencer une autre."},
+taureau:{n:'Taureau',g:'♉︎',msg:"La stabilité vous donne une vraie force aujourd’hui.",sub:"Ce qui est construit lentement tient plus longtemps.",amour:88,argent:81,humeur:79,energie:73,aff:'Vierge',affG:'♍︎',affTxt:'Calme, loyauté et solidité.',num:6,color:'Vert doré',stone:'Quartz rose',conseil:"Avancez sans vous presser. Une décision posée vaut mieux qu’un grand mouvement forcé."},
+gemeaux:{n:'Gémeaux',g:'♊︎',msg:"Une conversation peut débloquer une situation.",sub:"Vos mots ont plus de poids que vous ne le pensez.",amour:76,argent:69,humeur:88,energie:83,aff:'Balance',affG:'♎︎',affTxt:'Dialogue fluide et léger.',num:5,color:'Jaune clair',stone:'Citrine',conseil:"Dites ce que vous ressentez simplement. La clarté évite les détours inutiles."},
+cancer:{n:'Cancer',g:'♋︎',msg:"Votre intuition capte ce que les mots ne disent pas.",sub:"Écoutez votre intérieur avant de répondre.",amour:91,argent:67,humeur:78,energie:70,aff:'Poissons',affG:'♓︎',affTxt:'Douceur et compréhension profonde.',num:2,color:'Perle',stone:'Pierre de lune',conseil:"Protégez votre énergie. Gardez de la place pour ce qui vous apaise vraiment."},
+lion:{n:'Lion',g:'♌︎',msg:"Aujourd’hui, l’univers vous invite à ralentir pour mieux entendre votre véritable voix intérieure.",sub:"Faites confiance à votre intuition, elle connaît le chemin.",amour:87,argent:72,humeur:90,energie:85,aff:'Taureau',affG:'♉︎',affTxt:'Connexion solide et bienveillante.',num:7,color:'Or solaire',stone:'Citrine',conseil:"Aujourd’hui, choisissez une seule action importante. Faites-la lentement, avec présence, sans chercher à tout contrôler."},
+vierge:{n:'Vierge',g:'♍︎',msg:"Un détail bien réglé peut alléger toute votre journée.",sub:"L’ordre extérieur soutient votre paix intérieure.",amour:74,argent:86,humeur:80,energie:77,aff:'Capricorne',affG:'♑︎',affTxt:'Précision et confiance stable.',num:4,color:'Sable doré',stone:'Jaspe',conseil:"Simplifiez votre liste. Une priorité claire suffit pour reprendre la main."},
+balance:{n:'Balance',g:'♎︎',msg:"L’harmonie revient quand vous arrêtez de porter tout seul.",sub:"Demander, c’est aussi créer l’équilibre.",amour:89,argent:71,humeur:84,energie:76,aff:'Gémeaux',affG:'♊︎',affTxt:'Complicité et légèreté.',num:8,color:'Rose doré',stone:'Lapis-lazuli',conseil:"Cherchez l’équilibre, mais ne vous oubliez pas pour garder la paix."},
+scorpion:{n:'Scorpion',g:'♏︎',msg:"Une vérité intérieure demande à être respectée.",sub:"Votre intensité devient une force quand elle est dirigée.",amour:85,argent:78,humeur:73,energie:88,aff:'Cancer',affG:'♋︎',affTxt:'Profondeur et protection.',num:9,color:'Pourpre',stone:'Obsidienne',conseil:"Ne forcez pas les réponses. Observez, puis agissez avec précision."},
+sagittaire:{n:'Sagittaire',g:'♐︎',msg:"Un nouvel horizon vous redonne de l’élan.",sub:"Votre liberté commence par une décision honnête.",amour:78,argent:75,humeur:92,energie:89,aff:'Bélier',affG:'♈︎',affTxt:'Énergie vive et motivante.',num:1,color:'Bleu nuit',stone:'Turquoise',conseil:"Ouvrez une piste. Même petite, elle peut relancer votre mouvement."},
+capricorne:{n:'Capricorne',g:'♑︎',msg:"Votre patience prépare une avancée solide.",sub:"Ce qui semble lent peut devenir très puissant.",amour:73,argent:90,humeur:76,energie:82,aff:'Taureau',affG:'♉︎',affTxt:'Ambition calme et confiance.',num:10,color:'Bronze',stone:'Onyx',conseil:"Gardez le cap. Une étape régulière vaut mieux qu’un effort épuisant."},
+verseau:{n:'Verseau',g:'♒︎',msg:"Une idée différente peut devenir votre avantage.",sub:"Votre originalité mérite un espace clair.",amour:77,argent:80,humeur:86,energie:84,aff:'Sagittaire',affG:'♐︎',affTxt:'Vision ouverte et liberté.',num:11,color:'Électrique',stone:'Améthyste',conseil:"Notez l’idée qui revient souvent. Elle peut contenir votre prochaine direction."},
+poissons:{n:'Poissons',g:'♓︎',msg:"Votre sensibilité devient une boussole précieuse.",sub:"Le calme vous aide à entendre la bonne réponse.",amour:90,argent:70,humeur:82,energie:74,aff:'Cancer',affG:'♋︎',affTxt:'Tendresse et écoute sincère.',num:7,color:'Bleu doré',stone:'Aigue-marine',conseil:"Accordez-vous un vrai moment de silence. Votre intuition sait déjà ce qui compte."}
+};
+const SIGNS=Object.keys(DATA);
+let currentKey=localStorage.getItem('astro-v17-sign')||'lion';
+const $=s=>document.querySelector(s);
+function today(){return new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
+function buildRing(){const g=$('#ringGlyphs');SIGNS.forEach((k,i)=>{const s=DATA[k];const a=(i/12)*Math.PI*2-Math.PI/2;const x=50+45*Math.cos(a),y=50+45*Math.sin(a);g.innerHTML+=`<text class="glyph" x="${x.toFixed(2)}" y="${y.toFixed(2)}" text-anchor="middle" dominant-baseline="middle">${s.g}</text>`})}
+function buildPicker(){$('#signGrid').innerHTML=SIGNS.map(k=>{const s=DATA[k];return `<button class="zbtn" data-k="${k}" onclick="selectSign('${k}')"><span class="g">${s.g}</span><span class="n">${s.n}</span></button>`}).join('')}
+function selectSign(k){currentKey=k;localStorage.setItem('astro-v17-sign',k);render()}
+function render(){
+ const s=DATA[currentKey];
+ $('#topGlyph').textContent=s.g.replace('︎','');
+ $('#dateLine').textContent=today();
+ $('#mainMsg').textContent=s.msg;
+ $('#subMsg').textContent=s.sub;
+ $('#amour').textContent=s.amour+'%';
+ $('#argent').textContent=s.argent+'%';
+ $('#humeur').textContent=s.humeur+'%';
+ $('#energie').textContent=s.energie+'%';
+ $('#signName').textContent=s.n;
+ $('#affinity').textContent=s.aff;
+ $('#affGlyph').textContent=s.affG;
+ $('#affinityText').textContent=s.affTxt;
+ $('#number').textContent=s.num;
+ $('#color').textContent=s.color;
+ $('#stone').textContent=s.stone;
+ document.querySelectorAll('.zbtn').forEach(b=>b.classList.toggle('sel',b.dataset.k===currentKey));
 }
-function closeModal(){
-  $('#overlay').classList.remove('open');
-}
-function openConseil(){
-  openModal(`
-    <small>Conseil complet</small>
-    <h2>Ralentir pour mieux viser</h2>
-    <p>Aujourd’hui, choisissez une seule action importante. Faites-la lentement, avec présence, sans chercher à tout contrôler.</p>
-    <div class="premiumLine">Version premium : lecture longue, prévision mensuelle, compatibilité avancée et carte partageable.</div>
-    <button class="btn" onclick="closeModal()">Compris</button>
-  `);
-}
-function openInfo(){
-  openModal(`
-    <small>Astro Galactic</small>
-    <h2>Message des étoiles</h2>
-    <p>Votre rituel cosmique quotidien, pensé pour être simple, beau et direct.</p>
-    <button class="btn" onclick="closeModal()">Fermer</button>
-  `);
-}
-function openProfile(){
-  openModal(`
-    <small>Profil astral</small>
-    <h2>Signe : Lion</h2>
-    <p>Le choix du signe sera connecté ici dans la prochaine version interactive.</p>
-    <button class="btn" onclick="closeModal()">Fermer</button>
-    <button class="btn btnGhost" onclick="closeModal()">Changer plus tard</button>
-  `);
-}
+function openPicker(){$('#picker').classList.add('open')}
+function closePicker(){$('#picker').classList.remove('open')}
+function openModal(html){$('#modal').innerHTML='<div class="grab"></div>'+html;$('#scrim').classList.add('open')}
+function closeModal(){$('#scrim').classList.remove('open')}
+function openConseil(){const s=DATA[currentKey];openModal(`<small>Conseil complet</small><h2>${s.g} ${s.n}</h2><p>${s.conseil}</p><div class="note">Premium : lecture longue, prévision mensuelle, compatibilité avancée et carte partageable.</div><button class="cta" style="width:100%" onclick="closeModal()">Compris</button>`)}
+function openMenu(){const s=DATA[currentKey];openModal(`<small>Astro Galactic</small><h2>Votre ciel du jour</h2><p>${s.msg}</p><div class="note">Signe actif : ${s.n}<br>Affinité : ${s.aff}<br>Pierre : ${s.stone}</div><button class="cta" style="width:100%" onclick="closeModal()">Fermer</button>`)}
 async function shareMessage(){
-  const text = "Astro Galactic — Aujourd’hui, l’univers vous invite à ralentir pour mieux entendre votre véritable voix intérieure.";
-  try{
-    if(navigator.share){
-      await navigator.share({title:"Astro Galactic", text});
-    }else{
-      await navigator.clipboard.writeText(text);
-      showToast();
-    }
-  }catch(e){}
+ const s=DATA[currentKey];
+ const text=`Astro Galactic — ${s.n} : ${s.msg}`;
+ try{ if(navigator.share){await navigator.share({title:'Astro Galactic',text})}else{await navigator.clipboard.writeText(text); openModal(`<small>Partage</small><h2>Message copié</h2><p>${text}</p><button class="cta" style="width:100%" onclick="closeModal()">Fermer</button>`)}}catch(e){}
 }
-function showToast(){
-  const t = $('#toast');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 1800);
-}
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js').catch(()=>{});
-}
+buildRing();buildPicker();render();
+if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
 </script>
 </body>
 </html>

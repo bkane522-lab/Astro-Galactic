@@ -1,11 +1,3 @@
-# Astro Galactic V16 — Tableau intégré
+# Astro Galactic V17 Dynamique
 
-Cette version utilise le visuel “Message des étoiles” comme écran principal exact.
-Des zones cliquables invisibles sont posées sur :
-- menu
-- profil
-- bouton “Découvrir le conseil complet”
-- partage
-
-À uploader à la racine GitHub.
-Tester avec : https://astro-galactic.vercel.app/?v=16
+V17 : même esprit que le tableau premium, mais informations dynamiques selon le signe.
