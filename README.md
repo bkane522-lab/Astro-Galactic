@@ -1,3 +1,3 @@
-# Astro Galactic V9 Premium UI
+# Astro Galactic V10 Polish UI
 
-Accueil plus compact, plus premium, plus clair. Supprimer dist avant upload.
+Polish de la V9 : moins de vide, plus responsive tablette, CTA remonté, sélecteur plus premium.
