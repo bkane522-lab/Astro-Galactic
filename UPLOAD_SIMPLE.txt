@@ -1,5 +1,1 @@
-1. Décompresse le ZIP.
-2. Upload le CONTENU à la racine GitHub.
-3. Supprime dist si présent.
-4. Commit changes.
-5. Teste avec ?v=8.
+Uploader le contenu du ZIP à la racine GitHub. Supprimer dist s’il existe. Commit changes. Tester avec ?v=9.

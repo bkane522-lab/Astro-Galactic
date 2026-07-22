@@ -1,3 +1,3 @@
-# Astro Galactic V8 Portal UX
+# Astro Galactic V9 Premium UI
 
-Accueil portail sans scroll, choix du signe, modules après entrée.
+Accueil plus compact, plus premium, plus clair. Supprimer dist avant upload.
