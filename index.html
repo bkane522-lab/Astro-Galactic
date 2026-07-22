@@ -1,237 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080818">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Astro Galactic</title>
-<meta name="theme-color" content="#05070d">
+<meta name="description" content="Astro Galactic — horoscope quotidien, thème astral, compatibilité, numérologie et cristaux.">
 <link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/icon-192.png">
 <style>
-  :root{
-    --gold-bright:#f3c969;
-    --gold:#d4af37;
-    --gold-deep:#a5791b;
-    --night:#05070d;
-    --night-mid:#0d1220;
-    --night-soft:#141c30;
-    --emerald:#1f5f52;
-    --electric:#2f8fd1;
-    --text:#f5ecd2;
-    --text-dim:#9a8f72;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-  html,body{height:100%;}
-  body{
-    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-    background:radial-gradient(ellipse at 50% 15%, var(--night-soft) 0%, var(--night-mid) 45%, var(--night) 100%);
-    color:var(--text);
-    min-height:100vh;
-    overflow-x:hidden;
-    position:relative;
-  }
-  body::before{
-    content:'';
-    position:fixed;inset:0;
-    background-image:
-      radial-gradient(1.5px 1.5px at 15% 20%, rgba(243,201,105,0.5), transparent),
-      radial-gradient(1px 1px at 80% 12%, rgba(243,201,105,0.4), transparent),
-      radial-gradient(1.5px 1.5px at 65% 75%, rgba(243,201,105,0.4), transparent),
-      radial-gradient(1px 1px at 25% 85%, rgba(243,201,105,0.3), transparent),
-      radial-gradient(1px 1px at 90% 55%, rgba(47,143,209,0.3), transparent);
-    pointer-events:none;z-index:0;
-  }
-  .screen{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;}
-  .hidden{display:none !important;}
-
-  /* ===== PORTAIL ===== */
-  #portalScreen{align-items:center;padding:34px 22px 30px;text-align:center;}
-
-  .brand-row{display:flex;align-items:center;justify-content:center;gap:6px;}
-  .brand{font-family:Georgia,'Times New Roman',serif;font-size:1.9rem;color:var(--gold-bright);letter-spacing:0.5px;
-    text-shadow:0 0 18px rgba(243,201,105,0.35);}
-  .crown-icon{font-size:1.1rem;transform:translateY(-10px);}
-
-  .ornament{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px auto 10px;width:70%;max-width:200px;}
-  .ornament::before,.ornament::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-deep));}
-  .ornament::after{background:linear-gradient(90deg,var(--gold-deep),transparent);}
-  .ornament span{width:5px;height:5px;border:1px solid var(--gold);transform:rotate(45deg);}
-
-  .brand-sub{color:var(--text-dim);font-size:0.85rem;margin-bottom:20px;}
-
-  .wheel-wrap{position:relative;width:280px;height:280px;margin:10px auto 22px;}
-  .wheel-wrap svg{width:100%;height:100%;overflow:visible;}
-  .zodiac-symbol{font-size:15px;fill:var(--gold-bright);font-family:Georgia,serif;text-anchor:middle;dominant-baseline:middle;}
-  .wheel-ring{fill:none;stroke:var(--gold-deep);}
-  .wheel-spoke{stroke:rgba(212,175,55,0.35);stroke-width:1;}
-  .wheel-glow{filter:drop-shadow(0 0 6px rgba(243,201,105,0.6));}
-
-  .lion-badge{
-    position:absolute;top:-18px;left:50%;transform:translateX(-50%);
-    width:56px;height:56px;border-radius:50%;
-    background:radial-gradient(circle,var(--night-soft),var(--night));
-    border:1.5px solid var(--gold);
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 0 16px rgba(243,201,105,0.4);
-  }
-  .lion-badge .lion-emoji{font-size:1.6rem;}
-  .lion-badge .crown-mini{position:absolute;top:-11px;font-size:0.9rem;}
-
-  .portal-cta{width:100%;max-width:300px;}
-  .btn-pill{
-    position:relative;width:100%;padding:15px 20px;border:1.5px solid var(--gold);border-radius:40px;
-    background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));
-    color:var(--night);font-weight:700;font-size:1.02rem;font-family:Georgia,serif;
-    cursor:pointer;box-shadow:0 4px 20px rgba(212,175,55,0.35);
-  }
-  .btn-pill:active{transform:scale(0.97);}
-  .link-secondary{
-    display:inline-block;margin-top:16px;background:none;border:none;
-    color:var(--gold-bright);font-size:0.88rem;text-decoration:underline;cursor:pointer;
-  }
-
-  .portal-form{width:100%;max-width:300px;display:none;text-align:left;margin-top:6px;}
-  .portal-form.active{display:block;}
-  .portal-form label{display:block;font-size:0.8rem;color:var(--gold-bright);margin-bottom:6px;margin-top:14px;font-weight:600;}
-  .portal-form label:first-child{margin-top:0;}
-  input[type="date"],input[type="time"],input[type="text"]{
-    width:100%;padding:12px 14px;border-radius:10px;
-    border:1px solid rgba(212,175,55,0.35);
-    background:rgba(5,7,13,0.7);color:var(--text);font-size:1rem;
-  }
-  input::-webkit-calendar-picker-indicator{filter:invert(1) sepia(1) saturate(3) hue-rotate(10deg);}
-  .optional-tag{color:var(--text-dim);font-weight:400;font-size:0.72rem;}
-
-  /* rangée d'icônes de fonctionnalités */
-  .feature-row{display:flex;justify-content:center;gap:14px;margin-top:28px;flex-wrap:wrap;}
-  .feature-item{display:flex;flex-direction:column;align-items:center;gap:6px;width:64px;}
-  .feature-circle{
-    width:52px;height:52px;border-radius:50%;border:1.3px solid var(--gold-deep);
-    display:flex;align-items:center;justify-content:center;font-size:1.35rem;
-    background:rgba(212,175,55,0.06);
-  }
-  .feature-item.soon .feature-circle{opacity:0.4;}
-  .feature-item.soon span.feature-label{opacity:0.4;}
-  .feature-label{font-size:0.66rem;color:var(--text-dim);text-align:center;line-height:1.2;}
-
-  .footer-tag{margin-top:26px;font-size:0.72rem;color:var(--gold-deep);letter-spacing:0.5px;}
-
-  /* ===== GALAXIE (conservée, réharmonisée en gold/nuit) ===== */
-  #galaxyScreen{padding:20px 16px 40px;}
-  .galaxy-header{text-align:center;margin-bottom:8px;}
-  .galaxy-sign-emoji{font-size:2.6rem;filter:drop-shadow(0 0 8px rgba(212,175,55,0.5));}
-  .galaxy-sign-name{font-family:Georgia,serif;font-size:1.3rem;color:var(--gold-bright);margin-top:4px;}
-  .galaxy-sign-dates{font-size:0.75rem;color:var(--text-dim);}
-
-  .modules-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;}
-  .module-card{
-    background:linear-gradient(160deg,rgba(212,175,55,0.08),rgba(47,143,209,0.05));
-    border:1px solid rgba(212,175,55,0.3);
-    border-radius:16px;padding:16px 14px;
-    display:flex;flex-direction:column;align-items:flex-start;gap:6px;
-    cursor:pointer;transition:transform 0.15s ease;position:relative;overflow:hidden;
-  }
-  .module-card:active{transform:scale(0.96);}
-  .module-card.locked::after{content:'🔒';position:absolute;top:10px;right:12px;font-size:0.85rem;opacity:0.6;}
-  .module-icon{font-size:1.5rem;}
-  .module-title{font-size:0.85rem;font-weight:700;color:var(--text);}
-  .module-energy{font-size:0.7rem;color:var(--gold-bright);}
-  .module-card.oracle{grid-column:1 / -1;background:linear-gradient(120deg,rgba(47,143,209,0.15),rgba(212,175,55,0.08));border-color:rgba(47,143,209,0.45);}
-  .module-card.oracle .module-title{color:var(--electric);}
-
-  #moduleModal{position:fixed;inset:0;z-index:10;background:rgba(5,7,13,0.85);backdrop-filter:blur(4px);display:flex;align-items:flex-end;}
-  #moduleModal.hidden{display:none;}
-  .modal-sheet{width:100%;max-height:82vh;overflow-y:auto;background:linear-gradient(160deg,var(--night-soft),var(--night));border-top:1px solid rgba(212,175,55,0.4);border-radius:22px 22px 0 0;padding:22px 20px 30px;animation:slideUp 0.25s ease-out;}
-  @keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-  .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-  .modal-title{font-family:Georgia,serif;font-size:1.15rem;color:var(--gold-bright);}
-  .modal-close{background:none;border:none;color:var(--text-dim);font-size:1.4rem;cursor:pointer;line-height:1;}
-  .modal-body{line-height:1.65;font-size:0.95rem;white-space:pre-wrap;}
-  .loading{display:flex;align-items:center;gap:10px;color:var(--text-dim);font-size:0.9rem;}
-  .spinner{width:18px;height:18px;border-radius:50%;border:2px solid rgba(212,175,55,0.3);border-top-color:var(--gold-bright);animation:spin 0.8s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-  .oracle-input-row{display:flex;gap:8px;margin-bottom:16px;}
-  .oracle-input-row input{flex:1;}
-  .oracle-input-row button{padding:0 18px;border:none;border-radius:10px;background:var(--electric);color:var(--night);font-weight:700;cursor:pointer;}
-  .share-btn{margin-top:18px;width:100%;padding:12px;border:none;border-radius:10px;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.4);color:var(--gold-bright);font-weight:700;font-size:0.9rem;cursor:pointer;}
+:root{--void:#070714;--night:#0E1027;--panel:#151936;--gold:#E8C56B;--gold2:#F7DEA0;--ivory:#F5F0DF;--muted:#A9A0C2;--line:rgba(232,197,107,.20);--violet:#6B4FCF;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-variant-emoji:text}html,body{height:100%;overflow:hidden;background:#000;color:var(--ivory);font-family:Manrope,Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,select{font:inherit}button{border:0;background:none;color:inherit;cursor:pointer}body{display:grid;place-items:center}.app{position:relative;width:min(100vw,430px);height:100dvh;max-height:932px;overflow:hidden;background:radial-gradient(900px 560px at 50% -12%,rgba(107,79,207,.28),transparent 60%),radial-gradient(650px 440px at 85% 105%,rgba(232,197,107,.10),transparent 55%),linear-gradient(180deg,#070714 0%,#0D1028 58%,#070714 100%)}@media(min-width:720px){.app{height:min(100vh,920px);border-radius:34px;border:1px solid rgba(232,197,107,.16)}}.stars{position:absolute;inset:0;pointer-events:none;opacity:.52;background-image:radial-gradient(circle at 10% 12%,#F7DEA0 0 1px,transparent 1.6px),radial-gradient(circle at 26% 28%,#F7DEA0 0 1px,transparent 1.6px),radial-gradient(circle at 76% 12%,#F7DEA0 0 1px,transparent 1.6px),radial-gradient(circle at 90% 35%,#F7DEA0 0 1px,transparent 1.6px),radial-gradient(circle at 15% 60%,#F7DEA0 0 1px,transparent 1.6px),radial-gradient(circle at 48% 72%,#F7DEA0 0 1px,transparent 1.6px),radial-gradient(circle at 83% 84%,#F7DEA0 0 1px,transparent 1.6px)}.screen{position:absolute;inset:0;display:none;overflow:hidden;padding:calc(14px + var(--safe-top)) 18px calc(14px + var(--safe-bottom))}.screen.active{display:flex;flex-direction:column}.brand{flex-shrink:0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px}.brand .mark{font-size:10px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);font-weight:800;padding-left:.45em}.brand h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(36px,11vw,52px);line-height:.92;color:var(--ivory);letter-spacing:.01em}.brand h1 em{font-style:italic;color:var(--gold2)}.portal{justify-content:center;gap:clamp(12px,2.2vh,23px)}.portal-top{display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.5vh,16px)}.wheel{position:relative;width:min(55vw,25vh,230px);aspect-ratio:1;display:grid;place-items:center}.wheel svg{position:absolute;inset:0;width:100%;height:100%}.ringText{font-family:Georgia,serif;fill:var(--gold);font-size:10px}.ringText2{font-family:Georgia,serif;fill:rgba(247,222,160,.68);font-size:7px}.core{width:38%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;color:var(--gold2);font-family:Georgia,serif;font-size:clamp(27px,4.4vh,41px);background:radial-gradient(circle at 35% 30%,rgba(247,222,160,.36),rgba(107,79,207,.16) 56%,rgba(255,255,255,.02) 72%);border:1px solid var(--line);box-shadow:0 0 60px rgba(107,79,207,.35), inset 0 0 30px rgba(247,222,160,.10)}.tagline{max-width:29ch;text-align:center;font-family:Georgia,serif;font-size:clamp(15px,2vh,18px);font-style:italic;color:var(--muted);line-height:1.28}.signBox{flex-shrink:0;background:rgba(14,16,39,.82);border:1px solid var(--line);border-radius:22px;padding:clamp(10px,1.8vh,17px) 13px}.signBox .label{display:block;text-align:center;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-bottom:clamp(7px,1.2vh,12px)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(4px,.7vh,7px)}.zbtn{min-height:clamp(47px,7vh,62px);border-radius:14px;border:1px solid transparent;color:var(--ivory);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}.zbtn .g{font-family:Georgia,serif;font-size:clamp(18px,2.8vh,24px);color:var(--gold);line-height:1}.zbtn .n{font-size:clamp(9px,1.25vh,10.5px);color:var(--muted);line-height:1}.zbtn.sel{background:linear-gradient(160deg,rgba(107,79,207,.34),rgba(232,197,107,.12));border-color:rgba(232,197,107,.70);box-shadow:0 0 24px rgba(107,79,207,.24)}.zbtn.sel .n{color:var(--ivory)}.cta{flex-shrink:0;width:100%;min-height:clamp(50px,7vh,62px);border-radius:999px;background:linear-gradient(100deg,var(--gold),var(--gold2));color:#0A0713;font-weight:900;font-size:15px;letter-spacing:.02em;box-shadow:0 13px 30px -9px rgba(232,197,107,.55)}.cta:disabled{background:transparent;border:1px solid rgba(232,197,107,.42);color:rgba(232,197,107,.65);box-shadow:none}.topbar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}.profile{display:flex;align-items:center;gap:11px}.orb{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-family:Georgia,serif;font-size:24px;color:var(--gold2);background:radial-gradient(circle at 35% 30%,rgba(247,222,160,.32),rgba(107,79,207,.19));border:1px solid var(--line)}.profile small{display:block;font-size:10px;letter-spacing:.27em;text-transform:uppercase;color:var(--muted)}.profile b{display:block;font-family:Georgia,serif;font-size:22px;font-weight:500}.back{color:var(--muted);font-size:13px}.modules{flex:1;min-height:0;display:flex;flex-direction:column;gap:11px}.mod{min-height:76px;width:100%;border:1px solid var(--line);border-radius:20px;background:rgba(14,16,39,.82);display:flex;align-items:center;gap:14px;padding:14px;text-align:left}.mod .ico{flex:none;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-family:Georgia,serif;font-size:23px;color:var(--gold);background:linear-gradient(150deg,rgba(107,79,207,.24),rgba(232,197,107,.08));border:1px solid var(--line)}.mod .txt{flex:1}.mod h3{font-family:Georgia,serif;font-weight:500;font-size:21px;line-height:1.05}.mod p{color:var(--muted);font-size:12.5px;line-height:1.35;margin-top:3px}.mod .arrow{flex:none;color:var(--muted);font-size:21px}.premium{flex-shrink:0;min-height:48px;border-radius:999px;border:1px solid var(--line);color:var(--gold2);background:rgba(14,16,39,.72);font-size:14px;font-weight:700}.sheetWrap{position:absolute;inset:0;background:rgba(5,4,13,.74);backdrop-filter:blur(8px);display:none;align-items:flex-end;z-index:20}.sheetWrap.open{display:flex}.sheet{width:100%;max-height:88dvh;overflow:auto;background:linear-gradient(180deg,var(--panel),var(--night));border:1px solid var(--line);border-bottom:0;border-radius:28px 28px 0 0;padding:14px 22px calc(24px + var(--safe-bottom))}.grab{width:42px;height:4px;border-radius:99px;background:var(--line);margin:6px auto 18px}.sheet .eyebrow{text-align:center;font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold)}.sheet h2{margin:6px 0 4px;text-align:center;font-family:Georgia,serif;font-weight:400;font-size:32px}.sheet .sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:18px}.reading{border:1px solid var(--line);border-radius:18px;background:var(--void);padding:18px;font-family:Georgia,serif;font-size:18px;line-height:1.58;color:var(--ivory)}.facets{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px}.facet{border:1px solid var(--line);border-radius:14px;background:var(--void);text-align:center;padding:11px 6px}.facet small{display:block;color:var(--muted);font-size:9px;letter-spacing:.20em;text-transform:uppercase;margin-bottom:5px}.facet b{color:var(--gold);font-family:Georgia,serif;font-size:18px}.closeBtn{margin-top:14px}@media(max-height:760px){.screen{padding:calc(8px + var(--safe-top)) 14px calc(8px + var(--safe-bottom))}.portal{gap:8px}.brand .mark{font-size:9px}.brand h1{font-size:34px}.portal-top{gap:7px}.wheel{width:min(48vw,20vh,185px)}.tagline{font-size:13px}.signBox{padding:9px 11px;border-radius:18px}.grid{gap:3px}.zbtn{min-height:41px}.zbtn .g{font-size:17px}.zbtn .n{font-size:8.5px}.cta{min-height:46px}.modules{gap:8px}.mod{min-height:67px;padding:11px}.mod h3{font-size:18px}.mod p{font-size:11.5px}}
 </style>
 </head>
 <body>
-
-<!-- ===== ÉCRAN PORTAIL ===== -->
-<div class="screen" id="portalScreen">
-  <div class="brand-row"><span class="crown-icon">👑</span><span class="brand">Astro Galactic</span></div>
-  <div class="ornament"><span></span></div>
-  <div class="brand-sub">Entrez dans votre univers astral</div>
-
-  <div class="wheel-wrap" id="wheelWrap">
-    <div class="lion-badge"><span class="crown-mini">👑</span><span class="lion-emoji">🦁</span></div>
-    <svg viewBox="0 0 280 280" class="wheel-glow" id="portalSvg">
-      <circle class="wheel-ring" cx="140" cy="140" r="128" stroke-width="1.5"></circle>
-      <circle class="wheel-ring" cx="140" cy="140" r="105" stroke-width="1"></circle>
-      <circle class="wheel-ring" cx="140" cy="140" r="60" stroke-width="1"></circle>
-      <g id="spokes"></g>
-      <g id="symbols"></g>
-      <circle cx="140" cy="140" r="4" fill="#f3c969"></circle>
-    </svg>
-  </div>
-
-  <div class="portal-cta" id="portalIntro">
-    <button class="btn-pill" id="startBtn">Ouvrir mon ciel</button>
-    <button class="link-secondary" id="knowSignBtn">Je connais déjà mon signe</button>
-  </div>
-
-  <form class="portal-form" id="portalForm">
-    <label for="birthDate">Date de naissance</label>
-    <input type="date" id="birthDate" required>
-    <label for="birthTime">Heure de naissance <span class="optional-tag">(optionnel)</span></label>
-    <input type="time" id="birthTime">
-    <label for="birthPlace">Lieu de naissance <span class="optional-tag">(optionnel)</span></label>
-    <input type="text" id="birthPlace" placeholder="Ville, Pays">
-    <button type="submit" class="btn-pill" style="margin-top:18px;">Franchir le portail ✦</button>
-  </form>
-
-  <div class="feature-row">
-    <div class="feature-item"><div class="feature-circle">🌙</div><span class="feature-label">Horoscope<br>du jour</span></div>
-    <div class="feature-item"><div class="feature-circle">🗺️</div><span class="feature-label">Thème<br>astral</span></div>
-    <div class="feature-item"><div class="feature-circle">💞</div><span class="feature-label">Compatibilité</span></div>
-    <div class="feature-item soon"><div class="feature-circle">🔢</div><span class="feature-label">Numérologie<br>(bientôt)</span></div>
-    <div class="feature-item soon"><div class="feature-circle">💎</div><span class="feature-label">Cristaux<br>(bientôt)</span></div>
-  </div>
-
-  <div class="ornament" style="margin-top:26px;"><span></span></div>
-  <div class="footer-tag">✦ Votre guide cosmique personnel ✦</div>
-</div>
-
-<!-- ===== GALAXIE PERSONNELLE ===== -->
-<div class="screen hidden" id="galaxyScreen">
-  <div class="galaxy-header">
-    <div class="galaxy-sign-emoji" id="gSignEmoji">♈</div>
-    <div class="galaxy-sign-name" id="gSignName">—</div>
-    <div class="galaxy-sign-dates" id="gSignDates">—</div>
-  </div>
-  <div class="modules-grid">
-    <div class="module-card" data-module="horoscope"><div class="module-icon">🌙</div><div class="module-title">Horoscope du jour</div><div class="module-energy" id="energyHoroscope">—</div></div>
-    <div class="module-card" data-module="amour"><div class="module-icon">💛</div><div class="module-title">Amour</div><div class="module-energy" id="energyAmour">—</div></div>
-    <div class="module-card" data-module="argent"><div class="module-icon">✦</div><div class="module-title">Argent</div><div class="module-energy" id="energyArgent">—</div></div>
-    <div class="module-card" data-module="energie"><div class="module-icon">⚡</div><div class="module-title">Énergie</div><div class="module-energy" id="energyEnergie">—</div></div>
-    <div class="module-card locked" data-module="theme"><div class="module-icon">🗺️</div><div class="module-title">Thème astral complet</div><div class="module-energy">Premium</div></div>
-    <div class="module-card locked" data-module="compatibilite"><div class="module-icon">💞</div><div class="module-title">Compatibilité</div><div class="module-energy">Premium</div></div>
-    <div class="module-card oracle" data-module="oracle"><div class="module-icon">🔮</div><div class="module-title">Oracle IA — Pose ta question à l'univers</div></div>
-  </div>
-</div>
-
-<!-- ===== MODAL ===== -->
-<div id="moduleModal" class="hidden">
-  <div class="modal-sheet">
-    <div class="modal-header"><div class="modal-title" id="modalTitle">—</div><button class="modal-close" id="modalClose">✕</button></div>
-    <div id="modalOracleInput" class="oracle-input-row hidden"><input type="text" id="oracleQuestion" placeholder="Ex: Dois-je lui écrire ?"><button id="oracleAskBtn">Demander</button></div>
-    <div class="modal-body" id="modalBody"></div>
-    <button class="share-btn hidden" id="shareBtn">Partager ma carte ✦</button>
-  </div>
-</div>
-<canvas id="shareCanvas" width="1080" height="1920" class="hidden"></canvas>
-
-<script src="/app.js"></script>
-</body>
-</html>
+<main class="app"><div class="stars"></div>
+<section id="portal" class="screen portal active"><div class="portal-top"><div class="brand"><span class="mark">Horoscope</span><h1>Astro <em>Galactic</em></h1></div><div class="wheel"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="none" stroke="rgba(232,197,107,.18)" stroke-width=".5"/><circle cx="50" cy="50" r="36" fill="none" stroke="rgba(232,197,107,.13)" stroke-width=".5"/><circle cx="50" cy="50" r="25" fill="none" stroke="rgba(107,79,207,.22)" stroke-width=".5"/><g id="outerRing"></g><g id="innerRing"></g></svg><div class="core" id="coreGlyph">✦</div></div><p class="tagline">Le ciel a quelque chose à vous dire aujourd’hui.</p></div><div class="signBox"><span class="label">Choisissez votre signe</span><div class="grid" id="signGrid"></div></div><button class="cta" id="enterBtn" disabled>Ouvrir mon ciel</button></section>
+<section id="galaxy" class="screen"><div class="topbar"><div class="profile"><div class="orb" id="youGlyph">✦</div><div><small id="youDates">—</small><b id="youName">—</b></div></div><button class="back" onclick="goPortal()">Changer</button></div><div class="modules" id="modules"></div><button class="premium" onclick="openPremium()">✦ Astro Galactic Premium</button></section>
+<div class="sheetWrap" id="sheetWrap" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet"></div></div></main>
+<script>
+const SIGNS=[{k:'belier',n:'Bélier',g:'♈︎',d:'21 mar – 19 avr'},{k:'taureau',n:'Taureau',g:'♉︎',d:'20 avr – 20 mai'},{k:'gemeaux',n:'Gémeaux',g:'♊︎',d:'21 mai – 20 juin'},{k:'cancer',n:'Cancer',g:'♋︎',d:'21 juin – 22 juil'},{k:'lion',n:'Lion',g:'♌︎',d:'23 juil – 22 août'},{k:'vierge',n:'Vierge',g:'♍︎',d:'23 août – 22 sep'},{k:'balance',n:'Balance',g:'♎︎',d:'23 sep – 22 oct'},{k:'scorpion',n:'Scorpion',g:'♏︎',d:'23 oct – 21 nov'},{k:'sagittaire',n:'Sagittaire',g:'♐︎',d:'22 nov – 21 déc'},{k:'capricorne',n:'Capricorne',g:'♑︎',d:'22 déc – 19 jan'},{k:'verseau',n:'Verseau',g:'♒︎',d:'20 jan – 18 fév'},{k:'poissons',n:'Poissons',g:'♓︎',d:'19 fév – 20 mar'}];
+const MODULES=[{id:'daily',ico:'☀︎',title:'Message du jour',desc:'Votre guidance quotidienne, claire et courte.'},{id:'theme',ico:'✦',title:'Thème astral',desc:'Votre portrait céleste personnel.'},{id:'compat',ico:'♥',title:'Compatibilité',desc:'Affinité entre deux signes.'},{id:'numbers',ico:'7',title:'Numérologie',desc:'Nombre, énergie et intention du jour.'},{id:'crystals',ico:'◇',title:'Cristaux',desc:'Pierre, couleur et rituel rapide.'}];
+let current=null;const $=s=>document.querySelector(s);
+function buildWheel(){const outer=$('#outerRing'),inner=$('#innerRing');SIGNS.forEach((s,i)=>{const a=(i/12)*Math.PI*2-Math.PI/2;const x=50+43*Math.cos(a),y=50+43*Math.sin(a);outer.innerHTML+=`<text class="ringText" x="${x.toFixed(2)}" y="${y.toFixed(2)}" text-anchor="middle" dominant-baseline="middle">${s.g}</text>`;const a2=((i+.5)/12)*Math.PI*2-Math.PI/2;const x2=50+32*Math.cos(a2),y2=50+32*Math.sin(a2);inner.innerHTML+=`<text class="ringText2" x="${x2.toFixed(2)}" y="${y2.toFixed(2)}" text-anchor="middle" dominant-baseline="middle">✦</text>`})}
+function buildGrid(){$('#signGrid').innerHTML=SIGNS.map(s=>`<button class="zbtn" data-k="${s.k}" onclick="selectSign('${s.k}')"><span class="g">${s.g}</span><span class="n">${s.n}</span></button>`).join('')}
+function selectSign(k){current=SIGNS.find(s=>s.k===k);document.querySelectorAll('.zbtn').forEach(b=>b.classList.toggle('sel',b.dataset.k===k));$('#coreGlyph').textContent=current.g;$('#enterBtn').disabled=false;$('#enterBtn').textContent='Ouvrir le ciel du '+current.n;localStorage.setItem('astro-galactic-sign',k)}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active')}function enterGalaxy(){if(!current)return;$('#youGlyph').textContent=current.g;$('#youName').textContent=current.n;$('#youDates').textContent=current.d;$('#modules').innerHTML=MODULES.map(m=>`<button class="mod" onclick="openModule('${m.id}')"><span class="ico">${m.ico}</span><span class="txt"><h3>${m.title}</h3><p>${m.desc}</p></span><span class="arrow">→</span></button>`).join('');show('galaxy')}function goPortal(){show('portal')}
+function openSheet(html){$('#sheet').innerHTML='<div class="grab"></div>'+html;$('#sheetWrap').classList.add('open')}function closeSheet(){$('#sheetWrap').classList.remove('open')}function today(){return new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}
+function openModule(id){if(!current)return;const data={daily:{t:'Message du jour',s:'Votre guidance cosmique',p:'Le ciel vous invite à ralentir pour mieux viser. Une action simple, posée avec calme, peut remettre votre journée dans le bon axe.',f:['Amour 87','Chance 72','Humeur 90']},theme:{t:'Thème astral',s:'Portrait céleste',p:'Votre signe révèle votre manière de rayonner. Cette lecture ouvre la porte vers votre énergie profonde, vos forces et votre direction intérieure.',f:['Soleil '+current.n,'Force Clarté','Élément Feu']},compat:{t:'Compatibilité',s:'Affinité du jour',p:'Une connexion douce se renforce quand chacun garde sa vérité. Cherchez la simplicité, la présence et les mots justes.',f:['Affinité Taureau','Vibration 87','Conseil Écouter']},numbers:{t:'Numérologie',s:'Nombre du jour',p:'Le nombre 7 vous invite à observer avant d’agir. La bonne décision vient après un moment de silence.',f:['Nombre 7','Couleur Or','Intention Calme']},crystals:{t:'Cristaux',s:'Pierre du jour',p:'La citrine solaire accompagne la clarté, la confiance et le passage à l’action. Gardez une intention simple.',f:['Pierre Citrine','Couleur Or','Rituel 60 s']}}[id];openSheet(`<div class="eyebrow">${today()}</div><h2>${current.g} ${data.t}</h2><p class="sub">${data.s}</p><div class="reading">${data.p}</div><div class="facets">${data.f.map(x=>{const [a,...b]=x.split(' ');return `<div class="facet"><small>${a}</small><b>${b.join(' ')}</b></div>`}).join('')}</div><button class="cta closeBtn" onclick="closeSheet()">Fermer</button>`)}
+function openPremium(){openSheet(`<div class="eyebrow">Premium</div><h2>Astro Galactic complet</h2><p class="sub">Débloquez les lectures longues, les prévisions mensuelles et les compatibilités avancées.</p><div class="reading">La version premium sera connectée plus tard à Gumroad ou Stripe. Pour l’instant, cette page présente clairement l’offre sans casser l’expérience.</div><button class="cta closeBtn" onclick="closeSheet()">Compris</button>`)}
+buildWheel();buildGrid();$('#enterBtn').addEventListener('click',enterGalaxy);const last=localStorage.getItem('astro-galactic-sign');if(last)selectSign(last);if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
+</script></body></html>
