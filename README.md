@@ -1,3 +1,3 @@
-# Astro Galactic V14 UX Fix
+# Astro Galactic V15 Message des étoiles
 
-V14 : modales centrées, bouton Fermer corrigé, modules plus compacts, accès Modules depuis l’accueil.
+UI inspirée de la référence : message central, stats, affinité et éléments chanceux.
