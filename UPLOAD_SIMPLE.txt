@@ -1,1 +1,8 @@
-Uploader le contenu du ZIP à la racine GitHub. Supprimer dist s’il existe. Tester avec ?v=18.
+1. Décompresse le ZIP.
+2. Upload tout le contenu à la racine GitHub.
+3. Remplace les anciens fichiers.
+4. Commit changes.
+5. Vercel doit afficher Ready.
+6. Teste avec : https://astro-galactic.vercel.app/?v=19
+
+Important : le visuel principal est dans assets/astro-galactic-v19-ui.png
