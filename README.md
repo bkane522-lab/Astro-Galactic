@@ -1,3 +1,3 @@
-# Astro Galactic V17 Dynamique
+# Astro Galactic V18 Tableau Dynamique
 
-V17 : même esprit que le tableau premium, mais informations dynamiques selon le signe.
+V18 : UI plus proche du tableau de référence + données dynamiques corrigées.

@@ -1,1 +1,1 @@
-Uploader le contenu du ZIP à la racine GitHub. Supprimer dist s’il existe. Tester avec ?v=17.
+Uploader le contenu du ZIP à la racine GitHub. Supprimer dist s’il existe. Tester avec ?v=18.
