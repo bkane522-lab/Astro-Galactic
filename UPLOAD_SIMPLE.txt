@@ -1,1 +1,8 @@
-Uploader le contenu du ZIP à la racine GitHub. Supprimer dist s’il existe. Tester avec ?v=15.
+1. Décompresse le ZIP.
+2. Upload le CONTENU du dossier à la racine GitHub.
+3. Supprime l’ancien dossier dist s’il existe.
+4. Commit changes.
+5. Vercel doit afficher Ready.
+6. Teste avec https://astro-galactic.vercel.app/?v=16
+
+Important : cette version intègre le tableau comme image principale exacte.

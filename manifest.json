@@ -1,7 +1,7 @@
 {
   "name": "Astro Galactic",
   "short_name": "Galactic",
-  "description": "Astro Galactic — horoscope premium.",
+  "description": "Astro Galactic — Message des étoiles, horoscope quotidien premium.",
   "id": "/",
   "start_url": "/",
   "scope": "/",

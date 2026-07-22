@@ -4,318 +4,259 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#030914">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Astro Galactic</title>
+<meta name="description" content="Astro Galactic — Message des étoiles, horoscope quotidien premium.">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" href="/icon-192.png">
 <style>
 :root{
   --bg:#030914;
-  --ink:#06101f;
-  --panel:#071629;
-  --panel2:#091a31;
   --gold:#e6a936;
   --gold2:#ffd978;
   --cream:#fff0be;
-  --text:#fff7df;
-  --soft:rgba(255,247,223,.72);
-  --muted:rgba(255,247,223,.46);
-  --line:rgba(230,169,54,.32);
   --safeTop:env(safe-area-inset-top,0px);
   --safeBottom:env(safe-area-inset-bottom,0px);
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-variant-emoji:text}
-html,body{height:100%;overflow:hidden;background:#000;color:var(--text);font-family:Inter,Manrope,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
-body{display:grid;place-items:center}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+body{
+  display:grid;
+  place-items:center;
+}
 .app{
+  position:relative;
   width:min(100vw,430px);
   height:100dvh;
   max-height:932px;
-  position:relative;
   overflow:hidden;
-  background:
-    radial-gradient(550px 380px at 50% 0%,rgba(230,169,54,.18),transparent 64%),
-    radial-gradient(650px 480px at 50% 58%,rgba(15,56,91,.36),transparent 66%),
-    linear-gradient(180deg,#020812 0%,#071428 54%,#020812 100%);
+  background:#030914;
 }
 @media(min-width:720px){
-  .app{height:min(100vh,920px);border-radius:34px;border:1px solid rgba(230,169,54,.28)}
+  .app{
+    width:min(78vw,430px);
+    height:min(100vh,920px);
+    border-radius:34px;
+    border:1px solid rgba(230,169,54,.32);
+    box-shadow:0 30px 100px rgba(0,0,0,.72);
+  }
 }
-.stars{
-  position:absolute;inset:0;pointer-events:none;opacity:.72;
-  background-image:
-  radial-gradient(circle at 8% 10%,#ffd978 0 1px,transparent 1.8px),
-  radial-gradient(circle at 23% 18%,#fff0be 0 1px,transparent 1.7px),
-  radial-gradient(circle at 83% 12%,#ffd978 0 1px,transparent 1.9px),
-  radial-gradient(circle at 92% 32%,#fff0be 0 1px,transparent 1.8px),
-  radial-gradient(circle at 13% 56%,#ffd978 0 1px,transparent 1.8px),
-  radial-gradient(circle at 77% 58%,#fff0be 0 1px,transparent 1.8px),
-  radial-gradient(circle at 40% 88%,#ffd978 0 1px,transparent 1.8px);
+.tableau{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  user-select:none;
+  pointer-events:none;
 }
-.page{
-  position:absolute;inset:0;display:none;overflow:hidden;
-  padding:calc(10px + var(--safeTop)) 16px calc(10px + var(--safeBottom));
+.hotspot{
+  position:absolute;
+  border:0;
+  background:transparent;
+  color:transparent;
+  cursor:pointer;
+  z-index:3;
 }
-.page.active{display:flex;flex-direction:column}
-.home{gap:9px}
-.top{
-  min-height:45px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:2;
+.hotspot:active{
+  background:rgba(255,217,120,.08);
 }
-.brand{
-  display:flex;align-items:center;gap:9px;
+.menuHot{
+  left:4%;
+  top:2%;
+  width:14%;
+  height:8%;
 }
-.brandIcon{
-  width:38px;height:38px;border-radius:14px;border:1px solid var(--line);
-  display:grid;place-items:center;background:radial-gradient(circle,#ffd978 0 22%,#071629 24%);color:#050914;font-weight:900;
-  box-shadow:0 0 20px rgba(230,169,54,.18);
+.profileHot{
+  right:4%;
+  top:2%;
+  width:14%;
+  height:8%;
 }
-.brandIcon:before{content:"✦"}
-.brand small{display:block;font-size:9px;letter-spacing:.34em;color:var(--gold2);font-weight:900}
-.brand strong{display:block;font-family:Georgia,serif;font-size:22px;line-height:.95;color:var(--cream);font-weight:400}
-.round{
-  width:38px;height:38px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.035);
-  color:var(--gold2);display:grid;place-items:center;font-size:18px;
+.ctaHot{
+  left:10%;
+  right:10%;
+  bottom:4.8%;
+  height:7.5%;
+  border-radius:999px;
 }
-.hero{
-  text-align:center;flex-shrink:0;
+.shareHot{
+  left:22%;
+  right:22%;
+  bottom:.7%;
+  height:3.8%;
+  border-radius:999px;
 }
-.hero .kicker{
-  margin-top:2px;color:var(--gold2);font-size:9px;letter-spacing:.45em;text-transform:uppercase;font-weight:900;padding-left:.45em;
+.overlay{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(2,8,18,.72);
+  backdrop-filter:blur(10px);
+  z-index:10;
 }
-.hero h1{
-  margin-top:5px;
-  font-family:Georgia,serif;font-weight:400;color:var(--cream);
-  font-size:clamp(32px,9.2vw,48px);line-height:.98;
-  text-shadow:0 0 18px rgba(230,169,54,.16);
-}
-.hero p{
-  margin:4px auto 0;max-width:30ch;color:var(--soft);
-  font-family:Georgia,serif;font-size:15px;line-height:1.22;
-}
-.cosmic{
-  position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
-}
-.arc{
-  position:absolute;width:min(95vw,392px,45vh);aspect-ratio:1;top:-6px;left:50%;transform:translateX(-50%);
-  opacity:.85;pointer-events:none;
-}
-.arc svg{width:100%;height:100%;overflow:visible}
-.glyph{font-family:Georgia,serif;fill:rgba(230,169,54,.82);font-size:6.5px}
-.card{
-  position:relative;width:100%;
-  border:1px solid var(--line);border-radius:26px;
+.overlay.open{display:flex}
+.modal{
+  width:100%;
+  max-width:390px;
+  border-radius:30px;
+  border:1px solid rgba(230,169,54,.32);
   background:
-    radial-gradient(circle at 50% 0%,rgba(230,169,54,.12),transparent 42%),
-    linear-gradient(180deg,rgba(7,22,41,.88),rgba(4,11,24,.90));
-  padding:17px 14px 14px;
-  box-shadow:0 20px 55px rgba(0,0,0,.40), inset 0 0 0 1px rgba(255,255,255,.025);
+    radial-gradient(circle at 50% 0%,rgba(230,169,54,.16),transparent 42%),
+    linear-gradient(180deg,rgba(7,22,41,.98),rgba(4,11,24,.98));
+  color:var(--cream);
+  padding:22px 20px 20px;
   text-align:center;
+  box-shadow:0 24px 80px rgba(0,0,0,.54);
 }
-.starSeal{
-  width:58px;height:58px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;
-  border:1px solid rgba(230,169,54,.38);color:var(--gold2);font-size:30px;font-family:Georgia,serif;
-  background:radial-gradient(circle,rgba(255,217,120,.22),rgba(7,22,41,.74) 68%);
-  box-shadow:0 0 34px rgba(230,169,54,.22);
+.modal small{
+  display:block;
+  color:var(--gold2);
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  font-size:10px;
+  margin-bottom:10px;
 }
-.date{
-  color:var(--gold2);font-size:12px;letter-spacing:.16em;font-family:Georgia,serif;margin-bottom:7px;
+.modal h2{
+  font-family:Georgia,serif;
+  font-size:34px;
+  font-weight:400;
+  line-height:1.05;
+  margin-bottom:12px;
 }
-.message{
-  margin:0 auto;max-width:28ch;color:var(--cream);font-family:Georgia,serif;
-  font-size:clamp(20px,5.2vw,28px);line-height:1.22;
+.modal p{
+  font-family:Georgia,serif;
+  color:#fff3c9;
+  font-size:20px;
+  line-height:1.45;
+  margin-bottom:16px;
 }
-.submsg{
-  margin:9px auto 0;max-width:31ch;color:var(--soft);font-size:13.5px;line-height:1.32;
+.premiumLine{
+  border:1px solid rgba(230,169,54,.24);
+  border-radius:18px;
+  padding:12px;
+  margin:12px 0;
+  color:rgba(255,247,223,.72);
+  font-size:13px;
 }
-.stats{
-  flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;
+.btn{
+  width:100%;
+  height:54px;
+  border:0;
+  border-radius:999px;
+  background:linear-gradient(100deg,#d99221,#ffd978 55%,#fff0be);
+  color:#090714;
+  font-weight:900;
+  font-size:16px;
+  cursor:pointer;
 }
-.stat{
-  min-height:68px;border-radius:18px;border:1px solid rgba(230,169,54,.25);
-  background:radial-gradient(circle at 50% 0%,rgba(230,169,54,.11),transparent 48%),rgba(4,11,24,.58);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+.btnGhost{
+  margin-top:10px;
+  background:transparent;
+  border:1px solid rgba(230,169,54,.28);
+  color:#ffd978;
 }
-.stat i{font-style:normal;font-size:18px;color:var(--gold2);margin-bottom:2px}
-.stat span{font-size:10px;color:var(--cream);font-family:Georgia,serif}
-.stat b{font-size:18px;color:var(--gold2);font-family:Georgia,serif;margin-top:2px}
-.affinity{
-  flex-shrink:0;height:56px;border:1px solid rgba(230,169,54,.26);border-radius:20px;
-  display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(4,11,24,.54);
+.toast{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:calc(18px + var(--safeBottom));
+  min-height:48px;
+  border-radius:18px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(4,11,24,.92);
+  border:1px solid rgba(230,169,54,.32);
+  color:#ffd978;
+  z-index:20;
+  font-weight:800;
 }
-.affinity small{display:block;font-size:10px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase}
-.affinity b{display:block;color:var(--gold2);font-family:Georgia,serif;font-size:20px;font-weight:400}
-.lucky{
-  flex-shrink:0;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;
-}
-.lucky div{
-  min-height:54px;border:1px solid rgba(230,169,54,.22);border-radius:17px;background:rgba(4,11,24,.46);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-}
-.lucky small{font-size:9px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase}
-.lucky b{font-family:Georgia,serif;color:var(--gold2);font-size:17px;margin-top:3px}
-.actions{
-  flex-shrink:0;display:grid;grid-template-columns:1fr 54px;gap:9px;
-}
-.cta{
-  height:55px;border-radius:999px;background:linear-gradient(100deg,#d99221,#ffd978 55%,#fff0be);
-  color:#0a0712;font-weight:900;font-size:15.5px;box-shadow:0 14px 32px -10px rgba(230,169,54,.62);
-}
-.secondary{
-  height:55px;border-radius:999px;border:1px solid var(--line);background:rgba(7,22,41,.74);color:var(--gold2);font-weight:900;
-}
-.scrim,.picker{
-  position:absolute;inset:0;background:rgba(2,8,18,.76);backdrop-filter:blur(10px);display:none;z-index:30;
-}
-.scrim{align-items:center;justify-content:center;padding:18px}
-.picker{align-items:flex-end}
-.scrim.open,.picker.open{display:flex}
-.sheet{
-  width:100%;max-width:390px;max-height:82dvh;overflow:auto;border-radius:30px;border:1px solid var(--line);
-  background:linear-gradient(180deg,rgba(7,22,41,.98),rgba(4,11,24,.98));
-  padding:15px 20px 20px;box-shadow:0 24px 80px rgba(0,0,0,.50);text-align:center;
-}
-.pickPanel{
-  width:100%;max-height:74dvh;overflow:auto;border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:0;
-  background:linear-gradient(180deg,rgba(7,22,41,.98),rgba(4,11,24,.98));
-  padding:13px 18px calc(22px + var(--safeBottom));box-shadow:0 -24px 70px rgba(0,0,0,.42);
-}
-.grab{width:42px;height:4px;border-radius:99px;background:rgba(230,169,54,.28);margin:6px auto 16px}
-.sheet .eyebrow,.pickTitle small{text-align:center;color:var(--gold2);font-size:10px;letter-spacing:.35em;text-transform:uppercase}
-.sheet h2,.pickTitle b{display:block;text-align:center;font-family:Georgia,serif;font-weight:400;font-size:30px;color:var(--cream);margin:5px 0}
-.sheet .sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:15px}
-.reading{
-  border:1px solid rgba(230,169,54,.20);border-radius:20px;background:rgba(2,8,18,.82);
-  padding:18px 16px;font-family:Georgia,serif;font-size:18px;line-height:1.52;color:var(--ivory);text-align:center;
-}
-.facets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
-.facet{border:1px solid rgba(230,169,54,.18);border-radius:16px;background:rgba(2,8,18,.72);text-align:center;padding:10px 6px}
-.facet small{display:block;color:var(--muted);font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}
-.facet b{font-family:Georgia,serif;color:var(--gold2);font-size:18px}
-.closeBtn{margin-top:13px;width:100%;display:flex;align-items:center;justify-content:center}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px}
-.zbtn{min-height:62px;border-radius:17px;border:1px solid rgba(230,169,54,.12);background:rgba(2,8,18,.40);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
-.zbtn .g{font-family:Georgia,serif;color:var(--gold2);font-size:24px}.zbtn .n{font-size:10px;color:var(--muted)}
-.zbtn.sel{border-color:rgba(230,169,54,.72);background:linear-gradient(160deg,rgba(230,169,54,.20),rgba(7,22,41,.72))}
-.zbtn.sel .n{color:var(--ivory)}
-@media(max-height:760px){
-  .page{padding:calc(7px + var(--safeTop)) 13px calc(7px + var(--safeBottom));gap:6px}
-  .top{min-height:38px}.brandIcon{width:32px;height:32px;border-radius:12px}.brand small{font-size:8px}.brand strong{font-size:19px}.round{width:34px;height:34px}
-  .hero .kicker{font-size:8px}.hero h1{font-size:28px}.hero p{font-size:12px}
-  .arc{width:min(90vw,300px,36vh);top:-2px}
-  .card{padding:12px 10px 10px;border-radius:22px}.starSeal{width:44px;height:44px;font-size:24px}.date{font-size:10px}.message{font-size:18px}.submsg{font-size:11.5px;margin-top:6px}
-  .stats{gap:5px}.stat{min-height:52px;border-radius:14px}.stat i{font-size:14px}.stat span{font-size:8px}.stat b{font-size:14px}
-  .affinity{height:44px}.affinity small{font-size:8px}.affinity b{font-size:16px}
-  .lucky div{min-height:43px}.lucky small{font-size:7.5px}.lucky b{font-size:14px}
-  .cta,.secondary{height:45px;font-size:13px}
-}
+.toast.show{display:flex}
 </style>
 </head>
 <body>
 <main class="app">
-  <div class="stars"></div>
+  <img class="tableau" src="/assets/message-des-etoiles.png" alt="Astro Galactic — Message des étoiles">
 
-  <section id="home" class="page home active">
-    <div class="top">
-      <div class="brand"><div class="brandIcon"></div><div><small>ASTRO</small><strong>Galactic</strong></div></div>
-      <button class="round" onclick="openPicker()" id="topGlyph">♌</button>
-    </div>
+  <button class="hotspot menuHot" onclick="openInfo()" aria-label="Menu">Menu</button>
+  <button class="hotspot profileHot" onclick="openProfile()" aria-label="Profil">Profil</button>
+  <button class="hotspot ctaHot" onclick="openConseil()" aria-label="Découvrir le conseil complet">Découvrir le conseil complet</button>
+  <button class="hotspot shareHot" onclick="shareMessage()" aria-label="Partager votre message du jour">Partager</button>
 
-    <div class="hero">
-      <div class="kicker">Rituel cosmique quotidien</div>
-      <h1>Message des étoiles</h1>
-      <p>Votre ciel du jour, votre énergie, vos affinités.</p>
-    </div>
-
-    <div class="cosmic">
-      <div class="arc">
-        <svg viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(230,169,54,.22)" stroke-width=".45"/>
-          <circle cx="50" cy="50" r="41" fill="none" stroke="rgba(230,169,54,.16)" stroke-width=".4"/>
-          <circle cx="50" cy="50" r="33" fill="none" stroke="rgba(230,169,54,.11)" stroke-width=".35"/>
-          <g id="ringGlyphs"></g>
-        </svg>
-      </div>
-      <div class="card">
-        <div class="starSeal">✦</div>
-        <div class="date" id="dateText">Aujourd’hui</div>
-        <div class="message">Ralentir pour mieux entendre votre véritable voix intérieure.</div>
-        <div class="submsg">Faites confiance à votre intuition, elle connaît le chemin.</div>
-      </div>
-    </div>
-
-    <div class="stats">
-      <div class="stat"><i>♡</i><span>Amour</span><b>87%</b></div>
-      <div class="stat"><i>◉</i><span>Argent</span><b>72%</b></div>
-      <div class="stat"><i>☻</i><span>Humeur</span><b>90%</b></div>
-      <div class="stat"><i>ϟ</i><span>Énergie</span><b>85%</b></div>
-    </div>
-
-    <button class="affinity" onclick="openPicker()">
-      <span><small>Signe actif</small><b id="signName">Lion</b></span>
-      <span><small>Affinité du jour</small><b>Taureau</b></span>
-    </button>
-
-    <div class="lucky">
-      <div><small>Nombre</small><b>7</b></div>
-      <div><small>Couleur</small><b>Or</b></div>
-      <div><small>Pierre</small><b>Citrine</b></div>
-    </div>
-
-    <div class="actions">
-      <button class="cta" onclick="openModule('daily')">Découvrir le conseil</button>
-      <button class="secondary" onclick="openPicker()">♈</button>
-    </div>
-  </section>
-
-  <div class="scrim" id="scrim" onclick="if(event.target===this)closeSheet()">
-    <div class="sheet" id="sheet"></div>
+  <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal" id="modal"></div>
   </div>
 
-  <div class="picker" id="picker" onclick="if(event.target===this)closePicker()">
-    <div class="pickPanel">
-      <div class="grab"></div>
-      <div class="pickTitle"><small>Votre signe</small><b>Choisir</b></div>
-      <div class="grid" id="signGrid"></div>
-      <button class="cta closeBtn" onclick="closePicker()">Valider</button>
-    </div>
-  </div>
+  <div class="toast" id="toast">Message copié ✨</div>
 </main>
 
 <script>
-const SIGNS=[
-{k:'belier',n:'Bélier',g:'♈︎',d:'21 mar – 19 avr'},
-{k:'taureau',n:'Taureau',g:'♉︎',d:'20 avr – 20 mai'},
-{k:'gemeaux',n:'Gémeaux',g:'♊︎',d:'21 mai – 20 juin'},
-{k:'cancer',n:'Cancer',g:'♋︎',d:'21 juin – 22 juil'},
-{k:'lion',n:'Lion',g:'♌︎',d:'23 juil – 22 août'},
-{k:'vierge',n:'Vierge',g:'♍︎',d:'23 août – 22 sep'},
-{k:'balance',n:'Balance',g:'♎︎',d:'23 sep – 22 oct'},
-{k:'scorpion',n:'Scorpion',g:'♏︎',d:'23 oct – 21 nov'},
-{k:'sagittaire',n:'Sagittaire',g:'♐︎',d:'22 nov – 21 déc'},
-{k:'capricorne',n:'Capricorne',g:'♑︎',d:'22 déc – 19 jan'},
-{k:'verseau',n:'Verseau',g:'♒︎',d:'20 jan – 18 fév'},
-{k:'poissons',n:'Poissons',g:'♓︎',d:'19 fév – 20 mar'}
-];
-let current=SIGNS[4]; const $=s=>document.querySelector(s);
-function buildRing(){const g=$('#ringGlyphs');SIGNS.forEach((s,i)=>{const a=(i/12)*Math.PI*2-Math.PI/2;const x=50+45*Math.cos(a),y=50+45*Math.sin(a);g.innerHTML+=`<text class="glyph" x="${x.toFixed(2)}" y="${y.toFixed(2)}" text-anchor="middle" dominant-baseline="middle">${s.g}</text>`})}
-function buildPicker(){ $('#signGrid').innerHTML=SIGNS.map(s=>`<button class="zbtn" data-k="${s.k}" onclick="selectSign('${s.k}')"><span class="g">${s.g}</span><span class="n">${s.n}</span></button>`).join('') }
-function selectSign(k){current=SIGNS.find(s=>s.k===k);localStorage.setItem('astro-v15-sign',k);refresh()}
-function refresh(){
-  const d=new Date();
-  $('#dateText').textContent=d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
-  $('#signName').textContent=current.n;
-  $('#topGlyph').textContent=current.g.replace('︎','');
-  document.querySelectorAll('.zbtn').forEach(b=>b.classList.toggle('sel',b.dataset.k===current.k));
+const $ = s => document.querySelector(s);
+
+function openModal(html){
+  $('#modal').innerHTML = html;
+  $('#overlay').classList.add('open');
 }
-function openPicker(){ $('#picker').classList.add('open') } function closePicker(){ $('#picker').classList.remove('open') }
-function today(){return new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}
-function openSheet(html){$('#sheet').innerHTML='<div class="grab"></div>'+html;$('#scrim').classList.add('open')} function closeSheet(){$('#scrim').classList.remove('open')}
-function openModule(id){
-openSheet(`<div class="eyebrow">${today()}</div><h2>${current.g} Message du jour</h2><p class="sub">Votre guidance cosmique</p><div class="reading">Aujourd’hui, l’univers vous invite à ralentir pour mieux entendre votre véritable voix intérieure.</div><div class="facets"><div class="facet"><small>Amour</small><b>87%</b></div><div class="facet"><small>Chance</small><b>72%</b></div><div class="facet"><small>Énergie</small><b>85%</b></div></div><button class="cta closeBtn" onclick="closeSheet()">Fermer</button>`)
+function closeModal(){
+  $('#overlay').classList.remove('open');
 }
-buildRing();buildPicker();const last=localStorage.getItem('astro-v15-sign');if(last)current=SIGNS.find(s=>s.k===last)||current;refresh();
-if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
+function openConseil(){
+  openModal(`
+    <small>Conseil complet</small>
+    <h2>Ralentir pour mieux viser</h2>
+    <p>Aujourd’hui, choisissez une seule action importante. Faites-la lentement, avec présence, sans chercher à tout contrôler.</p>
+    <div class="premiumLine">Version premium : lecture longue, prévision mensuelle, compatibilité avancée et carte partageable.</div>
+    <button class="btn" onclick="closeModal()">Compris</button>
+  `);
+}
+function openInfo(){
+  openModal(`
+    <small>Astro Galactic</small>
+    <h2>Message des étoiles</h2>
+    <p>Votre rituel cosmique quotidien, pensé pour être simple, beau et direct.</p>
+    <button class="btn" onclick="closeModal()">Fermer</button>
+  `);
+}
+function openProfile(){
+  openModal(`
+    <small>Profil astral</small>
+    <h2>Signe : Lion</h2>
+    <p>Le choix du signe sera connecté ici dans la prochaine version interactive.</p>
+    <button class="btn" onclick="closeModal()">Fermer</button>
+    <button class="btn btnGhost" onclick="closeModal()">Changer plus tard</button>
+  `);
+}
+async function shareMessage(){
+  const text = "Astro Galactic — Aujourd’hui, l’univers vous invite à ralentir pour mieux entendre votre véritable voix intérieure.";
+  try{
+    if(navigator.share){
+      await navigator.share({title:"Astro Galactic", text});
+    }else{
+      await navigator.clipboard.writeText(text);
+      showToast();
+    }
+  }catch(e){}
+}
+function showToast(){
+  const t = $('#toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1800);
+}
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+}
 </script>
 </body>
 </html>
