@@ -1,3 +1,3 @@
-# Astro Galactic V13 Centered Modal
+# Astro Galactic V14 UX Fix
 
-V13 : modales plus centrées, message plus premium, UX accueil conservée.
+V14 : modales centrées, bouton Fermer corrigé, modules plus compacts, accès Modules depuis l’accueil.
