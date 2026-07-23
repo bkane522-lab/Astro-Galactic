@@ -1,1 +1,71 @@
-<!doctype html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#020816"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>Astro Galactic</title><link rel="manifest" href="/manifest.json"><link rel="icon" href="/icon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="stylesheet" href="/style.css"></head><body><main class="app" id="app"><div class="planet planet-a"></div><div class="planet planet-b"></div><header class="topbar"><button class="circle-btn" id="menuBtn" aria-label="Menu">☰</button><div class="brand"><small>Astro</small><strong>Galactic</strong></div><button class="circle-btn glyph-profile" id="profileBtn" aria-label="Profil">♓︎</button></header><section class="hero-title"><h1>Message des étoiles</h1><p>Votre rituel cosmique quotidien</p></section><section class="zodiac-zone" aria-label="Roue des signes"><button class="side-arrow left" id="prevBtn" aria-label="Signe précédent">‹</button><div class="wheel" id="wheel"><div class="wheel-ring"></div><div class="center-orb">✦</div></div><button class="side-arrow right" id="nextBtn" aria-label="Signe suivant">›</button></section><section class="message-card" id="messageCard"><div class="date-line" id="dateLine"></div><h2 id="mainMessage"></h2><p id="subMessage"></p></section><p class="swipe-hint">Faites glisser la roue pour changer de signe</p><section class="stats" aria-label="Énergies du jour"><button class="stat" data-stat="Amour"><span>♡</span><b id="loveVal"></b><em>Amour</em></button><button class="stat" data-stat="Argent"><span>◉</span><b id="moneyVal"></b><em>Argent</em></button><button class="stat" data-stat="Humeur"><span>☻</span><b id="moodVal"></b><em>Humeur</em></button><button class="stat" data-stat="Énergie"><span>ϟ</span><b id="energyVal"></b><em>Énergie</em></button></section><button class="affinity" id="affinityBtn"><span class="aff-glyph" id="affGlyph"></span><span class="aff-copy"><strong id="affTitle"></strong><small id="affSub"></small></span><span class="chev">›</span></button><section class="lucky-wrap"><h3>Vos éléments chanceux</h3><div class="lucky-grid"><button class="luck" data-luck="Nombre"><small>Nombre</small><b id="numVal"></b></button><button class="luck" data-luck="Couleur"><small>Couleur</small><b id="colorVal"></b></button><button class="luck" data-luck="Pierre"><small>Pierre</small><b id="stoneVal"></b></button></div></section><button class="cta" id="conseilBtn">Découvrir le conseil complet</button><section class="picker" id="picker" aria-label="Choix du signe"><h3>Choisissez votre signe</h3><div class="sign-grid" id="signGrid"></div><button class="picker-close" id="closePicker">Fermer</button></section><div class="modal-layer" id="modalLayer"><article class="modal" id="modal"></article></div></main><script src="/app.js"></script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#020816">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Astro Galactic</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="app" id="app">
+  <div class="topGlow"></div>
+  <header class="topbar">
+    <button class="round" id="menuBtn" aria-label="Menu">☰</button>
+    <div class="brand"><small>Astro</small><strong>Galactic</strong></div>
+    <button class="round profile" id="profileBtn" aria-label="Profil">♓︎</button>
+  </header>
+
+  <section class="hero">
+    <h1>Message des étoiles</h1>
+    <p>Votre rituel cosmique quotidien</p>
+  </section>
+
+  <section class="wheelZone">
+    <button class="navArrow left" id="prevBtn">‹</button>
+    <div class="wheel" id="wheel"><div class="rings"></div><div class="star">✦</div></div>
+    <button class="navArrow right" id="nextBtn">›</button>
+  </section>
+
+  <section class="messageCard">
+    <div class="date" id="dateLine"></div>
+    <h2 id="mainMessage"></h2>
+    <p id="subMessage"></p>
+  </section>
+  <p class="hint">Glissez la roue ou touchez un signe</p>
+
+  <section class="stats">
+    <button class="stat" data-stat="Amour"><span>♡</span><b id="loveVal"></b><em>Amour</em></button>
+    <button class="stat" data-stat="Argent"><span>◉</span><b id="moneyVal"></b><em>Argent</em></button>
+    <button class="stat" data-stat="Humeur"><span>☻</span><b id="moodVal"></b><em>Humeur</em></button>
+    <button class="stat" data-stat="Énergie"><span>ϟ</span><b id="energyVal"></b><em>Énergie</em></button>
+  </section>
+
+  <button class="affinity" id="affinityBtn">
+    <span class="affGlyph" id="affGlyph"></span>
+    <span class="affText"><strong id="affTitle"></strong><small id="affSub"></small></span>
+    <span class="chev">›</span>
+  </button>
+
+  <section class="lucky">
+    <h3>Éléments chanceux</h3>
+    <div class="luckGrid">
+      <button class="luck" data-luck="Nombre"><small>Nombre</small><b id="numVal"></b></button>
+      <button class="luck" data-luck="Couleur"><small>Couleur</small><b id="colorVal"></b></button>
+      <button class="luck" data-luck="Pierre"><small>Pierre</small><b id="stoneVal"></b></button>
+    </div>
+  </section>
+
+  <button class="cta" id="conseilBtn">Découvrir le conseil complet</button>
+
+  <section class="picker" id="picker"><h3>Choisissez votre signe</h3><div class="grid" id="signGrid"></div><button class="pickerClose" id="closePicker">Fermer</button></section>
+  <div class="modalLayer" id="modalLayer"><article class="modal" id="modal"></article></div>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>
