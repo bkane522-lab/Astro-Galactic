@@ -9,3 +9,266 @@
 .lucky{position:absolute;z-index:11;left:30px;right:30px;top:78.6%;text-align:center}.lucky h3{font-family:Georgia,serif;font-size:22px;line-height:1;color:#ffdf90;font-weight:700;margin-bottom:8px}.luckGrid{height:64px;border-radius:19px;border:1px solid rgba(232,172,58,.39);background:rgba(2,8,18,.76);display:grid;grid-template-columns:1fr 1.12fr 1.12fr;overflow:hidden}.luck{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-right:1px solid rgba(232,172,58,.21);padding:0 3px}.luck:last-child{border-right:0}.luck small{font-family:Georgia,serif;font-size:11px;color:#fff2c4}.luck b{font-family:Georgia,serif;font-size:15.5px;line-height:1.02;color:#ffdf90;margin-top:4px;max-width:100%;white-space:normal;overflow:visible}.cta{position:absolute;z-index:14;left:42px;right:42px;bottom:calc(13px + var(--safeBottom));height:52px;border-radius:999px;background:linear-gradient(100deg,#d88b18,#ffd978 58%,#fff0be);color:#070a13;font-weight:900;font-size:14.5px;box-shadow:0 16px 36px -12px rgba(255,217,120,.78)}
 .picker{position:absolute;z-index:30;left:15px;right:15px;bottom:calc(15px + var(--safeBottom));display:none;border:1px solid rgba(232,172,58,.46);border-radius:28px;background:rgba(2,9,20,.95);backdrop-filter:blur(16px);padding:18px 14px 14px}.picker.open{display:block}.picker h3{text-align:center;font-family:Georgia,serif;font-size:28px;font-weight:400;color:var(--gold2);margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.zbtn{height:68px;border-radius:18px;border:1px solid rgba(232,172,58,.28);background:rgba(2,8,18,.60);display:flex;flex-direction:column;align-items:center;justify-content:center}.zbtn .g{font-family:Georgia,serif;color:var(--gold2);font-size:28px;line-height:1}.zbtn .n{font-size:12px;color:var(--muted);margin-top:5px}.zbtn.sel{border-color:rgba(255,217,120,.92);background:linear-gradient(160deg,rgba(255,217,120,.22),rgba(2,8,18,.60));box-shadow:0 0 24px rgba(255,217,120,.17)}.pickerClose{margin-top:13px;width:100%;height:52px;border-radius:999px;border:1px solid rgba(232,172,58,.32);background:rgba(2,8,18,.58);color:#ffdf90;font-weight:900}.modalLayer{position:absolute;z-index:50;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,8,18,.72);backdrop-filter:blur(10px);padding:18px}.modalLayer.open{display:flex}.modal{width:100%;max-width:390px;text-align:center;border-radius:30px;border:1px solid rgba(232,172,58,.42);background:linear-gradient(180deg,rgba(7,24,45,.98),rgba(2,8,18,.98));padding:24px 20px;box-shadow:0 24px 80px rgba(0,0,0,.60)}.modal small{display:block;color:var(--gold2);font-size:10px;letter-spacing:.35em;text-transform:uppercase;margin-bottom:10px}.modal h2{font-family:Georgia,serif;font-size:34px;font-weight:400;line-height:1.02}.modal p{font-family:Georgia,serif;font-size:21px;line-height:1.38;margin-top:14px}.note{border:1px solid rgba(232,172,58,.25);border-radius:18px;color:var(--muted);padding:12px;font-size:13px;margin:14px 0}.modal .btn{width:100%;height:54px;border-radius:999px;background:linear-gradient(100deg,#d88b18,#ffd978 58%,#fff0be);color:#070a13;font-weight:900}.modal .btn2{margin-top:10px;background:transparent;border:1px solid rgba(232,172,58,.30);color:var(--gold2)}
 @media(max-height:800px){.topbar{top:calc(8px + var(--safeTop));height:46px}.round{width:43px;height:43px}.brand strong{font-size:27px}.brand small{font-size:9px}.hero{top:calc(68px + var(--safeTop))}.hero h1{font-size:34px}.hero p{font-size:15px;margin-top:4px}.wheelZone{top:20.8%;height:30.8%}.wheel{width:min(96vw,374px)}.sign{width:52px;height:48px;margin:-24px -26px}.sign b{font-size:21px}.sign span{font-size:6.5px}.star{width:56px;height:56px;font-size:27px}.messageCard{top:36.8%;min-height:106px;padding:10px 13px}.date{font-size:9px;margin-bottom:6px}.messageCard h2{font-size:22px}.messageCard p{font-size:11.5px;margin-top:6px}.hint{top:53.6%;font-size:10.5px}.stats{top:57.2%;height:65px}.stat span{font-size:16px}.stat b{font-size:18px}.stat em{font-size:10.5px}.affinity{top:66.8%;height:54px}.affText strong{font-size:16px}.affText small{font-size:10.5px}.lucky{top:74.9%}.lucky h3{font-size:20px;margin-bottom:6px}.luckGrid{height:57px}.luck small{font-size:10.5px}.luck b{font-size:14px}.cta{height:48px;bottom:calc(9px + var(--safeBottom));font-size:14px;left:38px;right:38px}}
+
+
+/* =========================================================
+   V23.1 — CORRECTIF UI UNIQUEMENT
+   Objectif : éviter les chevauchements sans changer l'app.
+   ========================================================= */
+
+/* On garde le même style, mais on donne plus d'air aux blocs */
+.wheelZone{
+  top:21.7%;
+  height:29.7%;
+}
+
+.wheel{
+  width:min(86vw,356px);
+}
+
+.sign{
+  width:54px;
+  height:50px;
+  margin:-25px -27px;
+}
+
+.sign b{
+  font-size:22px;
+}
+
+.sign span{
+  font-size:6.8px;
+  margin-top:2px;
+}
+
+/* La consigne gênait la lecture et se mélangeait avec les signes */
+.hint{
+  display:none;
+}
+
+/* Carte message plus compacte, sans casser le design */
+.messageCard{
+  top:39.6%;
+  left:28px;
+  right:28px;
+  min-height:106px;
+  padding:11px 14px 12px;
+  border-radius:24px;
+}
+
+.date{
+  font-size:9px;
+  margin-bottom:6px;
+}
+
+.messageCard h2{
+  font-size:clamp(20px,5.8vw,25px);
+  line-height:1.08;
+}
+
+.messageCard p{
+  font-size:11.5px;
+  line-height:1.22;
+  margin-top:6px;
+}
+
+/* Stats descendues et rendues plus compactes */
+.stats{
+  top:58.6%;
+  height:66px;
+  gap:7px;
+}
+
+.stat span{
+  font-size:17px;
+}
+
+.stat b{
+  font-size:18px;
+}
+
+.stat em{
+  font-size:10.5px;
+}
+
+/* Affinité plus propre et moins haute */
+.affinity{
+  top:68%;
+  height:55px;
+  left:28px;
+  right:28px;
+  grid-template-columns:46px 1fr 18px;
+}
+
+.affGlyph{
+  width:38px;
+  height:38px;
+  font-size:25px;
+}
+
+.affText strong{
+  font-size:16.5px;
+}
+
+.affText small{
+  font-size:10.5px;
+}
+
+/* Bloc éléments chanceux mieux rangé */
+.lucky{
+  top:75.8%;
+  left:31px;
+  right:31px;
+}
+
+.lucky h3{
+  font-size:20px;
+  margin-bottom:7px;
+}
+
+.luckGrid{
+  height:58px;
+}
+
+.luck small{
+  font-size:10.5px;
+}
+
+.luck b{
+  font-size:14px;
+  line-height:1.05;
+  white-space:normal;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+
+/* Bouton plus léger, sans écraser les éléments */
+.cta{
+  height:48px;
+  left:44px;
+  right:44px;
+  bottom:calc(12px + var(--safeBottom));
+  font-size:13.5px;
+}
+
+/* Ajustement spécial petits écrans / navigateur mobile */
+@media(max-height:800px){
+  .hero{
+    top:calc(64px + var(--safeTop));
+  }
+
+  .hero h1{
+    font-size:31px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  .wheelZone{
+    top:19.6%;
+    height:28.5%;
+  }
+
+  .wheel{
+    width:min(84vw,326px);
+  }
+
+  .sign{
+    width:48px;
+    height:45px;
+    margin:-22.5px -24px;
+  }
+
+  .sign b{
+    font-size:20px;
+  }
+
+  .sign span{
+    font-size:6px;
+  }
+
+  .star{
+    width:50px;
+    height:50px;
+    font-size:24px;
+  }
+
+  .messageCard{
+    top:36.9%;
+    min-height:96px;
+    left:28px;
+    right:28px;
+    padding:9px 12px 10px;
+  }
+
+  .messageCard h2{
+    font-size:20px;
+  }
+
+  .messageCard p{
+    font-size:10.7px;
+  }
+
+  .stats{
+    top:53.4%;
+    height:58px;
+    gap:6px;
+  }
+
+  .stat span{
+    font-size:15px;
+  }
+
+  .stat b{
+    font-size:16px;
+  }
+
+  .stat em{
+    font-size:9.8px;
+  }
+
+  .affinity{
+    top:62%;
+    height:50px;
+  }
+
+  .affText strong{
+    font-size:15px;
+  }
+
+  .affText small{
+    font-size:9.8px;
+  }
+
+  .lucky{
+    top:69.8%;
+  }
+
+  .lucky h3{
+    font-size:18px;
+    margin-bottom:5px;
+  }
+
+  .luckGrid{
+    height:52px;
+  }
+
+  .luck small{
+    font-size:9.5px;
+  }
+
+  .luck b{
+    font-size:12.5px;
+  }
+
+  .cta{
+    height:44px;
+    bottom:calc(8px + var(--safeBottom));
+    left:44px;
+    right:44px;
+    font-size:13px;
+  }
+}
