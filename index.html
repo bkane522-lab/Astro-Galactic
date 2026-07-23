@@ -11,266 +11,88 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" href="/icon-192.png">
 <style>
-:root{
-  --gold:#e6a936;
-  --gold2:#ffd978;
-  --cream:#fff0be;
-  --soft:rgba(255,247,223,.76);
-  --safeTop:env(safe-area-inset-top,0px);
-  --safeBottom:env(safe-area-inset-bottom,0px);
-}
+:root{--gold:#e6a936;--gold2:#ffd978;--cream:#fff0be;--soft:rgba(255,247,223,.78);--safeTop:env(safe-area-inset-top,0px);--safeBottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-variant-emoji:text}
 html,body{height:100%;overflow:hidden;background:#000;color:var(--cream);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
 body{display:grid;place-items:center}
-.app{
-  position:relative;
-  width:min(100vw,430px);
-  height:100dvh;
-  max-height:932px;
-  overflow:hidden;
-  background:#020816;
-}
-@media(min-width:720px){
-  .app{
-    height:min(100vh,920px);
-    border-radius:34px;
-    border:1px solid rgba(230,169,54,.34);
-    box-shadow:0 30px 100px rgba(0,0,0,.75);
-  }
-}
-.visual{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  user-select:none;
-  pointer-events:none;
-}
-.hot{
-  position:absolute;
-  z-index:5;
-  background:transparent;
-  color:transparent;
-  border:0;
-}
-.hot:active{background:rgba(255,217,120,.08)}
-.menu{left:3%;top:2.5%;width:13%;height:7%}
-.profile{right:3%;top:2.5%;width:13%;height:7%}
-.left{left:0;top:36%;width:17%;height:12%}
-.right{right:0;top:36%;width:17%;height:12%}
-.wheel{left:9%;right:9%;top:21%;height:37%;border-radius:50%;touch-action:none}
-.cta{left:12%;right:12%;bottom:3.4%;height:6.5%;border-radius:999px}
-.affinity{left:14%;right:14%;bottom:19.7%;height:6%}
-.share{left:20%;right:20%;bottom:.2%;height:3%}
-.picker{
-  position:absolute;left:12px;right:12px;bottom:calc(12px + var(--safeBottom));
-  border-radius:26px;border:1px solid rgba(230,169,54,.34);
-  background:rgba(3,10,22,.92);
-  backdrop-filter:blur(14px);
-  padding:14px;
-  z-index:20;
-  display:none;
-  box-shadow:0 20px 70px rgba(0,0,0,.55);
-}
-.picker.open{display:block}
-.picker h3{
-  font-family:Georgia,serif;
-  font-weight:400;
-  text-align:center;
-  color:var(--gold2);
-  font-size:25px;
-  margin-bottom:10px;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-}
-.zbtn{
-  min-height:58px;
-  border-radius:17px;
-  border:1px solid rgba(230,169,54,.20);
-  background:rgba(2,8,18,.50);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  color:var(--soft);
-}
-.zbtn .g{font-family:Georgia,serif;color:var(--gold2);font-size:24px;line-height:1}
-.zbtn .n{font-size:10px;margin-top:4px}
-.zbtn.sel{
-  border-color:rgba(255,217,120,.82);
-  background:linear-gradient(160deg,rgba(230,169,54,.23),rgba(5,16,34,.70));
-  color:#fff7df;
-}
-.overlay{
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(2,8,18,.73);
-  backdrop-filter:blur(10px);
-  padding:18px;
-  z-index:30;
-}
-.overlay.open{display:flex}
-.modal{
-  width:100%;
-  max-width:390px;
-  border-radius:30px;
-  border:1px solid rgba(230,169,54,.36);
-  background:
-    radial-gradient(circle at 50% 0%,rgba(255,217,120,.14),transparent 44%),
-    linear-gradient(180deg,rgba(6,23,43,.98),rgba(2,8,18,.98));
-  box-shadow:0 24px 80px rgba(0,0,0,.58);
-  text-align:center;
-  padding:22px 20px 20px;
-}
-.modal small{
-  display:block;
-  color:var(--gold2);
-  font-size:10px;
-  letter-spacing:.35em;
-  text-transform:uppercase;
-  margin-bottom:10px;
-}
-.modal h2{
-  font-family:Georgia,serif;
-  color:var(--cream);
-  font-size:34px;
-  line-height:1.03;
-  font-weight:400;
-  margin-bottom:14px;
-}
-.modal p{
-  font-family:Georgia,serif;
-  color:var(--cream);
-  font-size:21px;
-  line-height:1.42;
-  margin-bottom:14px;
-}
-.note{
-  border:1px solid rgba(230,169,54,.24);
-  border-radius:18px;
-  color:var(--soft);
-  padding:12px;
-  font-size:13px;
-  margin:12px 0;
-  line-height:1.35;
-}
-.btn{
-  width:100%;
-  height:54px;
-  border-radius:999px;
-  background:linear-gradient(100deg,#c87b14,#ffd978 58%,#fff0be);
-  color:#090714;
-  font-weight:900;
-  font-size:16px;
-  box-shadow:0 15px 35px -10px rgba(230,169,54,.70);
-}
-.btn2{
-  margin-top:10px;
-  background:transparent;
-  border:1px solid rgba(230,169,54,.30);
-  color:var(--gold2);
-  box-shadow:none;
-}
-.badge{
-  position:absolute;
-  top:calc(10px + var(--safeTop));
-  left:50%;
-  transform:translateX(-50%);
-  z-index:12;
-  pointer-events:none;
-  opacity:0;
-  background:rgba(3,10,22,.92);
-  border:1px solid rgba(230,169,54,.35);
-  color:var(--gold2);
-  border-radius:999px;
-  padding:8px 14px;
-  font-weight:800;
-  transition:.25s;
-}
-.badge.show{opacity:1}
+.app{position:relative;width:min(100vw,430px);height:100dvh;max-height:932px;overflow:hidden;background:#020816}
+@media(min-width:720px){.app{height:min(100vh,920px);border-radius:34px;border:1px solid rgba(230,169,54,.34);box-shadow:0 30px 100px rgba(0,0,0,.75)}}
+.visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;user-select:none;pointer-events:none}
+.hot{position:absolute;z-index:5;background:transparent;color:transparent;border:0}.hot:active{background:rgba(255,217,120,.08)}
+.menu{left:3%;top:2.5%;width:13%;height:7%}.profile{right:3%;top:2.5%;width:13%;height:7%}.left{left:0;top:36%;width:17%;height:12%}.right{right:0;top:36%;width:17%;height:12%}.wheel{left:9%;right:9%;top:21%;height:37%;border-radius:50%;touch-action:none}.cta{left:12%;right:12%;bottom:3.4%;height:6.5%;border-radius:999px}.affinity{left:14%;right:14%;bottom:19.7%;height:6%}.share{left:20%;right:20%;bottom:.2%;height:3%}
+.badge{position:absolute;top:calc(10px + var(--safeTop));left:50%;transform:translateX(-50%);z-index:12;pointer-events:none;opacity:0;background:rgba(3,10,22,.92);border:1px solid rgba(230,169,54,.35);color:var(--gold2);border-radius:999px;padding:8px 14px;font-weight:800;transition:.25s}.badge.show{opacity:1}
+.center-card{position:absolute;z-index:10;left:5.4%;right:5.4%;top:40.7%;padding:8px 12px 10px;border-radius:26px;background:linear-gradient(180deg,rgba(5,17,34,.76),rgba(2,8,18,.68));border:1px solid rgba(230,169,54,.18);backdrop-filter:blur(5px);text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.center-date{font-family:Georgia,serif;color:#e9cf86;font-size:8px;letter-spacing:.28em;text-transform:uppercase;margin-bottom:4px}
+.center-title{font-family:Georgia,serif;color:#fff1c7;font-size:26px;line-height:1.12;font-weight:400;text-shadow:0 1px 1px rgba(0,0,0,.28)}
+.center-sub{margin-top:4px;color:rgba(255,247,223,.9);font-size:9px;line-height:1.25;max-width:75%;margin-left:auto;margin-right:auto}
+.stats{position:absolute;z-index:10;left:4%;right:4%;top:74.6%;display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.stat{height:88px;border-radius:999px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(circle at 50% 50%,rgba(5,11,25,.18),rgba(5,11,25,.52));color:#fff0c4}
+.stat .label{font-family:Georgia,serif;font-size:11px;line-height:1.05}.stat .value{font-family:Georgia,serif;margin-top:5px;font-weight:700;font-size:19px;color:#ffedaa}
+.affinity-text{position:absolute;z-index:10;left:18%;right:9%;top:84.3%;color:#ffe9a6}.affinity-title{font-family:Georgia,serif;font-size:17px;line-height:1.08}.affinity-sub{font-size:9px;line-height:1.2;color:rgba(255,247,223,.82);margin-top:2px}
+.lucky{position:absolute;z-index:10;left:11%;right:11%;top:91.2%;display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:2px;text-align:center;color:#ffefbb}.luck .k{font-family:Georgia,serif;font-size:10px;opacity:.9}.luck .v{font-family:Georgia,serif;font-weight:700;font-size:18px;line-height:1.1;margin-top:4px}.luck .small{font-size:12px}
+.wheel-map{position:absolute;z-index:11;left:10%;right:10%;top:20.6%;height:39%;pointer-events:none}.sign-spot{position:absolute;width:14.5%;height:11.5%;border-radius:50%;pointer-events:auto;border:1px solid transparent;background:transparent;display:flex;align-items:center;justify-content:center;color:transparent}.sign-spot.active{border-color:rgba(255,217,120,.65);box-shadow:0 0 0 2px rgba(255,217,120,.14),0 0 22px rgba(255,217,120,.2)}.sign-spot span{display:none}
+.spot-0{left:42.5%;top:2%}.spot-1{left:67%;top:8.5%}.spot-2{left:81%;top:23%}.spot-3{left:85%;top:41%}.spot-4{left:77%;top:59%}.spot-5{left:63%;top:72%}.spot-6{left:42.5%;top:77%}.spot-7{left:22%;top:72%}.spot-8{left:8%;top:59%}.spot-9{left:0;top:41%}.spot-10{left:4%;top:23%}.spot-11{left:18%;top:8.5%}
+.picker{position:absolute;left:12px;right:12px;bottom:calc(12px + var(--safeBottom));border-radius:26px;border:1px solid rgba(230,169,54,.34);background:rgba(3,10,22,.92);backdrop-filter:blur(14px);padding:14px;z-index:20;display:none;box-shadow:0 20px 70px rgba(0,0,0,.55)}.picker.open{display:block}.picker h3{font-family:Georgia,serif;font-weight:400;text-align:center;color:var(--gold2);font-size:25px;margin-bottom:10px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.zbtn{min-height:58px;border-radius:17px;border:1px solid rgba(230,169,54,.20);background:rgba(2,8,18,.50);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--soft)}.zbtn .g{font-family:Georgia,serif;color:var(--gold2);font-size:24px;line-height:1}.zbtn .n{font-size:10px;margin-top:4px}.zbtn.sel{border-color:rgba(255,217,120,.82);background:linear-gradient(160deg,rgba(230,169,54,.23),rgba(5,16,34,.70));color:#fff7df}
+.overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,8,18,.73);backdrop-filter:blur(10px);padding:18px;z-index:30}.overlay.open{display:flex}.modal{width:100%;max-width:390px;border-radius:30px;border:1px solid rgba(230,169,54,.36);background:radial-gradient(circle at 50% 0%,rgba(255,217,120,.14),transparent 44%),linear-gradient(180deg,rgba(6,23,43,.98),rgba(2,8,18,.98));box-shadow:0 24px 80px rgba(0,0,0,.58);text-align:center;padding:22px 20px 20px}.modal small{display:block;color:var(--gold2);font-size:10px;letter-spacing:.35em;text-transform:uppercase;margin-bottom:10px}.modal h2{font-family:Georgia,serif;color:var(--cream);font-size:34px;line-height:1.03;font-weight:400;margin-bottom:14px}.modal p{font-family:Georgia,serif;color:var(--cream);font-size:21px;line-height:1.42;margin-bottom:14px}.note{border:1px solid rgba(230,169,54,.24);border-radius:18px;color:var(--soft);padding:12px;font-size:13px;margin:12px 0;line-height:1.35}.btn{width:100%;height:54px;border-radius:999px;background:linear-gradient(100deg,#c87b14,#ffd978 58%,#fff0be);color:#090714;font-weight:900;font-size:16px;box-shadow:0 15px 35px -10px rgba(230,169,54,.70)}.btn2{margin-top:10px;background:transparent;border:1px solid rgba(230,169,54,.30);color:var(--gold2);box-shadow:none}
 </style>
 </head>
 <body>
 <main class="app">
   <img class="visual" src="/assets/astro-galactic-v19-ui.png" alt="Astro Galactic — Message des étoiles">
   <div class="badge" id="badge">Signe changé</div>
-
   <button class="hot menu" onclick="openMenu()" aria-label="Menu">Menu</button>
   <button class="hot profile" onclick="openProfile()" aria-label="Profil">Profil</button>
   <button class="hot left" onclick="previousSign()" aria-label="Signe précédent">Précédent</button>
   <button class="hot right" onclick="nextSign()" aria-label="Signe suivant">Suivant</button>
-  <button class="hot wheel" id="wheelTouch" onclick="openPicker()" aria-label="Faire tourner la roue">Roue</button>
+  <button class="hot wheel" id="wheelTouch" aria-label="Faire tourner la roue">Roue</button>
   <button class="hot affinity" onclick="openAffinity()" aria-label="Affinité du jour">Affinité</button>
   <button class="hot cta" onclick="openConseil()" aria-label="Découvrir le conseil complet">Conseil</button>
   <button class="hot share" onclick="shareMessage()" aria-label="Partager">Partager</button>
-
-  <div class="picker" id="picker">
-    <h3>Choisissez votre signe</h3>
-    <div class="grid" id="grid"></div>
-    <button class="btn btn2" onclick="closePicker()">Fermer</button>
-  </div>
-
-  <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
-    <div class="modal" id="modal"></div>
-  </div>
+  <div class="wheel-map" id="wheelMap"></div>
+  <section class="center-card"><div class="center-date" id="centerDate"></div><div class="center-title" id="centerTitle"></div><div class="center-sub" id="centerSub"></div></section>
+  <section class="stats"><div class="stat"><div class="label">Amour</div><div class="value" id="loveVal"></div></div><div class="stat"><div class="label">Argent</div><div class="value" id="moneyVal"></div></div><div class="stat"><div class="label">Humeur</div><div class="value" id="moodVal"></div></div><div class="stat"><div class="label">Énergie</div><div class="value" id="energyVal"></div></div></section>
+  <section class="affinity-text"><div class="affinity-title" id="affinityTitle"></div><div class="affinity-sub" id="affinitySub"></div></section>
+  <section class="lucky"><div class="luck"><div class="k">Nombre</div><div class="v" id="numVal"></div></div><div class="luck"><div class="k">Couleur</div><div class="v small" id="colorVal"></div></div><div class="luck"><div class="k">Pierre</div><div class="v small" id="stoneVal"></div></div></section>
+  <div class="picker" id="picker"><h3>Choisissez votre signe</h3><div class="grid" id="grid"></div><button class="btn btn2" onclick="closePicker()">Fermer</button></div>
+  <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()"><div class="modal" id="modal"></div></div>
 </main>
-
 <script>
 const SIGNS=[
-{k:'belier',n:'Bélier',g:'♈︎',msg:'Une impulsion juste peut ouvrir une porte aujourd’hui.',aff:'Lion',stone:'Grenat',color:'Rouge or',num:'3',conseil:'Choisissez une action simple et terminez-la avant d’en commencer une autre.'},
-{k:'taureau',n:'Taureau',g:'♉︎',msg:'La stabilité vous donne une vraie force aujourd’hui.',aff:'Vierge',stone:'Quartz rose',color:'Vert doré',num:'6',conseil:'Avancez sans vous presser. Une décision posée vaut mieux qu’un grand mouvement forcé.'},
-{k:'gemeaux',n:'Gémeaux',g:'♊︎',msg:'Une conversation peut débloquer une situation.',aff:'Balance',stone:'Citrine',color:'Jaune clair',num:'5',conseil:'Dites ce que vous ressentez simplement. La clarté évite les détours inutiles.'},
-{k:'cancer',n:'Cancer',g:'♋︎',msg:'Votre intuition capte ce que les mots ne disent pas.',aff:'Poissons',stone:'Pierre de lune',color:'Perle',num:'2',conseil:'Protégez votre énergie. Gardez de la place pour ce qui vous apaise vraiment.'},
-{k:'lion',n:'Lion',g:'♌︎',msg:'Aujourd’hui, l’univers vous invite à ralentir pour mieux entendre votre véritable voix intérieure.',aff:'Taureau',stone:'Citrine',color:'Or solaire',num:'7',conseil:'Aujourd’hui, choisissez une seule action importante. Faites-la lentement, avec présence, sans chercher à tout contrôler.'},
-{k:'vierge',n:'Vierge',g:'♍︎',msg:'Un détail bien réglé peut alléger toute votre journée.',aff:'Capricorne',stone:'Jaspe',color:'Sable doré',num:'4',conseil:'Simplifiez votre liste. Une priorité claire suffit pour reprendre la main.'},
-{k:'balance',n:'Balance',g:'♎︎',msg:'L’harmonie revient quand vous arrêtez de porter tout seul.',aff:'Gémeaux',stone:'Lapis-lazuli',color:'Rose doré',num:'8',conseil:'Cherchez l’équilibre, mais ne vous oubliez pas pour garder la paix.'},
-{k:'scorpion',n:'Scorpion',g:'♏︎',msg:'Une vérité intérieure demande à être respectée.',aff:'Cancer',stone:'Obsidienne',color:'Pourpre',num:'9',conseil:'Ne forcez pas les réponses. Observez, puis agissez avec précision.'},
-{k:'sagittaire',n:'Sagittaire',g:'♐︎',msg:'Un nouvel horizon vous redonne de l’élan.',aff:'Bélier',stone:'Turquoise',color:'Bleu nuit',num:'1',conseil:'Ouvrez une piste. Même petite, elle peut relancer votre mouvement.'},
-{k:'capricorne',n:'Capricorne',g:'♑︎',msg:'Votre patience prépare une avancée solide.',aff:'Taureau',stone:'Onyx',color:'Bronze',num:'10',conseil:'Gardez le cap. Une étape régulière vaut mieux qu’un effort épuisant.'},
-{k:'verseau',n:'Verseau',g:'♒︎',msg:'Une idée différente peut devenir votre avantage.',aff:'Sagittaire',stone:'Améthyste',color:'Électrique',num:'11',conseil:'Notez l’idée qui revient souvent. Elle peut contenir votre prochaine direction.'},
-{k:'poissons',n:'Poissons',g:'♓︎',msg:'Votre sensibilité devient une boussole précieuse.',aff:'Cancer',stone:'Aigue-marine',color:'Bleu doré',num:'7',conseil:'Accordez-vous un vrai moment de silence. Votre intuition sait déjà ce qui compte.'}
+{k:'belier',n:'Bélier',g:'♈︎',msg:'Une impulsion juste peut ouvrir une porte aujourd’hui.',sub:'Avancez avec courage, sans précipitation.',aff:'Lion',affSub:'Belle alliance de feu, élan et confiance.',stone:'Grenat',color:'Rouge or',num:'3',love:83,money:66,mood:79,energy:88,conseil:'Choisissez une action simple et terminez-la avant d’en commencer une autre.'},
+{k:'taureau',n:'Taureau',g:'♉︎',msg:'La stabilité vous donne une vraie force aujourd’hui.',sub:'Restez ancré, la clarté vient dans le calme.',aff:'Vierge',affSub:'Connexion stable, fiable et rassurante.',stone:'Quartz rose',color:'Vert doré',num:'6',love:88,money:79,mood:76,energy:71,conseil:'Avancez sans vous presser. Une décision posée vaut mieux qu’un grand mouvement forcé.'},
+{k:'gemeaux',n:'Gémeaux',g:'♊︎',msg:'Une conversation peut débloquer une situation.',sub:'Léger et vif, votre esprit ouvre des passages.',aff:'Balance',affSub:'Fluidité, échanges et bonne complicité.',stone:'Citrine',color:'Jaune clair',num:'5',love:73,money:74,mood:86,energy:80,conseil:'Dites ce que vous ressentez simplement. La clarté évite les détours inutiles.'},
+{k:'cancer',n:'Cancer',g:'♋︎',msg:'Votre intuition capte ce que les mots ne disent pas.',sub:'Fiez-vous à votre ressenti profond.',aff:'Poissons',affSub:'Une douceur sincère et protectrice.',stone:'Pierre de lune',color:'Perle',num:'2',love:90,money:68,mood:84,energy:72,conseil:'Protégez votre énergie. Gardez de la place pour ce qui vous apaise vraiment.'},
+{k:'lion',n:'Lion',g:'♌︎',msg:'Aujourd’hui, l’univers vous invite à ralentir pour mieux entendre votre véritable voix intérieure.',sub:'Faites confiance à votre intuition, elle connaît le chemin.',aff:'Taureau',affSub:'Connexion solide et bienveillante.',stone:'Citrine',color:'Or solaire',num:'7',love:87,money:72,mood:90,energy:85,conseil:'Aujourd’hui, choisissez une seule action importante. Faites-la lentement, avec présence, sans chercher à tout contrôler.'},
+{k:'vierge',n:'Vierge',g:'♍︎',msg:'Un détail bien réglé peut alléger toute votre journée.',sub:'L’ordre juste vous redonne de l’espace.',aff:'Capricorne',affSub:'Énergie constructive et très fiable.',stone:'Jaspe',color:'Sable doré',num:'4',love:77,money:81,mood:74,energy:78,conseil:'Simplifiez votre liste. Une priorité claire suffit pour reprendre la main.'},
+{k:'balance',n:'Balance',g:'♎︎',msg:'L’harmonie revient quand vous arrêtez de porter tout seul.',sub:'Un choix équilibré vous fera du bien.',aff:'Gémeaux',affSub:'Compréhension, légèreté et lien naturel.',stone:'Lapis-lazuli',color:'Rose doré',num:'8',love:84,money:69,mood:82,energy:73,conseil:'Cherchez l’équilibre, mais ne vous oubliez pas pour garder la paix.'},
+{k:'scorpion',n:'Scorpion',g:'♏︎',msg:'Une vérité intérieure demande à être respectée.',sub:'Restez lucide, votre force est précise.',aff:'Cancer',affSub:'Profondeur émotionnelle et loyauté.',stone:'Obsidienne',color:'Pourpre',num:'9',love:75,money:77,mood:80,energy:84,conseil:'Ne forcez pas les réponses. Observez, puis agissez avec précision.'},
+{k:'sagittaire',n:'Sagittaire',g:'♐︎',msg:'Un nouvel horizon vous redonne de l’élan.',sub:'Osez viser plus loin, mais sans vous disperser.',aff:'Bélier',affSub:'Dynamique, stimulante et directe.',stone:'Turquoise',color:'Bleu nuit',num:'1',love:78,money:70,mood:88,energy:91,conseil:'Ouvrez une piste. Même petite, elle peut relancer votre mouvement.'},
+{k:'capricorne',n:'Capricorne',g:'♑︎',msg:'Votre patience prépare une avancée solide.',sub:'La constance vous rend puissant aujourd’hui.',aff:'Taureau',affSub:'Lente, sûre et efficace.',stone:'Onyx',color:'Bronze',num:'10',love:74,money:85,mood:72,energy:79,conseil:'Gardez le cap. Une étape régulière vaut mieux qu’un effort épuisant.'},
+{k:'verseau',n:'Verseau',g:'♒︎',msg:'Une idée différente peut devenir votre avantage.',sub:'L’inspiration revient dès que vous respirez mieux.',aff:'Sagittaire',affSub:'Ouverture, liberté et vision commune.',stone:'Améthyste',color:'Électrique',num:'11',love:71,money:73,mood:87,energy:82,conseil:'Notez l’idée qui revient souvent. Elle peut contenir votre prochaine direction.'},
+{k:'poissons',n:'Poissons',g:'♓︎',msg:'Votre sensibilité devient une boussole précieuse.',sub:'Le calme vous aide à entendre la bonne réponse.',aff:'Cancer',affSub:'Lien intuitif, tendre et protecteur.',stone:'Aigue-marine',color:'Bleu doré',num:'7',love:90,money:70,mood:82,energy:74,conseil:'Accordez-vous un vrai moment de silence. Votre intuition sait déjà ce qui compte.'}
 ];
 const $=s=>document.querySelector(s);
-let current=Number(localStorage.getItem('astro-v19-index')||11);
+let current=Number(localStorage.getItem('astro-v20-index')||11);
 function sign(){return SIGNS[current]}
+function save(){localStorage.setItem('astro-v20-index',current)}
 function showBadge(txt){const b=$('#badge');b.textContent=txt;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),1200)}
-function save(){localStorage.setItem('astro-v19-index',current)}
-function nextSign(){current=(current+1)%SIGNS.length;save();renderPicker();showBadge(sign().g+' '+sign().n)}
-function previousSign(){current=(current-1+SIGNS.length)%SIGNS.length;save();renderPicker();showBadge(sign().g+' '+sign().n)}
-function selectSign(i){current=i;save();renderPicker();closePicker();showBadge(sign().g+' '+sign().n)}
-function renderPicker(){
-  $('#grid').innerHTML=SIGNS.map((s,i)=>`<button class="zbtn ${i===current?'sel':''}" onclick="selectSign(${i})"><span class="g">${s.g}</span><span class="n">${s.n}</span></button>`).join('');
-}
-function openPicker(){renderPicker();$('#picker').classList.add('open')}
-function closePicker(){$('#picker').classList.remove('open')}
-function openModal(html){$('#modal').innerHTML=html;$('#overlay').classList.add('open')}
-function closeModal(){$('#overlay').classList.remove('open')}
-function openConseil(){const s=sign();openModal(`<small>Conseil complet</small><h2>${s.g} ${s.n}</h2><p>${s.conseil}</p><div class="note">Nombre : ${s.num} · Couleur : ${s.color} · Pierre : ${s.stone}</div><button class="btn" onclick="closeModal()">Compris</button>`)}
-function openAffinity(){const s=sign();openModal(`<small>Affinité du jour</small><h2>${s.aff}</h2><p>Une connexion favorable pour avancer avec plus de confiance et de douceur.</p><button class="btn" onclick="closeModal()">Fermer</button>`)}
-function openMenu(){const s=sign();openModal(`<small>Astro Galactic</small><h2>${s.n}</h2><p>${s.msg}</p><div class="note">Utilise les flèches ou touche la roue pour choisir ton signe.</div><button class="btn" onclick="openPicker()">Changer de signe</button><button class="btn btn2" onclick="closeModal()">Fermer</button>`)}
-function openProfile(){const s=sign();openModal(`<small>Profil astral</small><h2>Signe : ${s.n}</h2><p>${s.msg}</p><button class="btn" onclick="openPicker()">Changer mon signe</button><button class="btn btn2" onclick="closeModal()">Fermer</button>`)}
-async function shareMessage(){const s=sign();const text=`Astro Galactic — ${s.n} : ${s.msg}`;try{if(navigator.share){await navigator.share({title:'Astro Galactic',text})}else{await navigator.clipboard.writeText(text);showBadge('Message copié ✨')}}catch(e){}}
-
-let startX=0;
-const wheel=$('#wheelTouch');
-wheel.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});
-wheel.addEventListener('touchend',e=>{
-  const end=e.changedTouches[0].clientX;
-  if(end-startX>35) previousSign();
-  if(startX-end>35) nextSign();
-},{passive:true});
-
-renderPicker();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
+function dateFR(){const d=new Date();return d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
+function render(){const s=sign();$('#centerDate').textContent=dateFR();$('#centerTitle').textContent=s.msg;$('#centerSub').textContent=s.sub;$('#loveVal').textContent=s.love+'%';$('#moneyVal').textContent=s.money+'%';$('#moodVal').textContent=s.mood+'%';$('#energyVal').textContent=s.energy+'%';$('#affinityTitle').textContent='Affinité du jour : '+s.aff;$('#affinitySub').textContent=s.affSub;$('#numVal').textContent=s.num;$('#colorVal').textContent=s.color;$('#stoneVal').textContent=s.stone;renderPicker();renderWheelMap()}
+function nextSign(){current=(current+1)%SIGNS.length;save();render();showBadge(sign().g+' '+sign().n)}
+function previousSign(){current=(current-1+SIGNS.length)%SIGNS.length;save();render();showBadge(sign().g+' '+sign().n)}
+function selectSign(i,close=true){current=i;save();render();if(close)closePicker();showBadge(sign().g+' '+sign().n)}
+function renderPicker(){$('#grid').innerHTML=SIGNS.map((s,i)=>`<button class="zbtn ${i===current?'sel':''}" onclick="selectSign(${i})"><span class="g">${s.g}</span><span class="n">${s.n}</span></button>`).join('')}
+function renderWheelMap(){$('#wheelMap').innerHTML=SIGNS.map((s,i)=>`<button class="sign-spot spot-${i} ${i===current?'active':''}" onclick="selectSign(${i},false)" aria-label="${s.n}"><span>${s.n}</span></button>`).join('')}
+function openPicker(){renderPicker();$('#picker').classList.add('open')} function closePicker(){$('#picker').classList.remove('open')}
+function openModal(html){$('#modal').innerHTML=html;$('#overlay').classList.add('open')} function closeModal(){$('#overlay').classList.remove('open')}
+function openConseil(){const s=sign();openModal(`<small>Conseil complet</small><h2>${s.g} ${s.n}</h2><p>${s.conseil}</p><div class="note">Amour : ${s.love}% · Argent : ${s.money}% · Humeur : ${s.mood}% · Énergie : ${s.energy}%</div><div class="note">Nombre : ${s.num} · Couleur : ${s.color} · Pierre : ${s.stone}</div><button class="btn" onclick="closeModal()">Compris</button>`)}
+function openAffinity(){const s=sign();openModal(`<small>Affinité du jour</small><h2>${s.aff}</h2><p>${s.affSub}</p><button class="btn" onclick="closeModal()">Fermer</button>`)}
+function openMenu(){const s=sign();openModal(`<small>Astro Galactic</small><h2>${s.n}</h2><p>${s.msg}</p><div class="note">Touchez directement un signe sur le cercle pour changer le message central, les pourcentages et les éléments chanceux.</div><button class="btn" onclick="openPicker()">Choisir un signe</button><button class="btn btn2" onclick="closeModal()">Fermer</button>`)}
+function openProfile(){const s=sign();openModal(`<small>Profil astral</small><h2>Signe : ${s.n}</h2><p>${s.sub}</p><div class="note">Affinité : ${s.aff} · Pierre : ${s.stone}</div><button class="btn" onclick="openPicker()">Changer mon signe</button><button class="btn btn2" onclick="closeModal()">Fermer</button>`)}
+async function shareMessage(){const s=sign();const text=`Astro Galactic — ${s.n} : ${s.msg} | Amour ${s.love}% · Argent ${s.money}% · Humeur ${s.mood}% · Énergie ${s.energy}%`;try{if(navigator.share){await navigator.share({title:'Astro Galactic',text})}else{await navigator.clipboard.writeText(text);showBadge('Message copié ✨')}}catch(e){}}
+let startX=0;const wheel=$('#wheelTouch');wheel.addEventListener('click',openPicker);wheel.addEventListener('touchstart',e=>{startX=e.touches[0].clientX},{passive:true});wheel.addEventListener('touchend',e=>{const end=e.changedTouches[0].clientX;if(end-startX>35)previousSign();if(startX-end>35)nextSign()},{passive:true});
+render();if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
 </script>
 </body>
 </html>

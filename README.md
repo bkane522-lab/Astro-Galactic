@@ -1,13 +1,6 @@
-# Astro Galactic V19 — Exact UI
+# Astro Galactic V20 — dynamique
 
-Version avec le visuel validé en écran principal.
-Zones cliquables :
-- menu
-- profil
-- flèches gauche/droite
-- roue : swipe gauche/droite
-- affinité
-- conseil complet
-- partage
-
-Test : https://astro-galactic.vercel.app/?v=19
+- Le message central change quand on touche un signe
+- Les pourcentages Amour / Argent / Humeur / Énergie changent aussi
+- Nombre / Couleur / Pierre changent aussi
+- Sélection directe sur le cercle + swipe + panneau de sélection
