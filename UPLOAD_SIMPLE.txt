@@ -1,5 +1,5 @@
-1. Décompresse le ZIP
-2. Remplace tous les fichiers dans GitHub
-3. Commit changes
-4. Vercel redéploie
-5. Teste avec https://astro-galactic.vercel.app/?v=20
+1. Décompresse le ZIP.
+2. Upload tout à la racine GitHub.
+3. Remplace les anciens fichiers.
+4. Commit changes.
+5. Teste : https://astro-galactic.vercel.app/?v=21

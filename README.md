@@ -1,6 +1,5 @@
-# Astro Galactic V20 — dynamique
+# Astro Galactic V21 — Clean UI
 
-- Le message central change quand on touche un signe
-- Les pourcentages Amour / Argent / Humeur / Énergie changent aussi
-- Nombre / Couleur / Pierre changent aussi
-- Sélection directe sur le cercle + swipe + panneau de sélection
+Version propre sans doublons, avec données dynamiques et roue cliquable.
+
+Test : https://astro-galactic.vercel.app/?v=21
