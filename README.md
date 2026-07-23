@@ -1,5 +1,10 @@
-# Astro Galactic V21 — Clean UI
+# Astro Galactic V22 — Premium UX
 
-Version propre sans doublons, avec données dynamiques et roue cliquable.
+- UI plus respirante
+- roue cliquable et glissable au doigt
+- message central plus lisible
+- statistiques, affinité et éléments chanceux sans chevauchement
+- bouton CTA réduit et mieux placé
+- fond premium sans texte figé
 
-Test : https://astro-galactic.vercel.app/?v=21
+Test : https://astro-galactic.vercel.app/?v=22

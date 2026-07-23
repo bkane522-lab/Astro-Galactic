@@ -2,4 +2,5 @@
 2. Upload tout à la racine GitHub.
 3. Remplace les anciens fichiers.
 4. Commit changes.
-5. Teste : https://astro-galactic.vercel.app/?v=21
+5. Vercel redéploie.
+6. Teste : https://astro-galactic.vercel.app/?v=22
