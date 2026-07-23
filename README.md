@@ -1,12 +1,12 @@
-# Astro Galactic V23.1 — Correctif UI
+# Astro Galactic V23.2 — Placement UI
 
-Correctif uniquement sur l'interface :
-- moins de chevauchements
-- roue légèrement plus compacte
-- message central réduit
-- statistiques mieux espacées
-- affinité et éléments chanceux mieux rangés
-- bouton moins lourd
+Correction uniquement UI :
+- message central rentré dans la roue
+- police du message réduite
+- stats sous la roue sans chevauchement
+- éléments chanceux plus légers
+- bouton conseil remonté
+- roue conservée visuellement
 
 Test :
-https://astro-galactic.vercel.app/?v=23-ui-fix
+https://astro-galactic.vercel.app/?v=23-2

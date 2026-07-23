@@ -1,5 +1,8 @@
 1. Décompresse le ZIP.
-2. Upload les fichiers à la racine GitHub.
+2. Upload tous les fichiers à la racine GitHub.
 3. Remplace les anciens fichiers.
 4. Commit changes.
-5. Teste : https://astro-galactic.vercel.app/?v=23-ui-fix
+5. Teste :
+https://astro-galactic.vercel.app/?v=23-2
+
+Si tu vois l’ancienne version : recharge fort ou change ?v=23-2.

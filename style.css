@@ -272,3 +272,257 @@
     font-size:13px;
   }
 }
+
+
+/* =========================================================
+   V23.2 — CORRECTION PLACEMENT UI UNIQUEMENT
+   Ne change pas l'identité visuelle.
+   Corrige seulement les chevauchements.
+   ========================================================= */
+
+/* Haut un peu plus respirant */
+.hero{
+  top:calc(80px + var(--safeTop));
+}
+.hero h1{
+  font-size:clamp(30px,8.2vw,37px);
+}
+.hero p{
+  font-size:clamp(14px,4vw,17px);
+}
+
+/* Roue gardée, mais zone mieux maîtrisée */
+.wheelZone{
+  top:22.2%;
+  height:28.2%;
+}
+.wheel{
+  width:min(84vw,348px);
+}
+.sign{
+  width:50px;
+  height:46px;
+  margin:-23px -25px;
+}
+.sign b{
+  font-size:21px;
+}
+.sign span{
+  font-size:6.2px;
+  line-height:1.05;
+}
+
+/* Message central : rentré proprement dans la roue */
+.messageCard{
+  top:38.9%;
+  left:30px;
+  right:30px;
+  min-height:96px;
+  padding:10px 13px 11px;
+  border-radius:24px;
+}
+.date{
+  font-size:8.8px;
+  margin-bottom:5px;
+}
+.messageCard h2{
+  font-size:clamp(19px,5.4vw,23.5px);
+  line-height:1.08;
+}
+.messageCard p{
+  font-size:11px;
+  line-height:1.22;
+  margin-top:6px;
+}
+
+/* On retire la phrase qui se mélange avec les signes */
+.hint{
+  display:none !important;
+}
+
+/* Stats : placées sous la roue, sans couvrir les signes */
+.stats{
+  top:56.9%;
+  left:30px;
+  right:30px;
+  height:60px;
+  gap:7px;
+}
+.stat span{
+  font-size:15px;
+}
+.stat b{
+  font-size:17px;
+}
+.stat em{
+  font-size:9.8px;
+}
+
+/* Affinité plus basse et plus compacte */
+.affinity{
+  top:65.4%;
+  left:30px;
+  right:30px;
+  height:51px;
+  grid-template-columns:42px 1fr 18px;
+  padding:7px 11px;
+}
+.affGlyph{
+  width:34px;
+  height:34px;
+  font-size:23px;
+}
+.affText strong{
+  font-size:15.5px;
+}
+.affText small{
+  font-size:10px;
+  margin-top:2px;
+}
+
+/* Éléments chanceux plus bas et plus léger */
+.lucky{
+  top:73.1%;
+  left:34px;
+  right:34px;
+}
+.lucky h3{
+  font-size:19px;
+  margin-bottom:6px;
+}
+.luckGrid{
+  height:54px;
+  border-radius:17px;
+}
+.luck small{
+  font-size:9.8px;
+}
+.luck b{
+  font-size:13.2px;
+  line-height:1.04;
+}
+
+/* Bouton remonté, moins lourd */
+.cta{
+  height:45px;
+  left:48px;
+  right:48px;
+  bottom:calc(16px + var(--safeBottom));
+  font-size:13px;
+}
+
+/* Flèches légèrement moins imposantes */
+.navArrow{
+  width:26px;
+  height:44px;
+  top:49%;
+  font-size:31px;
+}
+
+/* Petits écrans téléphone */
+@media(max-height:800px){
+  .hero{
+    top:calc(60px + var(--safeTop));
+  }
+  .hero h1{
+    font-size:29px;
+  }
+  .hero p{
+    font-size:13.5px;
+  }
+  .wheelZone{
+    top:18.8%;
+    height:27%;
+  }
+  .wheel{
+    width:min(82vw,318px);
+  }
+  .sign{
+    width:45px;
+    height:41px;
+    margin:-20.5px -22.5px;
+  }
+  .sign b{
+    font-size:18px;
+  }
+  .sign span{
+    font-size:5.5px;
+  }
+  .star{
+    width:46px;
+    height:46px;
+    font-size:22px;
+  }
+  .messageCard{
+    top:35.4%;
+    left:30px;
+    right:30px;
+    min-height:86px;
+    padding:8px 11px 9px;
+  }
+  .date{
+    font-size:8px;
+    margin-bottom:4px;
+  }
+  .messageCard h2{
+    font-size:18.5px;
+  }
+  .messageCard p{
+    font-size:10px;
+    margin-top:5px;
+  }
+  .stats{
+    top:51.6%;
+    left:30px;
+    right:30px;
+    height:54px;
+    gap:6px;
+  }
+  .stat span{
+    font-size:13px;
+  }
+  .stat b{
+    font-size:15px;
+  }
+  .stat em{
+    font-size:8.8px;
+  }
+  .affinity{
+    top:59.7%;
+    height:47px;
+  }
+  .affGlyph{
+    width:31px;
+    height:31px;
+    font-size:21px;
+  }
+  .affText strong{
+    font-size:14px;
+  }
+  .affText small{
+    font-size:9px;
+  }
+  .lucky{
+    top:66.7%;
+  }
+  .lucky h3{
+    font-size:17px;
+    margin-bottom:5px;
+  }
+  .luckGrid{
+    height:49px;
+  }
+  .luck small{
+    font-size:8.8px;
+  }
+  .luck b{
+    font-size:12px;
+  }
+  .cta{
+    height:42px;
+    left:50px;
+    right:50px;
+    bottom:calc(12px + var(--safeBottom));
+    font-size:12.5px;
+  }
+}
