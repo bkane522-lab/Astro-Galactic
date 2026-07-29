@@ -1,13 +1,13 @@
 {
   "name": "Astro Galactic",
   "short_name": "Galactic",
-  "description": "Astro Galactic — Message des étoiles, horoscope premium.",
+  "description": "Astro Galactic — Message des étoiles.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#020816",
-  "theme_color": "#020816",
+  "background_color": "#070B1E",
+  "theme_color": "#070B1E",
   "orientation": "portrait-primary",
   "lang": "fr-FR",
   "icons": [
