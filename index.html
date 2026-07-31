@@ -391,6 +391,107 @@
   }
 </style>
 
+
+<style id="v28-5-gold-premium-style">
+  :root{
+    --gold-1:#FFF1C4 !important;
+    --gold-2:#F2CD72 !important;
+    --gold-3:#D9A94E !important;
+    --gold-4:#B9852B !important;
+    --gold-line:rgba(242,205,114,.52) !important;
+  }
+  body{
+    background:
+      radial-gradient(circle at 50% 18%, rgba(242,205,114,.13), transparent 20%),
+      radial-gradient(circle at 15% 30%, rgba(217,169,78,.09), transparent 22%),
+      radial-gradient(circle at 85% 24%, rgba(242,205,114,.07), transparent 18%),
+      linear-gradient(180deg,#050916 0%,#0A1026 52%,#0C1430 100%) !important;
+  }
+  .screen, .page, .container, .panel, .card, .center-card{
+    box-shadow:
+      0 18px 40px rgba(0,0,0,.34),
+      0 0 0 1px rgba(242,205,114,.10),
+      inset 0 1px 0 rgba(255,241,196,.05);
+  }
+  .center-card{
+    background:
+      linear-gradient(180deg, rgba(20,26,58,.96), rgba(9,13,32,.97)) !important;
+    border-color: rgba(242,205,114,.42) !important;
+  }
+  .center-card .date{
+    color: var(--gold-2) !important;
+    letter-spacing:.12em;
+  }
+  .center-card .msg{
+    color: #FFF6D8 !important;
+  }
+  .center-card .sub{
+    color: rgba(255,241,196,.82) !important;
+  }
+  .stats-row{
+    gap:8px !important;
+  }
+  .stat .stat-label{
+    color:#F6EBC0 !important;
+    font-weight:500;
+  }
+  .stat .stat-ring{
+    width: clamp(54px,14.5vw,66px) !important;
+    height: clamp(54px,14.5vw,66px) !important;
+    border:none !important;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(7,11,30,.96) 51%, transparent 52%),
+      conic-gradient(from -90deg,
+        rgba(242,205,114,.95) calc(var(--pct,78) * 1%),
+        rgba(255,241,196,.18) 0) !important;
+    box-shadow:
+      0 0 18px rgba(242,205,114,.30),
+      inset 0 0 22px rgba(242,205,114,.12) !important;
+    position:relative;
+  }
+  .stat .stat-ring::before{
+    inset:5px !important;
+    border:1px solid rgba(255,241,196,.16) !important;
+    border-style:solid !important;
+    background: radial-gradient(circle at 50% 40%, rgba(242,205,114,.05), rgba(5,9,22,.92));
+  }
+  .stat .stat-val{
+    position:relative;
+    z-index:2;
+    font-size: clamp(16px,4vw,20px) !important;
+    color:#FFF2C7 !important;
+    text-shadow:0 0 10px rgba(242,205,114,.33);
+  }
+  .affinity, .lucky-card, .premium-card, .feature-card, .action-card{
+    background:
+      linear-gradient(180deg, rgba(242,205,114,.08), rgba(9,13,32,.70)) !important;
+    border-color: rgba(242,205,114,.38) !important;
+    box-shadow:
+      0 12px 28px rgba(0,0,0,.25),
+      0 0 18px rgba(242,205,114,.08) !important;
+  }
+  .cta, .btn, button:not(.sign){
+    background:
+      linear-gradient(180deg, rgba(242,205,114,.24), rgba(185,133,43,.18)),
+      rgba(7,11,30,.66) !important;
+    border-color: rgba(242,205,114,.46) !important;
+    color:#FFF1C4 !important;
+    box-shadow: 0 0 16px rgba(242,205,114,.16);
+  }
+  .wheel-wrap, .wheel-shell, .wheel{
+    filter: drop-shadow(0 0 22px rgba(242,205,114,.12));
+  }
+  .gold-premium-boost .stat{transform:translateY(0)}
+  .gold-premium-boost .stat-updated .stat-ring{
+    animation: royalRingPulse .45s ease-out;
+  }
+  @keyframes royalRingPulse{
+    0%{transform:scale(.94);filter:brightness(.88)}
+    60%{transform:scale(1.05);filter:brightness(1.18)}
+    100%{transform:scale(1);filter:brightness(1)}
+  }
+</style>
+
 </head>
 <body>
 
@@ -885,6 +986,97 @@
   } else {
     init();
   }
+})();
+</script>
+
+
+<script id="v28-5-gold-premium-script">
+(function(){
+  const SIGN_STATS = {
+    "Bélier":[94,72,83,96],
+    "Taureau":[86,91,74,68],
+    "Gémeaux":[79,84,92,87],
+    "Cancer":[93,66,89,71],
+    "Lion":[95,78,86,98],
+    "Vierge":[81,88,77,74],
+    "Balance":[90,75,94,80],
+    "Scorpion":[96,69,82,90],
+    "Sagittaire":[84,83,91,97],
+    "Capricorne":[77,95,72,79],
+    "Verseau":[75,86,90,85],
+    "Poissons":[92,70,88,73]
+  };
+
+  const labels = ["Amour","Argent","Humeur","Énergie"];
+
+  function normalize(v){
+    return String(v||"").trim().toLowerCase()
+      .replace(/é/g,"e").replace(/è/g,"e").replace(/ê/g,"e").replace(/à/g,"a");
+  }
+  function canonicalSign(value){
+    const wanted = normalize(value);
+    return Object.keys(SIGN_STATS).find(name => normalize(name)===wanted)
+      || Object.keys(SIGN_STATS).find(name => wanted.includes(normalize(name)))
+      || "Poissons";
+  }
+
+  function applyStats(sign){
+    const vals = SIGN_STATS[canonicalSign(sign)] || SIGN_STATS["Poissons"];
+    const root = document.body;
+    root.classList.add("gold-premium-boost");
+    const stats = document.querySelectorAll(".stats-row .stat");
+    stats.forEach((stat, i) => {
+      const v = vals[i] ?? vals[0];
+      const ring = stat.querySelector(".stat-ring");
+      const valEl = stat.querySelector(".stat-val");
+      const labelEl = stat.querySelector(".stat-label");
+      if(ring) ring.style.setProperty("--pct", v);
+      if(valEl) valEl.textContent = v + "%";
+      if(labelEl && labels[i]) labelEl.textContent = labels[i];
+      stat.classList.remove("stat-updated");
+      void stat.offsetWidth;
+      stat.classList.add("stat-updated");
+    });
+  }
+
+  function activeSign(){
+    return canonicalSign(
+      window.ASTRO_ACTIVE_SIGN ||
+      window.currentSign ||
+      window.selectedSign ||
+      window.activeSign ||
+      document.querySelector(".sign.is-selected .name")?.textContent ||
+      "Poissons"
+    );
+  }
+
+  function bindAll(){
+    document.querySelectorAll("#signLabels .sign").forEach(el=>{
+      if(el.dataset.v285Bound === "1") return;
+      el.dataset.v285Bound = "1";
+      const handler = () => {
+        const name = el.querySelector(".name")?.textContent || activeSign();
+        window.ASTRO_ACTIVE_SIGN = canonicalSign(name);
+        setTimeout(()=>applyStats(window.ASTRO_ACTIVE_SIGN), 10);
+      };
+      el.addEventListener("click", handler);
+      el.addEventListener("touchstart", handler, {passive:true});
+    });
+    applyStats(activeSign());
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", bindAll);
+  } else {
+    bindAll();
+  }
+
+  const labels = document.getElementById("signLabels");
+  if(labels){
+    new MutationObserver(() => bindAll()).observe(labels, {childList:true, subtree:true});
+  }
+
+  window.applyAstroGoldStats = applyStats;
 })();
 </script>
 
