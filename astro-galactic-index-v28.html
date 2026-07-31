@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astro Galactic — Message des étoiles</title>
+<meta name="theme-color" content="#070B1E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Marcellus&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#070B1E;
+    --bg-mid:#0D1430;
+    --gold-1:#F6E3A1;
+    --gold-2:#D9A94E;
+    --gold-3:#B9852B;
+    --gold-line: rgba(212,175,88,0.4);
+    --cream: #F3E9D2;
+    --cream-dim: rgba(243,233,210,0.65);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 120% 55% at 50% -8%, #182452 0%, transparent 55%),
+      radial-gradient(ellipse 90% 50% at 95% 15%, #14204a 0%, transparent 55%),
+      radial-gradient(ellipse 80% 40% at 5% 90%, #101a3a 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 45%, #050813 100%);
+    color: var(--cream);
+    font-family:'Jost', sans-serif;
+    min-height:100svh;
+    overflow-x:hidden;
+    position:relative;
+  }
+  #stars{ position:fixed; inset:0; pointer-events:none; z-index:0; }
+
+  /* discrete planets in the cosmic background */
+  .planet{
+    position:fixed; border-radius:50%; pointer-events:none; z-index:0;
+  }
+  .planet.p1{
+    width:100px; height:100px; top:6%; left:-34px;
+    background: radial-gradient(circle at 32% 28%, #4a5aa0, #141c3f 72%);
+    box-shadow: 0 0 46px rgba(90,110,200,0.22);
+    opacity:.4;
+  }
+  .planet.p2{
+    width:56px; height:56px; top:16%; right:-16px;
+    background: radial-gradient(circle at 35% 30%, #caa15a, #3a2711 75%);
+    box-shadow: 0 0 26px rgba(217,169,78,0.22);
+    opacity:.32;
+  }
+  .planet.p2::after{
+    content:""; position:absolute; left:50%; top:50%;
+    width:96px; height:22px; border:1px solid rgba(217,169,78,0.45);
+    border-radius:50%; transform:translate(-50%,-50%) rotate(-18deg);
+  }
+  .planet.p3{
+    width:70px; height:70px; bottom:8%; left:-22px;
+    background: radial-gradient(circle at 35% 30%, #3a2a52, #120c1f 75%);
+    box-shadow: 0 0 30px rgba(120,90,180,0.18);
+    opacity:.28;
+  }
+
+  .app{
+    position:relative; z-index:1;
+    max-width:480px; margin:0 auto;
+    padding: clamp(18px,5vw,26px) clamp(18px,5.5vw,24px) clamp(34px,8vw,50px);
+  }
+
+  /* ---------- header ---------- */
+  .topbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:2px; }
+  .icon-ring{
+    width:42px; height:42px; border-radius:50%;
+    border:1px solid var(--gold-line);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--gold-2);
+    background: radial-gradient(circle at 30% 20%, rgba(212,175,88,0.08), transparent 70%);
+    flex-shrink:0;
+  }
+  .brand{ text-align:center; }
+  .crown{ color: var(--gold-2); margin-bottom:2px; }
+  .brand-name{
+    font-family:'Marcellus', serif;
+    letter-spacing: 2.5px;
+    font-size: clamp(17px,4.6vw,21px);
+    color: var(--gold-1);
+  }
+  .divider{
+    width:104px; height:1px; margin:6px auto 0;
+    background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+    position:relative;
+  }
+  .divider::after{
+    content:"◈︎"; position:absolute; left:50%; top:50%;
+    transform:translate(-50%,-50%);
+    font-size:9px; color: var(--gold-2); background: var(--bg-deep);
+    padding: 0 6px;
+  }
+
+  .hero-title{ text-align:center; margin: clamp(16px,4.5vw,22px) 0 clamp(6px,2vw,10px); }
+  .hero-title h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:700;
+    font-size: clamp(28px,7.8vw,36px);
+    margin:0;
+    line-height:1.15;
+    background: linear-gradient(180deg, #FBEFC4 0%, #D9A94E 65%, #B9852B 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-title h1 .spark{ font-size:0.6em; vertical-align: 0.15em; -webkit-text-fill-color: var(--gold-2); }
+  .hero-title p{
+    margin:6px 0 0; font-size: clamp(12.5px,3.4vw,14.5px); color: var(--cream-dim); font-weight:300;
+  }
+
+  /* ---------- wheel ---------- */
+  .wheel-section{ position:relative; margin: clamp(18px,5vw,28px) auto clamp(8px,2vw,10px); width: 100%; max-width: min(92vw, 410px); }
+  .side-arrow{
+    position:absolute; top:50%; transform: translateY(-50%);
+    width:32px; height:32px; border-radius:50%;
+    border:1px solid var(--gold-line);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--gold-2); z-index:4;
+    background: rgba(9,13,32,0.55);
+  }
+  .side-arrow.left{ left:-2px; }
+  .side-arrow.right{ right:-2px; }
+
+  .wheel{
+    position:relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin:0 auto;
+  }
+  .wheel svg{ position:absolute; inset:0; width:100%; height:100%;
+    transform-origin:50% 50%; animation: wheelSpin 220s linear infinite; }
+  @keyframes wheelSpin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+  .wheel:active svg{ animation-play-state: paused; }
+
+  .sign{
+    position:absolute;
+    display:flex; flex-direction:column; align-items:center;
+    width:58px; transform: translate(-50%,-50%);
+    text-align:center;
+  }
+  .sign .glyph{
+    font-size: clamp(15px,4vw,19px); color: var(--gold-1);
+    filter: drop-shadow(0 0 6px rgba(217,169,78,.5));
+  }
+  .sign .name{
+    font-size: clamp(7.5px,2vw,9.5px); letter-spacing:1px; color: var(--gold-2); margin-top:2px;
+    font-weight:500;
+  }
+
+  .center-card{
+    position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);
+    width: clamp(150px, 44%, 198px);
+    background: linear-gradient(180deg, rgba(14,22,54,0.94), rgba(8,12,28,0.97));
+    border: 1px solid var(--gold-2);
+    border-radius: 16px;
+    padding: clamp(16px,4vw,20px) clamp(12px,3.2vw,16px) clamp(11px,2.8vw,14px);
+    text-align:center;
+    box-shadow: 0 0 30px rgba(217,169,78,0.18), inset 0 0 20px rgba(217,169,78,0.06);
+    z-index:3;
+  }
+  .center-card .star-top{
+    position:absolute; top:-15px; left:50%; transform:translateX(-50%);
+    width:30px; height:30px; border-radius:50%;
+    background: var(--bg-deep);
+    display:flex; align-items:center; justify-content:center;
+    border: 1px solid var(--gold-2);
+    box-shadow: 0 0 12px rgba(217,169,78,0.35);
+  }
+  .center-card .date{
+    font-size: clamp(10.5px,2.8vw,12.5px); letter-spacing:1px; color: var(--cream-dim); margin-bottom:7px;
+  }
+  .center-card .msg{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size: clamp(14px,3.8vw,17px);
+    line-height:1.28;
+    color: var(--gold-1);
+    margin:0 0 7px;
+  }
+  .center-card .sub{
+    font-size: clamp(10.5px,2.8vw,12px); line-height:1.4; color: var(--cream-dim); margin:0;
+  }
+
+  .drag-hint{
+    text-align:center; margin: clamp(10px,3vw,14px) 0 clamp(18px,5vw,26px);
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size: clamp(12px,3.2vw,14px); color: var(--gold-2); opacity:.85;
+    position:relative;
+  }
+
+  /* ---------- stats row ---------- */
+  .stats-row{
+    display:flex; justify-content:space-between; gap: clamp(6px,2.2vw,10px);
+    margin-bottom: clamp(20px,5vw,26px);
+  }
+  .stat{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:7px;
+  }
+  .stat .stat-label{ font-size: clamp(11.5px,3vw,13px); color: var(--cream); }
+  .stat .stat-ring{
+    position:relative;
+    width: clamp(52px,14vw,62px); height: clamp(52px,14vw,62px); border-radius:50%;
+    border:1px solid var(--gold-2);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--gold-1);
+    background: radial-gradient(circle at 35% 30%, rgba(217,169,78,0.14), transparent 70%);
+    box-shadow: 0 0 16px rgba(217,169,78,0.2), inset 0 0 10px rgba(217,169,78,0.1);
+  }
+  .stat .stat-ring::before{
+    content:""; position:absolute; inset:4px; border-radius:50%;
+    border:1px dashed rgba(217,169,78,0.4);
+  }
+  .stat .stat-val{
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(16px,4vw,19px); font-weight:600; color: var(--gold-1);
+  }
+
+  /* ---------- affinity row ---------- */
+  .affinity{
+    display:flex; align-items:center; gap:14px;
+    border:1px solid var(--gold-line);
+    border-radius: 18px;
+    padding: clamp(12px,3.5vw,15px) clamp(14px,4vw,17px);
+    background: linear-gradient(180deg, rgba(217,169,78,0.05), rgba(9,13,32,0.4));
+    margin-bottom: clamp(16px,4.5vw,22px);
+    cursor:pointer;
+  }
+  .affinity .bull-ring{
+    width: clamp(44px,12vw,52px); height: clamp(44px,12vw,52px); border-radius:50%; flex-shrink:0;
+    border:1px solid var(--gold-2);
+    display:flex; align-items:center; justify-content:center;
+    background: radial-gradient(circle at 35% 30%, rgba(217,169,78,0.15), transparent 70%);
+  }
+  .affinity .txt{ flex:1; min-width:0; }
+  .affinity .txt .title{
+    font-size: clamp(13.5px,3.6vw,15px); color: var(--gold-1); font-weight:500; margin:0 0 2px;
+  }
+  .affinity .txt .sub{ font-size: clamp(11px,3vw,12.5px); color: var(--cream-dim); margin:0; }
+  .affinity .chev{ color: var(--gold-2); flex-shrink:0; }
+
+  /* ---------- lucky elements ---------- */
+  .lucky-title{
+    text-align:center; font-family:'Marcellus', serif; letter-spacing:1.5px;
+    font-size: clamp(13px,3.4vw,15px); color: var(--gold-1); margin: 2px 0 clamp(12px,3.4vw,16px);
+  }
+  .lucky-title .spark{ color: var(--gold-2); margin: 0 8px; font-size:11px; }
+  .lucky-row{
+    display:flex; margin-bottom: clamp(20px,5.5vw,28px);
+    border-top:1px solid var(--gold-line);
+    border-bottom:1px solid var(--gold-line);
+    padding: clamp(12px,3.4vw,16px) 0;
+  }
+  .lucky-col{
+    flex:1; text-align:center; position:relative;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .lucky-col:not(:last-child)::after{
+    content:""; position:absolute; right:0; top:6px; bottom:6px; width:1px;
+    background: var(--gold-line);
+  }
+  .lucky-col .lbl{ font-size: clamp(11px,2.8vw,12px); color: var(--cream-dim); letter-spacing:.5px; }
+  .lucky-col .val{
+    font-family:'Cormorant Garamond', serif; font-weight:600;
+    font-size: clamp(17px,4.2vw,21px); color: var(--gold-1);
+  }
+  .lucky-col .ic{ color: var(--gold-2); margin-top:2px; }
+
+  /* ---------- CTA (fine, chic, moins massif) ---------- */
+  .cta{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    width:100%; padding: clamp(12px,3.2vw,14px) clamp(18px,5vw,22px);
+    border-radius: 26px;
+    border: 1px solid rgba(255,246,220,0.35);
+    cursor:pointer;
+    font-family:'Jost', sans-serif; font-size: clamp(13.5px,3.5vw,15px); letter-spacing:.5px; font-weight:500;
+    color:#241705;
+    background: linear-gradient(180deg, #F3DFA0, #D9A94E 60%, #C79A44);
+    box-shadow: 0 4px 16px rgba(217,169,78,0.22);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .cta svg{ width:14px; height:14px; }
+  .cta:hover{ transform: translateY(-1px); box-shadow: 0 8px 22px rgba(217,169,78,0.35); }
+
+  @media (max-height:700px){
+    .wheel-section{ max-width:min(84vw,340px); }
+    .drag-hint{ display:none; }
+    .stats-row{ margin-bottom: clamp(12px,3.5vw,18px); }
+    .lucky-row{ margin-bottom: clamp(14px,4vw,20px); }
+  }
+
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="ig1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F6E3A1"/><stop offset="100%" stop-color="#B9852B"/>
+    </linearGradient>
+  </defs>
+</svg>
+<div class="planet p1"></div>
+<div class="planet p2"></div>
+<div class="planet p3"></div>
+
+<div class="app">
+
+  <div class="topbar">
+    <div class="icon-ring" title="Menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </div>
+    <div class="brand">
+      <div class="crown">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2 18h20l-1.5-9-4.5 4-4-7-4 7-4.5-4L2 18z"/></svg>
+      </div>
+      <div class="brand-name">Astro Galactic</div>
+      <div class="divider"></div>
+    </div>
+    <div class="icon-ring" title="Profil">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+    </div>
+  </div>
+
+  <div class="hero-title">
+    <h1><span class="spark">✦︎</span> Message des étoiles <span class="spark">✦︎</span></h1>
+    <p>Votre rituel cosmique quotidien</p>
+  </div>
+
+  <div class="wheel-section">
+    <div class="side-arrow left">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </div>
+    <div class="side-arrow right">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+
+    <div class="wheel" id="wheel">
+      <svg viewBox="0 0 400 400">
+        <circle cx="200" cy="200" r="192" stroke="#D9A94E" stroke-opacity=".5" stroke-width="1" fill="none"/>
+        <circle cx="200" cy="200" r="182" stroke="#D9A94E" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="1 7" fill="none"/>
+        <circle cx="200" cy="200" r="150" stroke="#D9A94E" stroke-opacity=".55" stroke-width="1" fill="none"/>
+        <circle cx="200" cy="200" r="112" stroke="#D9A94E" stroke-opacity=".6" stroke-width="1" fill="none"/>
+        <g stroke="#D9A94E" stroke-opacity=".35" stroke-width="1">
+          <!-- 12 radial spokes -->
+          <line x1="200" y1="8" x2="200" y2="392"/>
+          <line x1="8" y1="200" x2="392" y2="200"/>
+          <line x1="41" y1="41" x2="359" y2="359"/>
+          <line x1="41" y1="359" x2="359" y2="41"/>
+          <line x1="200" y1="8" x2="200" y2="150" transform="rotate(30 200 200)"/>
+          <line x1="200" y1="8" x2="200" y2="150" transform="rotate(60 200 200)"/>
+          <line x1="200" y1="8" x2="200" y2="150" transform="rotate(120 200 200)"/>
+          <line x1="200" y1="8" x2="200" y2="150" transform="rotate(150 200 200)"/>
+        </g>
+      </svg>
+      <div id="signLabels"></div>
+      <div class="center-card">
+        <div class="star-top">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <defs><linearGradient id="compassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#F6E3A1"/><stop offset="100%" stop-color="#B9852B"/>
+            </linearGradient></defs>
+            <g fill="url(#compassGrad)">
+              <path d="M12 1 L14 10 L12 12 L10 10 Z"/>
+              <path d="M12 23 L14 14 L12 12 L10 14 Z" opacity=".55"/>
+              <path d="M1 12 L10 10 L12 12 L10 14 Z" opacity=".75"/>
+              <path d="M23 12 L14 14 L12 12 L14 10 Z" opacity=".75"/>
+              <path d="M4 4 L11.2 9.6 L12 12 L9.6 11.2 Z" opacity=".4"/>
+              <path d="M20 20 L12.8 14.4 L12 12 L14.4 12.8 Z" opacity=".4"/>
+              <path d="M4 20 L9.6 12.8 L12 12 L11.2 14.4 Z" opacity=".4"/>
+              <path d="M20 4 L14.4 11.2 L12 12 L12.8 9.6 Z" opacity=".4"/>
+            </g>
+            <circle cx="12" cy="12" r="2" fill="#F6E3A1"/>
+          </svg>
+        </div>
+        <div class="date">22 juillet 2026</div>
+        <p class="msg">Votre sensibilité devient une boussole précieuse.</p>
+        <p class="sub">Le calme vous aide à entendre la bonne réponse.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="drag-hint">↶︎ Faites glisser pour faire tourner la roue ↷︎</div>
+
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-label">Amour</div>
+      <div class="stat-ring"><svg width="24" height="24" viewBox="0 0 24 24">
+        <path d="M12 21s-7-4.6-9.5-9C.7 8.2 2.4 4.8 5.8 4.2c2-.4 3.8.5 4.9 2.1a1 1 0 0 0 1.6 0c1.1-1.6 2.9-2.5 4.9-2.1 3.4.6 5.1 4 3.3 7.8-2.5 4.4-9.5 9-9.5 9z" fill="url(#ig1)" fill-opacity=".18" stroke="currentColor" stroke-width="1.3"/>
+        <path d="M12 6.4c.8-1.1 2-1.8 3.4-1.6" stroke="currentColor" stroke-width=".7" stroke-linecap="round" opacity=".6"/>
+      </svg></div>
+      <div class="stat-val">90%</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Argent</div>
+      <div class="stat-ring"><svg width="24" height="24" viewBox="0 0 24 24">
+        <circle cx="9" cy="9" r="6.2" fill="url(#ig1)" fill-opacity=".16" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M9 6 L9.7 8.3 L12 8.3 L10.15 9.7 L10.9 12 L9 10.6 L7.1 12 L7.85 9.7 L6 8.3 L8.3 8.3 Z" fill="currentColor" opacity=".85" stroke="none"/>
+        <circle cx="15" cy="15" r="6.2" fill="#0E1636" stroke="currentColor" stroke-width="1.2"/>
+        <text x="15" y="18" font-size="7.5" text-anchor="middle" fill="currentColor" stroke="none" font-family="Georgia, serif">$</text>
+      </svg></div>
+      <div class="stat-val">70%</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Humeur</div>
+      <div class="stat-ring"><svg width="24" height="24" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" fill="url(#ig1)" fill-opacity=".14" stroke="currentColor" stroke-width="1.3"/>
+        <path d="M7.5 13.5s1.8 2.6 4.5 2.6 4.5-2.6 4.5-2.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+        <circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="15" cy="9.5" r="1" fill="currentColor" stroke="none"/>
+      </svg></div>
+      <div class="stat-val">82%</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Énergie</div>
+      <div class="stat-ring"><svg width="24" height="24" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" fill="url(#ig1)" fill-opacity=".1" stroke="currentColor" stroke-width="1" opacity=".5"/>
+        <path d="M13 3L4 14h6.5l-1 7L20 10h-6.5l-.5-7z" fill="url(#ig1)" stroke="currentColor" stroke-width=".6"/>
+      </svg></div>
+      <div class="stat-val">74%</div>
+    </div>
+  </div>
+
+  <div class="affinity">
+    <div class="bull-ring" id="affinityIcon"></div>
+    <div class="txt">
+      <p class="title">Affinité du jour : <span id="affinitySignName">Taureau</span></p>
+      <p class="sub" id="affinitySub">Connexion solide et bienveillante.</p>
+    </div>
+    <div class="chev">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </div>
+
+  <div class="lucky-title"><span class="spark">✦︎</span>Vos éléments chanceux<span class="spark">✦︎</span></div>
+  <div class="lucky-row">
+    <div class="lucky-col">
+      <div class="lbl">Nombre</div>
+      <div class="val">7</div>
+    </div>
+    <div class="lucky-col">
+      <div class="lbl">Couleur</div>
+      <div class="val" style="font-size:17px;">Or solaire</div>
+      <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4.2" fill="url(#ig1)" stroke="currentColor" stroke-width="1"/>
+        <g stroke="currentColor" stroke-width="1.1" stroke-linecap="round">
+          <line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/>
+          <line x1="1.5" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.5" y2="12"/>
+          <line x1="4.4" y1="4.4" x2="6.1" y2="6.1"/><line x1="17.9" y1="17.9" x2="19.6" y2="19.6"/>
+          <line x1="4.4" y1="19.6" x2="6.1" y2="17.9"/><line x1="17.9" y1="6.1" x2="19.6" y2="4.4"/>
+        </g>
+      </svg></div>
+    </div>
+    <div class="lucky-col">
+      <div class="lbl">Pierre</div>
+      <div class="val" style="font-size:17px;">Citrine</div>
+      <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24">
+        <path d="M6 3h12l3 6-9 12L3 9l3-6z" fill="url(#ig1)" fill-opacity=".22" stroke="currentColor" stroke-width="1.1"/>
+        <path d="M6 3l3 6M18 3l-3 6M3 9h18M9 9l3 12M15 9l-3 12" stroke="currentColor" stroke-width=".55" opacity=".7"/>
+      </svg></div>
+    </div>
+  </div>
+
+  <button class="cta">
+    <span>✦︎ Découvrir le conseil complet</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
+
+</div>
+
+<script>
+  // starfield
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = document.body.scrollHeight;
+    stars = [];
+    const n = Math.floor((canvas.width*canvas.height)/9000);
+    for(let i=0;i<n;i++){
+      stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+        r: Math.random()*1.3+0.2, a: Math.random(), speed: Math.random()*0.015+0.003 });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(const s of stars){
+      s.a += s.speed;
+      const op = (Math.sin(s.a)+1)/2*0.7+0.15;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(246,227,161,${op})`; ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+
+  // zodiac wheel labels, positioned clockwise from top
+  const VS = '︎'; // force le rendu texte (pas emoji couleur) sur Android/iOS
+  const signs = [
+    {glyph:'♈'+VS, name:'BÉLIER'},
+    {glyph:'♉'+VS, name:'TAUREAU'},
+    {glyph:'♊'+VS, name:'GÉMEAUX'},
+    {glyph:'♋'+VS, name:'CANCER'},
+    {glyph:'♌'+VS, name:'LION'},
+    {glyph:'♍'+VS, name:'VIERGE'},
+    {glyph:'♎'+VS, name:'BALANCE'},
+    {glyph:'♏'+VS, name:'SCORPION'},
+    {glyph:'♐'+VS, name:'SAGITTAIRE'},
+    {glyph:'♑'+VS, name:'CAPRICORNE'},
+    {glyph:'♒'+VS, name:'VERSEAU'},
+    {glyph:'♓'+VS, name:'POISSONS'},
+  ];
+
+  function layoutWheel(){
+    const wheel = document.getElementById('wheel');
+    const container = document.getElementById('signLabels');
+    container.innerHTML = '';
+    const size = wheel.clientWidth;
+    const cx = size/2, cy = size/2;
+    const r = size * 0.40;
+    signs.forEach((s, i)=>{
+      const angle = (i * 30) * Math.PI/180; // 0 = top, clockwise
+      const x = cx + r * Math.sin(angle);
+      const y = cy - r * Math.cos(angle);
+      const el = document.createElement('div');
+      el.className = 'sign';
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.innerHTML = `<div class="glyph">${s.glyph}</div><div class="name">${s.name}</div>`;
+      container.appendChild(el);
+    });
+  }
+  window.addEventListener('resize', layoutWheel);
+  window.addEventListener('load', layoutWheel);
+  layoutWheel();
+
+  // ---------- Icône d'affinité dynamique : s'adapte au signe du jour ----------
+  const affinityGlyphs = {
+    'Bélier':'♈'+'︎', 'Taureau':'♉'+'︎', 'Gémeaux':'♊'+'︎', 'Cancer':'♋'+'︎',
+    'Lion':'♌'+'︎', 'Vierge':'♍'+'︎', 'Balance':'♎'+'︎', 'Scorpion':'♏'+'︎',
+    'Sagittaire':'♐'+'︎', 'Capricorne':'♑'+'︎', 'Verseau':'♒'+'︎', 'Poissons':'♓'+'︎'
+  };
+
+  const bullSVG = `<svg width="34" height="34" viewBox="0 0 24 24">
+    <defs><radialGradient id="bullGrad" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#F6E3A1"/><stop offset="100%" stop-color="#B9852B"/>
+    </radialGradient></defs>
+    <path d="M3.2 6.8c-.3-2.1 1.4-3.4 2.7-2.2 1.1 1 1.3 2.7.9 3.9" fill="none" stroke="#D9A94E" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M20.8 6.8c.3-2.1-1.4-3.4-2.7-2.2-1.1 1-1.3 2.7-.9 3.9" fill="none" stroke="#D9A94E" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="12" cy="13.5" r="6.6" fill="url(#bullGrad)" fill-opacity=".22" stroke="#D9A94E" stroke-width="1.2"/>
+    <path d="M8.4 10.5c-1 .3-1.6 1.2-1.4 2.4M15.6 10.5c1 .3 1.6 1.2 1.4 2.4" stroke="#D9A94E" stroke-width=".7" fill="none" opacity=".6"/>
+    <circle cx="9.3" cy="12.3" r="0.7" fill="#D9A94E"/>
+    <circle cx="14.7" cy="12.3" r="0.7" fill="#D9A94E"/>
+    <path d="M9.7 16.2c.7.7 1.5 1 2.3 1s1.6-.3 2.3-1" stroke="#D9A94E" stroke-width="1" fill="none" stroke-linecap="round"/>
+    <ellipse cx="12" cy="15" rx="1.5" ry="1.1" fill="#D9A94E" opacity=".9"/>
+    <path d="M10.6 15 h2.8" stroke="#0E1636" stroke-width=".4"/>
+  </svg>`;
+
+  function medallionSVG(glyph){
+    return `<svg width="34" height="34" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10.5" fill="url(#ig1)" fill-opacity=".18" stroke="#D9A94E" stroke-width="1.2"/>
+      <circle cx="12" cy="12" r="8" fill="none" stroke="#D9A94E" stroke-opacity=".45" stroke-width="1" stroke-dasharray="1 3"/>
+      <text x="12" y="16.5" font-size="13" text-anchor="middle" fill="#F6E3A1">${glyph}</text>
+    </svg>`;
+  }
+
+  function setAffinitySign(signName){
+    const glyph = affinityGlyphs[signName] || affinityGlyphs['Taureau'];
+    document.getElementById('affinitySignName').textContent = signName;
+    document.getElementById('affinityIcon').innerHTML = (signName === 'Taureau') ? bullSVG : medallionSVG(glyph);
+  }
+
+  // À remplacer par la vraie donnée du jour calculée côté back — pour l'instant, exemple fixe.
+  window.ASTRO_AFFINITY_SIGN = window.ASTRO_AFFINITY_SIGN || 'Taureau';
+  setAffinitySign(window.ASTRO_AFFINITY_SIGN);
+
+  if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }
+</script>
+</body>
+</html>
