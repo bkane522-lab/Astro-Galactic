@@ -587,5 +587,175 @@
 
   if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }
 </script>
+
+<script id="v28-1-affinite-dynamique">
+(function(){
+  const SIGN_META = {
+    "Bélier":      { glyph:"♈︎", affinity:"Lion",        text:"Élan franc, passion et courage partagé." },
+    "Taureau":    { glyph:"♉︎", affinity:"Vierge",      text:"Connexion stable, fiable et rassurante." },
+    "Gémeaux":    { glyph:"♊︎", affinity:"Balance",     text:"Dialogue fluide, curiosité et légèreté." },
+    "Cancer":     { glyph:"♋︎", affinity:"Poissons",    text:"Lien intuitif, tendre et protecteur." },
+    "Lion":       { glyph:"♌︎", affinity:"Sagittaire",  text:"Feu créatif, confiance et grande énergie." },
+    "Vierge":     { glyph:"♍︎", affinity:"Capricorne",  text:"Vision claire, soutien concret et durable." },
+    "Balance":    { glyph:"♎︎", affinity:"Gémeaux",     text:"Harmonie, charme et complicité naturelle." },
+    "Scorpion":   { glyph:"♏︎", affinity:"Cancer",      text:"Intensité douce, loyauté et profondeur." },
+    "Sagittaire": { glyph:"♐︎", affinity:"Bélier",      text:"Mouvement, audace et envie d’avancer." },
+    "Capricorne": { glyph:"♑︎", affinity:"Taureau",     text:"Solidité, patience et confiance tranquille." },
+    "Verseau":    { glyph:"♒︎", affinity:"Balance",     text:"Idées libres, équilibre et inspiration." },
+    "Poissons":   { glyph:"♓︎", affinity:"Taureau",     text:"Connexion solide et bienveillante." }
+  };
+
+  function getActiveSign(){
+    const candidates = [
+      window.ASTRO_ACTIVE_SIGN,
+      window.currentSign,
+      window.selectedSign,
+      window.activeSign,
+      document.querySelector("[data-current-sign]")?.dataset.currentSign,
+      document.querySelector(".sign.active .name")?.textContent,
+      document.querySelector(".zodiac-sign.active .name")?.textContent,
+      document.querySelector(".active-sign")?.textContent
+    ].filter(Boolean);
+
+    const text = candidates.join(" ");
+    return Object.keys(SIGN_META).find(s => text.toLowerCase().includes(s.toLowerCase())) || "Poissons";
+  }
+
+  function medallionSVG(glyph){
+    return `
+      <svg viewBox="0 0 120 120" class="affinity-medallion-svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="affMedalGrad" cx="50%" cy="38%" r="68%">
+            <stop offset="0%" stop-color="#fff1b9" stop-opacity=".22"/>
+            <stop offset="46%" stop-color="#d9a94e" stop-opacity=".12"/>
+            <stop offset="100%" stop-color="#050b19" stop-opacity=".92"/>
+          </radialGradient>
+          <filter id="affGlow">
+            <feGaussianBlur stdDeviation="2.2" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <circle cx="60" cy="60" r="55" fill="url(#affMedalGrad)" stroke="#D9A94E" stroke-width="2.4"/>
+        <circle cx="60" cy="60" r="43" fill="none" stroke="#F6E3A1" stroke-opacity=".32" stroke-width="1.2" stroke-dasharray="3 5"/>
+        <circle cx="60" cy="60" r="31" fill="none" stroke="#B9852B" stroke-opacity=".45" stroke-width="1"/>
+        <text x="60" y="75" text-anchor="middle" font-size="50" fill="#F6E3A1" font-family="Georgia, 'Times New Roman', serif" filter="url(#affGlow)">${glyph}</text>
+      </svg>`;
+  }
+
+  function bullSVG(){
+    return `
+      <svg viewBox="0 0 120 120" class="affinity-medallion-svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="bullGold" cx="50%" cy="35%" r="70%">
+            <stop offset="0%" stop-color="#fff1b9"/>
+            <stop offset="42%" stop-color="#d9a94e"/>
+            <stop offset="100%" stop-color="#6f4214"/>
+          </radialGradient>
+          <filter id="bullGlow">
+            <feGaussianBlur stdDeviation="1.8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <circle cx="60" cy="60" r="55" fill="#050b19" stroke="#D9A94E" stroke-width="2.2"/>
+        <circle cx="60" cy="60" r="45" fill="none" stroke="#F6E3A1" stroke-opacity=".28" stroke-dasharray="3 5"/>
+        <path d="M33 39 C20 23 19 12 28 8 C37 17 42 28 43 42" fill="none" stroke="url(#bullGold)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M87 39 C100 23 101 12 92 8 C83 17 78 28 77 42" fill="none" stroke="url(#bullGold)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M36 47 C41 32 79 32 84 47 C90 66 78 92 60 94 C42 92 30 66 36 47 Z" fill="url(#bullGold)" stroke="#F6E3A1" stroke-width="1.2" filter="url(#bullGlow)"/>
+        <path d="M47 59 C50 55 55 55 57 60 M63 60 C65 55 70 55 73 59" fill="none" stroke="#211506" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M52 76 C56 80 64 80 68 76" fill="none" stroke="#211506" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="48" cy="66" r="2.4" fill="#211506"/>
+        <circle cx="72" cy="66" r="2.4" fill="#211506"/>
+      </svg>`;
+  }
+
+  function findAffinityIcon(){
+    return document.querySelector(".affinity .bull-ring")
+      || document.querySelector(".affinity .affinity-icon")
+      || document.querySelector(".affinity .icon")
+      || document.querySelector(".affinity svg")?.parentElement
+      || document.querySelector("[data-affinity-icon]");
+  }
+
+  function setTextSmart(selectorList, value){
+    for(const selector of selectorList){
+      const el = document.querySelector(selector);
+      if(el){ el.textContent = value; return true; }
+    }
+    return false;
+  }
+
+  function updateAffinity(){
+    const sign = getActiveSign();
+    const activeMeta = SIGN_META[sign] || SIGN_META.Poissons;
+    const affName = activeMeta.affinity;
+    const affMeta = SIGN_META[affName] || SIGN_META.Taureau;
+
+    window.ASTRO_AFFINITY_SIGN = affName;
+
+    const icon = findAffinityIcon();
+    if(icon){
+      icon.innerHTML = affName === "Taureau" ? bullSVG() : medallionSVG(affMeta.glyph);
+      icon.setAttribute("aria-label", "Affinité du jour : " + affName);
+      icon.classList.add("affinity-medallion");
+    }
+
+    setTextSmart([
+      ".affinity .txt .title",
+      ".affinity .title",
+      ".affinity-title",
+      "[data-affinity-title]"
+    ], "Affinité du jour : " + affName);
+
+    setTextSmart([
+      ".affinity .txt .sub",
+      ".affinity .sub",
+      ".affinity-subtitle",
+      "[data-affinity-subtitle]"
+    ], activeMeta.text);
+
+    const glyphTarget = document.querySelector(".affinity .right-glyph") || document.querySelector("[data-affinity-glyph]");
+    if(glyphTarget) glyphTarget.textContent = affMeta.glyph;
+  }
+
+  const css = document.createElement("style");
+  css.id = "v28-1-affinite-style";
+  css.textContent = `
+    .affinity-medallion,
+    .affinity .bull-ring,
+    .affinity .affinity-icon{
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+    }
+    .affinity-medallion-svg{
+      width:100%;
+      height:100%;
+      display:block;
+      filter:drop-shadow(0 0 12px rgba(217,169,78,.28));
+    }
+  `;
+  document.head.appendChild(css);
+
+  // Mise à jour au chargement
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", updateAffinity);
+  } else {
+    updateAffinity();
+  }
+
+  // Mise à jour après clic/glissement/choix de signe
+  ["click","pointerup","touchend"].forEach(evt=>{
+    document.addEventListener(evt, ()=>setTimeout(updateAffinity, 80), {passive:true});
+  });
+
+  // API simple si Claude veut appeler après changement de signe
+  window.updateAstroAffinity = updateAffinity;
+})();
+</script>
+
 </body>
 </html>
