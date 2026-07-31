@@ -1,6 +1,17 @@
-1. Décompresse le ZIP.
-2. Upload tout à la racine GitHub.
-3. Remplace les anciens fichiers.
-4. Commit changes.
-5. Teste :
-https://astro-galactic.vercel.app/?v=25
+CORRECTION ERREUR VERCEL
+
+L’erreur vient d’un conflit :
+api/assetlinks.js
+api/assetlinks.json
+
+À faire sur GitHub :
+1. Ouvre le dossier api
+2. Supprime assetlinks.js
+3. Supprime assetlinks.json s’il existe
+4. Si le dossier api est vide, supprime le dossier api
+5. Upload ce ZIP à la racine
+6. Commit changes
+7. Redeploy Vercel
+
+Test :
+https://astro-galactic.vercel.app/?v=25-1

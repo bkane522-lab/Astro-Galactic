@@ -1,12 +1,6 @@
-# Astro Galactic V23.2 — Placement UI
+# Astro Galactic V25.1 — No API Conflict
 
-Correction uniquement UI :
-- message central rentré dans la roue
-- police du message réduite
-- stats sous la roue sans chevauchement
-- éléments chanceux plus légers
-- bouton conseil remonté
-- roue conservée visuellement
-
-Test :
-https://astro-galactic.vercel.app/?v=23-2
+Correction du bug Vercel :
+- suppression totale du dossier api/
+- assetlinks gardé uniquement en fichier statique : .well-known/assetlinks.json
+- plus de conflit api/assetlinks.js vs api/assetlinks.json

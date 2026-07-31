@@ -1,0 +1,12 @@
+Erreur Vercel :
+Two or more files have conflicting paths or names.
+The path "api/assetlinks.js" has conflicts with "api/assetlinks.json".
+
+Solution :
+Supprimer totalement le dossier api/.
+Garder uniquement :
+.well-known/assetlinks.json
+
+Important :
+Sur GitHub, si le dossier api existe encore, il faut le supprimer manuellement.
+Uploader le ZIP ne supprime pas toujours les anciens fichiers.
