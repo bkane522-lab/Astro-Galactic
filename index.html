@@ -319,10 +319,13 @@
     font-size: clamp(13px,3.4vw,14.5px); color: var(--cream);
     border-bottom:1px solid var(--gold-line);
     cursor:pointer; transition: background .2s ease;
+    text-decoration:none;
   }
   .dropdown-item:last-of-type{ border-bottom:none; }
   .dropdown-item:hover{ background: rgba(217,169,78,0.07); }
   .dropdown-item .di-ic{ color: var(--gold-2); display:flex; flex-shrink:0; }
+  .dropdown-item .di-lock{ margin-left:auto; font-size:11px; color: var(--gold-2); opacity:.8; }
+  .dropdown-item.is-current{ color: var(--gold-1); background: rgba(217,169,78,0.05); }
   .dropdown-note{
     margin:0; padding: 8px clamp(14px,4vw,17px) clamp(11px,3vw,13px);
     font-size: clamp(10px,2.6vw,11px); color: var(--cream-dim); text-align:center; font-style:italic;
@@ -731,37 +734,41 @@
   </div>
 
   <div class="dropdown-panel" id="menuPanel">
-    <div class="dropdown-item">
+    <a href="index.html" class="dropdown-item is-current">
       <span class="di-ic">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="4" ry="10" transform="rotate(45 12 12)"/></svg>
       </span>
       <span>Ma galaxie</span>
-    </div>
-    <div class="dropdown-item">
+    </a>
+    <a href="compatibilite.html" class="dropdown-item">
       <span class="di-ic">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.6-9.5-9C.7 8.2 2.4 4.8 5.8 4.2c2-.4 3.8.5 4.9 2.1a1 1 0 0 0 1.6 0c1.1-1.6 2.9-2.5 4.9-2.1 3.4.6 5.1 4 3.3 7.8-2.5 4.4-9.5 9-9.5 9z"/></svg>
       </span>
       <span>Compatibilité</span>
-    </div>
-    <div class="dropdown-item">
+      <span class="di-lock">✦︎</span>
+    </a>
+    <a href="theme-astral.html" class="dropdown-item">
       <span class="di-ic">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="12" r="0.9" fill="currentColor" stroke="none"/></svg>
       </span>
       <span>Thème astral</span>
-    </div>
-    <div class="dropdown-item">
+      <span class="di-lock">✦︎</span>
+    </a>
+    <a href="cristaux.html" class="dropdown-item">
       <span class="di-ic">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h12l3 6-9 12L3 9l3-6z"/></svg>
       </span>
       <span>Cristaux</span>
-    </div>
-    <div class="dropdown-item">
+      <span class="di-lock">✦︎</span>
+    </a>
+    <a href="numerologie.html" class="dropdown-item">
       <span class="di-ic">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h12l3 6-9 12L3 9l3-6z"/><path d="M3 9h18M9 3l3 6 3-6M9 21l3-9 3 9"/></svg>
       </span>
       <span>Numérologie</span>
-    </div>
-    <p class="dropdown-note">Navigation entre écrans à venir</p>
+      <span class="di-lock">✦︎</span>
+    </a>
+    <p class="dropdown-note">✦︎ = contenu Premium</p>
   </div>
 
   <div class="dropdown-panel" id="profilePanel">
