@@ -48,7 +48,7 @@
   .app{
     position:relative; z-index:1;
     max-width:480px; margin:0 auto;
-    padding: clamp(18px,5vw,26px) clamp(18px,5.5vw,24px) clamp(34px,8vw,50px);
+    padding: clamp(14px,4vw,20px) clamp(18px,5.5vw,24px) clamp(22px,5vw,30px);
   }
 
   /* ---------- header ---------- */
@@ -81,7 +81,7 @@
     padding: 0 6px;
   }
 
-  .hero-title{ text-align:center; margin: clamp(16px,4.5vw,22px) 0 clamp(6px,2vw,10px); }
+  .hero-title{ text-align:center; margin: clamp(8px,2.5vw,12px) 0 clamp(3px,1vw,6px); }
   .hero-title h1{
     font-family:'Cormorant Garamond', serif;
     font-weight:700;
@@ -97,7 +97,7 @@
   }
 
   /* ---------- wheel ---------- */
-  .wheel-section{ position:relative; margin: clamp(18px,5vw,28px) auto clamp(8px,2vw,10px); width: 100%; max-width: min(92vw, 410px); }
+  .wheel-section{ position:relative; margin: clamp(10px,3vw,16px) auto clamp(4px,1.5vw,6px); width: 100%; max-width: min(80vw, 320px); }
   .side-arrow{
     position:absolute; top:50%; transform: translateY(-50%);
     width:32px; height:32px; border-radius:50%;
@@ -173,7 +173,7 @@
   }
 
   .drag-hint{
-    text-align:center; margin: clamp(10px,3vw,14px) 0 clamp(18px,5vw,26px);
+    text-align:center; margin: clamp(4px,1.5vw,6px) 0 clamp(10px,3vw,14px);
     font-family:'Cormorant Garamond', serif; font-style:italic;
     font-size: clamp(12px,3.2vw,14px); color: var(--gold-2); opacity:.85;
     position:relative;
@@ -182,7 +182,7 @@
   /* ---------- stats row ---------- */
   .stats-row{
     display:flex; justify-content:space-between; gap: clamp(6px,2.2vw,10px);
-    margin-bottom: clamp(20px,5vw,26px);
+    margin-bottom: clamp(12px,3.2vw,16px);
   }
   .stat{
     flex:1; display:flex; flex-direction:column; align-items:center; gap:7px;
@@ -213,7 +213,7 @@
     border-radius: 18px;
     padding: clamp(12px,3.5vw,15px) clamp(14px,4vw,17px);
     background: linear-gradient(180deg, rgba(217,169,78,0.05), rgba(9,13,32,0.4));
-    margin-bottom: clamp(16px,4.5vw,22px);
+    margin-bottom: clamp(9px,2.8vw,12px);
     cursor:pointer;
   }
   .affinity .bull-ring{
@@ -232,11 +232,11 @@
   /* ---------- lucky elements ---------- */
   .lucky-title{
     text-align:center; font-family:'Marcellus', serif; letter-spacing:1.5px;
-    font-size: clamp(13px,3.4vw,15px); color: var(--gold-1); margin: 2px 0 clamp(12px,3.4vw,16px);
+    font-size: clamp(13px,3.4vw,15px); color: var(--gold-1); margin: 2px 0 clamp(7px,2vw,9px);
   }
   .lucky-title .spark{ color: var(--gold-2); margin: 0 8px; font-size:11px; }
   .lucky-row{
-    display:flex; margin-bottom: clamp(20px,5.5vw,28px);
+    display:flex; margin-bottom: clamp(10px,3vw,14px);
     border-top:1px solid var(--gold-line);
     border-bottom:1px solid var(--gold-line);
     padding: clamp(12px,3.4vw,16px) 0;
@@ -302,16 +302,24 @@
 
   /* ---------- panneaux déroulants (menu / profil) ---------- */
   .icon-ring{ cursor:pointer; }
+  .panel-backdrop{
+    position:fixed; inset:0; background:rgba(4,7,16,0.6);
+    opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:40;
+  }
+  .panel-backdrop.is-open{ opacity:1; pointer-events:auto; }
   .dropdown-panel{
-    max-height:0; overflow:hidden; opacity:0;
-    transition: max-height .4s ease, opacity .3s ease, margin .4s ease;
-    border-radius:16px;
+    position:fixed; left:50%; top:76px; transform:translateX(-50%) translateY(-8px);
+    width:min(90vw,432px);
+    max-height:0; overflow:hidden; opacity:0; pointer-events:none;
+    transition: max-height .3s ease, opacity .25s ease, transform .25s ease;
+    border-radius:16px; z-index:41;
   }
   .dropdown-panel.is-open{
-    max-height:400px; opacity:1; margin: clamp(10px,3vw,14px) 0;
+    max-height:min(70vh,420px); opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0);
+    overflow-y:auto;
     border:1px solid var(--gold-line);
-    background: linear-gradient(180deg, rgba(14,22,54,0.92), rgba(8,12,28,0.96));
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    background: linear-gradient(180deg, rgba(14,22,54,0.97), rgba(8,12,28,0.99));
+    box-shadow: 0 14px 40px rgba(0,0,0,0.5);
   }
   .dropdown-item{
     display:flex; align-items:center; gap:12px;
@@ -342,7 +350,7 @@
   .pp-text{ margin:0; font-size: clamp(12px,3.2vw,13.5px); color: var(--cream-dim); line-height:1.5; max-width:280px; }
 
   @media (max-height:700px){
-    .wheel-section{ max-width:min(84vw,340px); }
+    .wheel-section{ max-width:min(72vw,280px); }
     .drag-hint{ display:none; }
     .stats-row{ margin-bottom: clamp(12px,3.5vw,18px); }
     .lucky-row{ margin-bottom: clamp(14px,4vw,20px); }
@@ -696,6 +704,105 @@
     text-shadow:0 0 10px rgba(217,169,78,.72);
   }
 </style>
+
+<style id="gold-royal-harmonisation-finale">
+  :root{
+    --gold-1:#FFF1C4;
+    --gold-2:#F2CD72;
+    --gold-3:#D9A94E;
+    --gold-4:#B9852B;
+    --gold-line:rgba(242,205,114,.52);
+    --bg-deep:#070B1E;
+    --bg-mid:#0D1430;
+    --cream:#F3E9D2;
+    --cream-dim:rgba(243,233,210,.65);
+  }
+
+  body{
+    background:
+      radial-gradient(circle at 50% 18%, rgba(242,205,114,.13), transparent 20%),
+      radial-gradient(circle at 15% 30%, rgba(217,169,78,.09), transparent 22%),
+      radial-gradient(circle at 85% 24%, rgba(242,205,114,.07), transparent 18%),
+      linear-gradient(180deg,#050916 0%,#0A1026 52%,#0C1430 100%) !important;
+    color:var(--cream);
+  }
+
+  .brand-name,.page-title,.section-title,.eyebrow,h1,h2,h3{
+    color:var(--gold-1);
+    text-shadow:0 0 18px rgba(242,205,114,.10);
+  }
+
+  .card,.panel,.premium-card,.preview-card,.result-card,.feature-card,
+  .compat-card,.crystal-card,.number-card,.unlock-card,.affinity,.lucky-row,.center-card{
+    border-color:rgba(242,205,114,.34) !important;
+    background:linear-gradient(180deg,rgba(242,205,114,.055),rgba(7,11,30,.64)) !important;
+    box-shadow:
+      0 14px 30px rgba(0,0,0,.22),
+      0 0 0 1px rgba(255,241,196,.025),
+      inset 0 1px 0 rgba(255,241,196,.035) !important;
+  }
+
+  .icon-ring,.medallion,.sign-medallion,.zodiac-medallion,.bull-ring,.crystal-orb,.number-orb{
+    border-color:rgba(242,205,114,.48) !important;
+    box-shadow:
+      0 0 16px rgba(242,205,114,.13),
+      inset 0 0 16px rgba(242,205,114,.06) !important;
+  }
+
+  button,.btn,.cta,.unlock-btn,.primary-btn,a.button{
+    border-color:rgba(255,241,196,.38) !important;
+    box-shadow:0 8px 18px rgba(185,133,43,.16) !important;
+    transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+  }
+
+  button:hover,.btn:hover,.cta:hover,.unlock-btn:hover,.primary-btn:hover,a.button:hover{
+    transform:translateY(-1px);
+    box-shadow:0 10px 22px rgba(185,133,43,.22) !important;
+  }
+
+  button:active,.btn:active,.cta:active,.unlock-btn:active,.primary-btn:active,a.button:active{
+    transform:translateY(0) scale(.985);
+  }
+
+  :focus-visible{
+    outline:2px solid var(--gold-2) !important;
+    outline-offset:3px;
+    box-shadow:0 0 0 4px rgba(242,205,114,.13) !important;
+  }
+
+  .muted,.subtitle,.sub,.description,.helper,.premium-note{
+    color:var(--cream-dim) !important;
+  }
+
+  .score,.stat-val,.value,.result-value,.number-value,.crystal-name,.sign-name{
+    color:var(--gold-1) !important;
+  }
+
+  .divider,hr{
+    border-color:rgba(242,205,114,.20) !important;
+  }
+
+  .overlay,.modal-backdrop{
+    background:rgba(3,6,16,.74) !important;
+  }
+
+  @media(max-width:480px){
+    .card,.panel,.premium-card,.preview-card,.result-card,.feature-card,
+    .compat-card,.crystal-card,.number-card,.unlock-card{
+      border-radius:18px !important;
+    }
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+      scroll-behavior:auto !important;
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
+  }
+</style>
+
 </head>
 <body class="gold-premium-boost">
 
@@ -706,6 +813,7 @@
   <div class="planet planet-four ringed"></div>
 </div>
 
+<div class="panel-backdrop" id="panelBackdrop"></div>
 <canvas id="stars"></canvas>
 <svg width="0" height="0" style="position:absolute">
   <defs>
@@ -831,7 +939,7 @@
             <circle cx="12" cy="12" r="2" fill="#F6E3A1"/>
           </svg>
         </div>
-        <div class="date">22 juillet 2026</div>
+        <div class="date" id="todayDate">22 juillet 2026</div>
         <p class="msg">Votre sensibilité devient une boussole précieuse.</p>
         <p class="sub">Le calme vous aide à entendre la bonne réponse.</p>
       </div>
@@ -1086,7 +1194,9 @@
       icon.setAttribute("aria-label", "Signe sélectionné : " + sign);
     }
     if(title){
-      title.innerHTML = `Affinité du jour : <span id="affinitySignName">${sign}</span>`;
+      const signName = document.getElementById("affinitySignName");
+      if(signName) signName.textContent = sign;
+      else title.textContent = "Affinité du jour : " + sign;
     }
     if(sub) sub.textContent = meta.text;
 
@@ -1195,23 +1305,20 @@
 <script id="v28-9-wheel-menu">
 (function(){
   // ---------- menu / profil : panneaux exclusifs (un seul ouvert à la fois) ----------
-  function wirePanel(btn, panel, others){
+  function wirePanel(btn, panel, others, backdrop){
     if(!btn || !panel) return;
-    function close(){
-      panel.classList.remove('is-open');
-      btn.setAttribute('aria-expanded','false');
-    }
-    function toggle(){
-      const willOpen = !panel.classList.contains('is-open');
+    function setOpen(willOpen){
       others.forEach(function(o){ if(o.panel !== panel){ o.panel.classList.remove('is-open'); o.btn.setAttribute('aria-expanded','false'); } });
       panel.classList.toggle('is-open', willOpen);
       btn.setAttribute('aria-expanded', String(willOpen));
+      if(backdrop) backdrop.classList.toggle('is-open', willOpen);
     }
+    function toggle(){ setOpen(!panel.classList.contains('is-open')); }
     btn.addEventListener('click', toggle);
     btn.addEventListener('keydown', function(e){
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
     });
-    return { btn:btn, panel:panel, close:close };
+    return { btn:btn, panel:panel, close:function(){ setOpen(false); } };
   }
 
   function initPanels(){
@@ -1219,13 +1326,20 @@
     const menuPanel = document.getElementById('menuPanel');
     const profileBtn = document.getElementById('profileBtn');
     const profilePanel = document.getElementById('profilePanel');
+    const backdrop = document.getElementById('panelBackdrop');
     const refs = [];
     refs.push({btn:menuBtn, panel:menuPanel});
     refs.push({btn:profileBtn, panel:profilePanel});
-    wirePanel(menuBtn, menuPanel, refs);
-    wirePanel(profileBtn, profilePanel, refs);
+    const w1 = wirePanel(menuBtn, menuPanel, refs, backdrop);
+    const w2 = wirePanel(profileBtn, profilePanel, refs, backdrop);
+    if(backdrop){
+      backdrop.addEventListener('click', function(){ w1 && w1.close(); w2 && w2.close(); });
+    }
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){ w1 && w1.close(); w2 && w2.close(); }
+    });
 
-    // les items du menu ferment simplement le panneau (pas encore de vraie navigation multi-écrans)
+    // fermeture du panneau avant la navigation (cosmétique, la page se recharge de toute façon)
     document.querySelectorAll('#menuPanel .dropdown-item').forEach(function(item){
       item.addEventListener('click', function(){
         menuPanel.classList.remove('is-open');
@@ -1271,7 +1385,15 @@
     wheel.addEventListener('pointercancel', onUp);
   }
 
-  function init(){ initPanels(); initWheelDrag(); }
+  function setTodayDate(){
+    const el = document.getElementById('todayDate');
+    if(!el) return;
+    const months = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    const d = new Date();
+    el.textContent = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  function init(){ initPanels(); initWheelDrag(); setTodayDate(); }
 
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', init);
