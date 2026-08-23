@@ -1134,6 +1134,41 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
   }
   .me-entry-action.is-pinned{ color:#241705; background: linear-gradient(180deg, #FFEAB0, #E3B957 60%, #B9852B); border-color:transparent; }
 </style>
+<style id="gold-royal-single-view-v36">
+  /* Compaction visant à tenir l'accueil dans une seule vue mobile, basée sur la hauteur
+     réelle de l'écran (pas seulement sa largeur). S'applique sur la quasi-totalité des
+     téléphones en portrait. Le zéro-scroll total n'est pas garanti sur tous les appareils
+     (les hauteurs varient énormément, d'environ 600px à plus de 900px), mais l'écart est
+     réduit au minimum sans sacrifier la lisibilité. */
+  @media(max-height:900px){
+    .app{ padding: 6px 16px 10px !important; }
+    .header-premium-row{ margin: 2px 0 !important; }
+    .hero-title{ margin: 2px 0 0 !important; }
+    .hero-title h1{ font-size: clamp(20px,6vw,26px) !important; }
+    .hero-title p{ display:none; }
+    .wheel-section{ max-width: min(58vw, 32vh) !important; margin-top:0 !important; }
+    .drag-hint{ display:none !important; }
+    .center-card{ padding: 7px 9px 7px !important; }
+    .center-card .date{ font-size: clamp(10px,2.6vw,11.5px) !important; }
+    .center-card .msg{ font-size: clamp(11.5px,3.2vw,14px) !important; line-height:1.15 !important; }
+    .center-card .sub{ font-size: clamp(10px,2.6vw,11.5px) !important; }
+    .stats-row{ margin-bottom:6px !important; }
+    .stat-ring{ width:44px !important; height:44px !important; }
+    .stat-label{ font-size:11px !important; }
+    .affinity{ padding:7px 10px !important; margin-bottom:5px !important; }
+    .affinity .bull-ring{ width:38px !important; height:38px !important; }
+    .affinity .title{ font-size:14px !important; }
+    .affinity .sub{ font-size:11px !important; }
+    .lucky-title{ margin:2px 0 4px !important; font-size:15px !important; }
+    .lucky-row{ padding:6px 4px !important; margin-bottom:5px !important; }
+    .cta-row{ margin-top:0 !important; }
+  }
+  @media(max-height:700px){
+    .wheel-section{ max-width: min(50vw, 27vh) !important; }
+    .stat-ring{ width:38px !important; height:38px !important; }
+    .lucky-row .val{ font-size:14px !important; }
+  }
+</style>
 </head>
 <body class="gold-premium-boost">
 
@@ -1695,20 +1730,21 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
   function showAffinityFor(activeSign){
     const sign = canonicalSign(activeSign);
     const meta = SIGN_META[sign] || SIGN_META.Poissons;
+    const affinity = canonicalSign(meta.affinity);
     const icon = document.getElementById("affinityIcon");
     const title = document.querySelector(".affinity .title");
     const sub = document.getElementById("affinitySub") || document.querySelector(".affinity .sub");
 
-    // Le signe cliqué s'affiche lui-même (icône + nom cohérents avec le choix de l'utilisateur)
+    // Affinité du jour = le vrai partenaire de compatibilité du signe sélectionné (pas le signe lui-même)
     window.ASTRO_ACTIVE_SIGN = sign;
-    window.ASTRO_AFFINITY_SIGN = sign;
+    window.ASTRO_AFFINITY_SIGN = affinity;
 
     if(icon){
-      icon.innerHTML = `<img class="affinity-zodiac-image" src="${SIGN_IMAGES[sign]}" alt="Médaillon royal du signe ${sign}" loading="lazy" width="52" height="52">`;
-      icon.setAttribute("aria-label", "Signe sélectionné : " + sign);
+      icon.innerHTML = `<img class="affinity-zodiac-image" src="${SIGN_IMAGES[affinity]}" alt="Médaillon royal du signe ${affinity}" loading="lazy" width="52" height="52">`;
+      icon.setAttribute("aria-label", "Affinité du jour : " + affinity);
     }
     if(title){
-      title.innerHTML = `Affinité du jour : <span id="affinitySignNameSecondary">${sign}</span>`;
+      title.innerHTML = `Affinité du jour : <span id="affinitySignNameSecondary">${affinity}</span>`;
     }
     if(sub) sub.textContent = meta.text;
 
