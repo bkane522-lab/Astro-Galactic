@@ -1,4 +1,4 @@
-const CACHE_NAME = 'astro-galactic-gold-royal-final-v1';
+const CACHE_NAME = 'astro-galactic-gold-royal-final-v3';
 const ASSETS=[
   '/',
   '/index.html',
@@ -9,7 +9,8 @@ const ASSETS=[
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png',
-  '/apple-touch-icon.png'
+  '/apple-touch-icon.png',
+  '/icons/maskable-512.png'
 ];
 self.addEventListener('install',event=>{
   self.skipWaiting();
