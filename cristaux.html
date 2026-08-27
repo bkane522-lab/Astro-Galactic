@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Astro Galactic — Cristaux</title>
 <meta name="theme-color" content="#070B1E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Marcellus&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -425,50 +430,35 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     color:#241705; text-shadow:none; box-shadow: 0 0 12px rgba(242,205,114,.35);
   }
 
-  .pp-auth-actions{ display:flex; gap:8px; width:100%; margin: 12px 0 4px; }
-  .pp-auth-btn{
-    flex:1; padding: 9px 10px; border-radius:22px; cursor:pointer;
-    font-family:'Jost', sans-serif; font-size: clamp(12px,3.1vw,13px); font-weight:600;
-  }
-  .pp-auth-btn-filled{
-    border:none; color:#241705;
-    background: linear-gradient(180deg, #FFEAB0, #E3B957 60%, #B9852B);
-    box-shadow: 0 0 10px rgba(242,205,114,.3);
-  }
-  .pp-auth-btn-ghost{
-    border:1px solid rgba(242,205,114,.55); color: var(--gold-1); background:transparent;
-  }
-
-  .pp-form-title{
-    font-family:'Cormorant Garamond', serif; font-weight:700; font-size: clamp(18px,4.6vw,21px);
-    color: var(--gold-1); margin: 2px 0 12px; text-align:center;
-  }
-  .pp-field{ display:flex; flex-direction:column; gap:5px; width:100%; margin-bottom:10px;
-    font-size: clamp(11px,2.9vw,12px); color: var(--cream-dim); text-align:left; }
-  .pp-input{
-    width:100%; padding: 10px 12px; border-radius:10px;
-    border:1px solid rgba(242,205,114,.35); background: rgba(6,10,25,.55);
-    color: var(--cream); font-family:'Jost', sans-serif; font-size: clamp(13px,3.4vw,14px);
-  }
-  .pp-input:focus{ outline:none; border-color: rgba(242,205,114,.8); }
-  .pp-form-submit{ width:100%; margin-top:4px; }
-  .pp-form-note{ font-size: clamp(10px,2.6vw,11px); color: rgba(243,233,210,.6); text-align:center; margin: 10px 0 4px; line-height:1.4; }
-  .pp-form-error{ font-size: clamp(11px,2.8vw,12px); color:#ff8a8a; text-align:center; margin: -4px 0 8px; }
   .pp-form-back{
     background:none; border:none; color: var(--gold-2); font-size: clamp(12px,3.1vw,13px);
     cursor:pointer; text-decoration:underline; padding:6px;
   }
-  .pp-logout{ margin-top:10px; color:#ff9d9d; }
 
   .pp-premium-flag{
     display:inline-block; margin: 4px 0 8px; font-size:11px; font-weight:600; letter-spacing:.3px;
     color:#241705; background: linear-gradient(180deg, #FFEAB0, #E3B957 60%, #B9852B);
     border-radius:20px; padding:4px 12px; box-shadow: 0 0 10px rgba(242,205,114,.3);
   }
-  .pp-field-birthdate{ margin-top:4px; }
-
+  .pm-license{ display:flex; flex-direction:column; gap:8px; width:100%; margin-top:10px; }
+  .pm-license .pp-input{
+    width:100%; padding: 10px 12px; border-radius:10px;
+    border:1px solid rgba(242,205,114,.35); background: rgba(6,10,25,.55);
+    color: var(--cream); font-family:'Jost', sans-serif; font-size: clamp(13px,3.4vw,14px);
+  }
+  .pm-license .pp-input:focus{ outline:none; border-color: rgba(242,205,114,.8); }
+  .pm-license-error{ font-size: clamp(11px,2.8vw,12px); color:#ff8a8a; text-align:center; margin:0; }
+  .pm-action[disabled]{ opacity:.65; cursor:default; }
   .dropdown-item.is-locked{ cursor:pointer; }
 </style>
+
+  .header-premium-row-split{ justify-content:space-between !important; align-items:center; padding: 0 2px; }
+  .back-home-btn{
+    display:inline-flex; align-items:center; gap:5px; text-decoration:none;
+    padding: 5px 12px; border-radius:20px; border:1px solid rgba(242,205,114,.4);
+    background: rgba(242,205,114,.06); color: var(--gold-2);
+    font-family:'Jost', sans-serif; font-size: clamp(11px,2.9vw,12.5px); font-weight:600;
+  }
 <style id="gold-royal-mon-espace-v35">
   /* ---------- bouton epingler (carte centrale) ---------- */
   .center-card{ position:relative; }
@@ -641,7 +631,11 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     </div>
   </div>
 
-    <div class="header-premium-row">
+    <div class="header-premium-row header-premium-row-split">
+    <a href="index.html" class="back-home-btn" aria-label="Retour à l'accueil">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span>Accueil</span>
+    </a>
     <button type="button" class="header-premium-badge" id="headerPremiumBadge" aria-label="Voir le contenu Premium">
       <span id="headerPremiumBadgeText">✦ Premium</span>
     </button>
@@ -769,15 +763,20 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     return { close:function(){ setOpen(false); } };
   }
 
-  // ---------- bouton "Débloquer" : déblocage persistant (localStorage, simulation locale — pas de vrai paiement) ----------
-  // === POINT D'INTÉGRATION BACKEND ===
-  // Le déblocage Premium est actuellement une simulation 100% locale (localStorage),
-  // sans vrai paiement ni compte utilisateur. À la connexion d'un vrai backend :
-  // - remplacer applyUnlockState() par un appel API vérifiant l'abonnement réel de l'utilisateur ;
-  // - remplacer le clic sur .plc-cta par l'ouverture d'un vrai flux de paiement (Stripe, RevenueCat, etc.) ;
-  // - la clé 'astroGalacticPremiumUnlocked' devra être synchronisée avec le compte, pas juste l'appareil.
+  // ---------- Premium : achat réel sur Gumroad + activation par code de licence ----------
+  // === POINT D'INTÉGRATION BACKEND / GUMROAD ===
+  // 1. Remplacer GUMROAD_PRODUCT_URL par l'URL réelle de la page de vente du produit Gumroad.
+  // 2. Déployer api/verify-license.js (fourni dans ce projet, prêt pour Vercel) : il sert de
+  //    proxy vers l'API de vérification de licence Gumroad et évite les soucis de CORS.
+  //    Y renseigner GUMROAD_PRODUCT_PERMALINK (ou la variable d'env Vercel du même nom).
+  // Le bouton "Acheter sur Gumroad" ouvre la vraie page de paiement dans un nouvel onglet :
+  // aucun déblocage n'a lieu à ce clic. Le déblocage n'a lieu que si le code de licence reçu
+  // par email après achat est vérifié avec succès auprès de Gumroad (via GUMROAD_VERIFY_ENDPOINT).
   // Voir BACKEND-TODO.md à la racine du projet.
   const PREMIUM_KEY = 'astroGalacticPremiumUnlocked';
+  const PREMIUM_LICENSE_KEY = 'astroGalacticPremiumLicense';
+  const GUMROAD_PRODUCT_URL = 'https://gumroad.com/l/REMPLACER_PAR_VOTRE_PRODUIT';
+  const GUMROAD_VERIFY_ENDPOINT = '/api/verify-license';
 
   function applyUnlockState(){
     const unlocked = localStorage.getItem(PREMIUM_KEY) === 'true';
@@ -792,6 +791,11 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     const modal = document.getElementById('premiumModal');
     const backdrop = document.getElementById('premiumModalBackdrop');
     const action = document.getElementById('premiumModalAction');
+    const haveCodeBtn = document.getElementById('premiumHaveCode');
+    const licenseForm = document.getElementById('pmLicenseForm');
+    const licenseInput = document.getElementById('pmLicenseInput');
+    const licenseSubmit = document.getElementById('pmLicenseSubmit');
+    const licenseError = document.getElementById('pmLicenseError');
     let toast = document.getElementById('premiumToast');
     if(!toast){
       toast = document.createElement('div');
@@ -815,18 +819,60 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
       if(!modal) return;
       modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true');
       if(backdrop) backdrop.classList.remove('is-open');
+      if(licenseForm) licenseForm.style.display = 'none';
+      if(licenseError) licenseError.style.display = 'none';
     }
-    // Le clic sur "Débloquer" ouvre d'abord le panneau Premium (parcours visuel clair)
+    function showLicenseError(msg){
+      if(!licenseError) return;
+      licenseError.textContent = msg;
+      licenseError.style.display = '';
+    }
+    // Le clic sur la carte verrouillée ouvre le panneau Premium (parcours visuel clair)
     if(btn){
       btn.addEventListener('click', function(){ openModal(); });
     }
-    // Le bouton à l'intérieur du panneau effectue le vrai déblocage (simulation locale)
+    // Le bouton principal ouvre la vraie page d'achat Gumroad — aucun déblocage à ce clic
     if(action){
       action.addEventListener('click', function(){
-        localStorage.setItem(PREMIUM_KEY, 'true');
-        applyUnlockState();
-        closeModal();
-        showToast('Débloqué ✦ Simulation locale — pas de vrai paiement pour l\'instant');
+        window.open(GUMROAD_PRODUCT_URL, '_blank', 'noopener');
+      });
+    }
+    // "J'ai déjà un code" révèle le champ de saisie du code de licence Gumroad
+    if(haveCodeBtn && licenseForm){
+      haveCodeBtn.addEventListener('click', function(){
+        const willOpen = licenseForm.style.display === 'none';
+        licenseForm.style.display = willOpen ? '' : 'none';
+        if(willOpen && licenseInput) licenseInput.focus();
+      });
+    }
+    // La validation du code appelle le point d'intégration Gumroad (voir commentaire ci-dessus)
+    if(licenseSubmit){
+      licenseSubmit.addEventListener('click', function(){
+        const key = (licenseInput && licenseInput.value || '').trim();
+        if(licenseError) licenseError.style.display = 'none';
+        if(!key){ showLicenseError('Merci de coller votre code Premium.'); return; }
+        licenseSubmit.disabled = true;
+        licenseSubmit.textContent = 'Vérification…';
+        fetch(GUMROAD_VERIFY_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ license_key: key })
+        }).then(function(r){ return r.json(); }).then(function(data){
+          licenseSubmit.disabled = false;
+          licenseSubmit.textContent = 'Valider mon code';
+          if(data && data.success){
+            localStorage.setItem(PREMIUM_KEY, 'true');
+            localStorage.setItem(PREMIUM_LICENSE_KEY, key);
+            showToast('Débloqué ✦ Actualisation…');
+            setTimeout(function(){ window.location.reload(); }, 500);
+          } else {
+            showLicenseError('Code invalide. Vérifiez le code reçu par email Gumroad.');
+          }
+        }).catch(function(){
+          licenseSubmit.disabled = false;
+          licenseSubmit.textContent = 'Valider mon code';
+          showLicenseError('Vérification indisponible pour le moment. Réessayez.');
+        });
       });
     }
     if(backdrop) backdrop.addEventListener('click', closeModal);
@@ -866,8 +912,14 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     <li>Numérologie</li>
     <li>Contenus approfondis</li>
   </ul>
-  <button type="button" class="cta pm-action" id="premiumModalAction">Débloquer Premium</button>
-  <p class="pm-note">Simulation locale — pas de vrai paiement pour l'instant.</p>
+  <button type="button" class="cta pm-action" id="premiumModalAction">✦ Acheter sur Gumroad</button>
+  <button type="button" class="pp-form-back" id="premiumHaveCode">J'ai déjà un code Premium</button>
+  <div class="pm-license" id="pmLicenseForm" style="display:none;">
+    <input type="text" class="pp-input" id="pmLicenseInput" placeholder="Collez votre code Premium" autocomplete="off" inputmode="text">
+    <button type="button" class="cta pm-action" id="pmLicenseSubmit">Valider mon code</button>
+    <p class="pm-license-error" id="pmLicenseError" style="display:none;"></p>
+  </div>
+  <p class="pm-note">Paiement sécurisé sur Gumroad. Le code Premium reçu par email débloque l'app sur cet appareil.</p>
 </div>
 <script id="astro-galactic-interactive-v35">
 (function(){
@@ -1158,13 +1210,6 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     if(badge) badge.addEventListener('click', openExistingPremiumModal);
   }
 
-  function watchUnlockAction(){
-    var actionBtn = document.getElementById('premiumModalAction');
-    if(actionBtn){
-      actionBtn.addEventListener('click', function(){ setTimeout(refreshAllPremiumBadges, 60); });
-    }
-  }
-
   function toastStreak(count){
     var toast = document.getElementById('premiumToast');
     if(!toast){
@@ -1187,7 +1232,6 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     initJournalObserver();
     initMenuPremiumLinks();
     initHeaderBadge();
-    watchUnlockAction();
     if(streakResult.justIncremented && streakResult.data.count > 1){
       setTimeout(function(){ toastStreak(streakResult.data.count); }, 1200);
     }
@@ -1199,6 +1243,9 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     init();
   }
 })();
+</script>
+<script>
+  if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }
 </script>
 </body>
 </html>
