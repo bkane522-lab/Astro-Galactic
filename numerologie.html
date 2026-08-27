@@ -453,6 +453,8 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
   }
   .pp-profile-input:focus{ outline:none; border-color: rgba(242,205,114,.8); }
   .pp-profile-note{ font-size: clamp(9.5px,2.5vw,10.5px); color: rgba(243,233,210,.5); margin: 2px 0 0; line-height:1.4; }
+  .pp-profile-saved{ font-size: clamp(9.5px,2.5vw,10.5px); color: var(--gold-2); margin: -2px 0 0; opacity:0; transition: opacity .3s ease; }
+  .pp-profile-saved.is-visible{ opacity:1; }
   .pm-license{ display:flex; flex-direction:column; gap:8px; width:100%; margin-top:10px; }
   .pm-license .pp-input{
     width:100%; padding: 10px 12px; border-radius:10px;
@@ -620,6 +622,7 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
         <input type="date" class="pp-profile-input" id="ppBirthdate" autocomplete="off">
         <label class="pp-profile-label" for="ppPrenom">Prénom (optionnel, pour le nombre d'expression)</label>
         <input type="text" class="pp-profile-input" id="ppPrenom" placeholder="Votre prénom" autocomplete="off" maxlength="40">
+        <p class="pp-profile-saved" id="ppProfileSaved">✓ Enregistré sur cet appareil</p>
         <p class="pp-profile-note">Utilisés uniquement sur cet appareil pour personnaliser Thème astral, Numérologie, Cristaux et Compatibilité.</p>
       </div>
 
@@ -1135,16 +1138,32 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     // ---------- Profil local : date de naissance + prénom (Mon espace) ----------
     var ppBirthdateEl = document.getElementById('ppBirthdate');
     var ppPrenomEl = document.getElementById('ppPrenom');
+    var ppSavedEl = document.getElementById('ppProfileSaved');
+    var ppSavedTimer;
+    function flashProfileSaved(){
+      if(!ppSavedEl) return;
+      ppSavedEl.classList.add('is-visible');
+      clearTimeout(ppSavedTimer);
+      ppSavedTimer = setTimeout(function(){ ppSavedEl.classList.remove('is-visible'); }, 1800);
+    }
     if(ppBirthdateEl){
       try { ppBirthdateEl.value = localStorage.getItem('astroGalacticBirthdate') || ''; } catch(e){}
-      ppBirthdateEl.addEventListener('change', function(){
-        try { localStorage.setItem('astroGalacticBirthdate', ppBirthdateEl.value || ''); } catch(e){}
+      // 'input' se déclenche dès la sélection dans le picker natif, contrairement à 'change'
+      // qui peut être peu fiable dans certains contextes mobiles/PWA — plus robuste ainsi.
+      ['input','change'].forEach(function(evt){
+        ppBirthdateEl.addEventListener(evt, function(){
+          try { localStorage.setItem('astroGalacticBirthdate', ppBirthdateEl.value || ''); } catch(e){}
+          flashProfileSaved();
+        });
       });
     }
     if(ppPrenomEl){
       try { ppPrenomEl.value = localStorage.getItem('astroGalacticPrenom') || ''; } catch(e){}
-      ppPrenomEl.addEventListener('change', function(){
-        try { localStorage.setItem('astroGalacticPrenom', ppPrenomEl.value.trim()); } catch(e){}
+      ['input','change'].forEach(function(evt){
+        ppPrenomEl.addEventListener(evt, function(){
+          try { localStorage.setItem('astroGalacticPrenom', ppPrenomEl.value.trim()); } catch(e){}
+          flashProfileSaved();
+        });
       });
     }
   }
