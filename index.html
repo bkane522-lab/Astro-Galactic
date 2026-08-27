@@ -1033,6 +1033,15 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     color:#241705; background: linear-gradient(180deg, #FFEAB0, #E3B957 60%, #B9852B);
     border-radius:20px; padding:4px 12px; box-shadow: 0 0 10px rgba(242,205,114,.3);
   }
+  .pp-profile-form{ display:flex; flex-direction:column; gap:6px; width:100%; margin: 10px 0 4px; text-align:left; }
+  .pp-profile-label{ font-size: clamp(10.5px,2.7vw,11.5px); color: var(--cream-dim); margin-top:6px; }
+  .pp-profile-input{
+    width:100%; padding: 9px 12px; border-radius:10px;
+    border:1px solid rgba(242,205,114,.35); background: rgba(6,10,25,.55);
+    color: var(--cream); font-family:'Jost', sans-serif; font-size: clamp(12.5px,3.2vw,13.5px);
+  }
+  .pp-profile-input:focus{ outline:none; border-color: rgba(242,205,114,.8); }
+  .pp-profile-note{ font-size: clamp(9.5px,2.5vw,10.5px); color: rgba(243,233,210,.5); margin: 2px 0 0; line-height:1.4; }
   .pm-license{ display:flex; flex-direction:column; gap:8px; width:100%; margin-top:10px; }
   .pm-license .pp-input{
     width:100%; padding: 10px 12px; border-radius:10px;
@@ -1263,6 +1272,14 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
         <span class="me-streak-label" id="meStreakLabel">jour à la suite</span>
       </div>
       <span class="pp-premium-flag" id="ppPremiumFlag" style="display:none;">✦ Premium actif</span>
+
+      <div class="pp-profile-form" id="ppProfileForm">
+        <label class="pp-profile-label" for="ppBirthdate">Date de naissance (optionnelle)</label>
+        <input type="date" class="pp-profile-input" id="ppBirthdate" autocomplete="off">
+        <label class="pp-profile-label" for="ppPrenom">Prénom (optionnel, pour le nombre d'expression)</label>
+        <input type="text" class="pp-profile-input" id="ppPrenom" placeholder="Votre prénom" autocomplete="off" maxlength="40">
+        <p class="pp-profile-note">Utilisés uniquement sur cet appareil pour personnaliser Thème astral, Numérologie, Cristaux et Compatibilité.</p>
+      </div>
 
       <div class="me-tabs">
         <button type="button" class="me-tab is-active" id="meTabFavoris" data-me-tab="favoris">Favoris</button>
@@ -1721,6 +1738,7 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
 
     // Affinité du jour = le vrai partenaire de compatibilité du signe sélectionné (pas le signe lui-même)
     window.ASTRO_ACTIVE_SIGN = sign;
+    try { localStorage.setItem('astroGalacticSign', sign); } catch(e){}
     window.ASTRO_AFFINITY_SIGN = affinity;
 
     if(icon){
@@ -2297,8 +2315,33 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
         writeJSON(JOURNAL_KEY, []);
         writeJSON(FAVORITES_KEY, []);
         writeJSON(STREAK_KEY, {count:0, lastDate:null, longest:0});
+        try {
+          localStorage.removeItem('astroGalacticBirthdate');
+          localStorage.removeItem('astroGalacticPrenom');
+          localStorage.removeItem('astroGalacticPartnerSign');
+        } catch(e){}
+        var bdField = document.getElementById('ppBirthdate');
+        var pnField = document.getElementById('ppPrenom');
+        if(bdField) bdField.value = '';
+        if(pnField) pnField.value = '';
         renderMonEspace();
         syncPinButtonState();
+      });
+    }
+
+    // ---------- Profil local : date de naissance + prénom (Mon espace) ----------
+    var ppBirthdateEl = document.getElementById('ppBirthdate');
+    var ppPrenomEl = document.getElementById('ppPrenom');
+    if(ppBirthdateEl){
+      try { ppBirthdateEl.value = localStorage.getItem('astroGalacticBirthdate') || ''; } catch(e){}
+      ppBirthdateEl.addEventListener('change', function(){
+        try { localStorage.setItem('astroGalacticBirthdate', ppBirthdateEl.value || ''); } catch(e){}
+      });
+    }
+    if(ppPrenomEl){
+      try { ppPrenomEl.value = localStorage.getItem('astroGalacticPrenom') || ''; } catch(e){}
+      ppPrenomEl.addEventListener('change', function(){
+        try { localStorage.setItem('astroGalacticPrenom', ppPrenomEl.value.trim()); } catch(e){}
       });
     }
   }

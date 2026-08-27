@@ -437,6 +437,15 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     color:#241705; background: linear-gradient(180deg, #FFEAB0, #E3B957 60%, #B9852B);
     border-radius:20px; padding:4px 12px; box-shadow: 0 0 10px rgba(242,205,114,.3);
   }
+  .pp-profile-form{ display:flex; flex-direction:column; gap:6px; width:100%; margin: 10px 0 4px; text-align:left; }
+  .pp-profile-label{ font-size: clamp(10.5px,2.7vw,11.5px); color: var(--cream-dim); margin-top:6px; }
+  .pp-profile-input{
+    width:100%; padding: 9px 12px; border-radius:10px;
+    border:1px solid rgba(242,205,114,.35); background: rgba(6,10,25,.55);
+    color: var(--cream); font-family:'Jost', sans-serif; font-size: clamp(12.5px,3.2vw,13.5px);
+  }
+  .pp-profile-input:focus{ outline:none; border-color: rgba(242,205,114,.8); }
+  .pp-profile-note{ font-size: clamp(9.5px,2.5vw,10.5px); color: rgba(243,233,210,.5); margin: 2px 0 0; line-height:1.4; }
   .pm-license{ display:flex; flex-direction:column; gap:8px; width:100%; margin-top:10px; }
   .pm-license .pp-input{
     width:100%; padding: 10px 12px; border-radius:10px;
@@ -599,6 +608,14 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
       </div>
       <span class="pp-premium-flag" id="ppPremiumFlag" style="display:none;">✦ Premium actif</span>
 
+      <div class="pp-profile-form" id="ppProfileForm">
+        <label class="pp-profile-label" for="ppBirthdate">Date de naissance (optionnelle)</label>
+        <input type="date" class="pp-profile-input" id="ppBirthdate" autocomplete="off">
+        <label class="pp-profile-label" for="ppPrenom">Prénom (optionnel, pour le nombre d'expression)</label>
+        <input type="text" class="pp-profile-input" id="ppPrenom" placeholder="Votre prénom" autocomplete="off" maxlength="40">
+        <p class="pp-profile-note">Utilisés uniquement sur cet appareil pour personnaliser Thème astral, Numérologie, Cristaux et Compatibilité.</p>
+      </div>
+
       <div class="me-tabs">
         <button type="button" class="me-tab is-active" id="meTabFavoris" data-me-tab="favoris">Favoris</button>
         <button type="button" class="me-tab" id="meTabHistorique" data-me-tab="historique">Historique</button>
@@ -640,6 +657,7 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
   <div class="hero-title">
     <h1><span class="spark">✦︎</span> Thème astral <span class="spark">✦︎</span></h1>
     <p>Votre carte du ciel personnelle</p>
+    <p class="pp-profile-note" style="max-width:320px; margin:6px auto 0; text-align:center;">Version simplifiée basée sur votre signe et votre date de naissance — sans heure ni lieu de naissance, l'ascendant réel ne peut pas être calculé ici.</p>
   </div>
 
   <div class="premium-gate">
@@ -671,27 +689,19 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
 
   <div class="pos-card">
     <div class="icon">☉</div>
-    <div class="txt"><p class="title">Soleil en Lion</p><p class="sub">Votre identité rayonne par la créativité et la confiance en soi.</p></div>
+    <div class="txt"><p class="title" id="taSunTitle">Soleil en Lion</p><p class="sub" id="taSunSub">Votre identité rayonne par la créativité et la confiance en soi.</p></div>
+  </div>
+  <div class="pos-card">
+    <div class="icon">🔥</div>
+    <div class="txt"><p class="title" id="taElementTitle">Élément dominant : Feu</p><p class="sub" id="taElementSub">Votre énergie de base est ardente — vous avancez par l'élan et l'audace.</p></div>
+  </div>
+  <div class="pos-card">
+    <div class="icon">◆</div>
+    <div class="txt"><p class="title" id="taModalityTitle">Modalité : Fixe</p><p class="sub" id="taModalitySub">Vous tenez bon, approfondissez, résistez dans la durée.</p></div>
   </div>
   <div class="pos-card">
     <div class="icon">☽</div>
-    <div class="txt"><p class="title">Lune en Cancer</p><p class="sub">Votre monde intérieur cherche la sécurité affective et la douceur.</p></div>
-  </div>
-  <div class="pos-card">
-    <div class="icon">↑</div>
-    <div class="txt"><p class="title">Ascendant Balance</p><p class="sub">Vous abordez le monde avec diplomatie et un sens aigu de l'harmonie.</p></div>
-  </div>
-  <div class="pos-card">
-    <div class="icon">☿</div>
-    <div class="txt"><p class="title">Mercure en Vierge</p><p class="sub">Une pensée précise, analytique, attentive aux détails.</p></div>
-  </div>
-  <div class="pos-card">
-    <div class="icon">♀</div>
-    <div class="txt"><p class="title">Vénus en Cancer</p><p class="sub">Vous aimez avec pudeur et fidélité, en cherchant un attachement profond et rassurant.</p></div>
-  </div>
-  <div class="pos-card">
-    <div class="icon">♂</div>
-    <div class="txt"><p class="title">Mars en Bélier</p><p class="sub">Une énergie d'action directe et spontanée, qui n'aime pas attendre pour agir.</p></div>
+    <div class="txt"><p class="title" id="taMoonTitle">Lune (estimation) en Cancer</p><p class="sub" id="taMoonSub">Estimation simplifiée, propre à cet appareil — pas un calcul d'éphéméride réel. Un vrai thème lunaire nécessite l'heure et le lieu de naissance.</p></div>
   </div>
 
   <button class="cta">
@@ -1147,8 +1157,33 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
         writeJSON(JOURNAL_KEY, []);
         writeJSON(FAVORITES_KEY, []);
         writeJSON(STREAK_KEY, {count:0, lastDate:null, longest:0});
+        try {
+          localStorage.removeItem('astroGalacticBirthdate');
+          localStorage.removeItem('astroGalacticPrenom');
+          localStorage.removeItem('astroGalacticPartnerSign');
+        } catch(e){}
+        var bdField = document.getElementById('ppBirthdate');
+        var pnField = document.getElementById('ppPrenom');
+        if(bdField) bdField.value = '';
+        if(pnField) pnField.value = '';
         renderMonEspace();
         syncPinButtonState();
+      });
+    }
+
+    // ---------- Profil local : date de naissance + prénom (Mon espace) ----------
+    var ppBirthdateEl = document.getElementById('ppBirthdate');
+    var ppPrenomEl = document.getElementById('ppPrenom');
+    if(ppBirthdateEl){
+      try { ppBirthdateEl.value = localStorage.getItem('astroGalacticBirthdate') || ''; } catch(e){}
+      ppBirthdateEl.addEventListener('change', function(){
+        try { localStorage.setItem('astroGalacticBirthdate', ppBirthdateEl.value || ''); } catch(e){}
+      });
+    }
+    if(ppPrenomEl){
+      try { ppPrenomEl.value = localStorage.getItem('astroGalacticPrenom') || ''; } catch(e){}
+      ppPrenomEl.addEventListener('change', function(){
+        try { localStorage.setItem('astroGalacticPrenom', ppPrenomEl.value.trim()); } catch(e){}
       });
     }
   }
@@ -1265,6 +1300,336 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
+  }
+})();
+</script>
+<script id="astro-galactic-engine-core-v1">
+(function(){
+  'use strict';
+
+  // === Données réelles (dates tropicales usuelles, élément et modalité de chaque signe) ===
+  var SIGN_DATA = {
+    'Bélier':     { order:0,  element:'Feu',   modality:'Cardinal', start:[3,21],  end:[4,19]  },
+    'Taureau':    { order:1,  element:'Terre', modality:'Fixe',     start:[4,20],  end:[5,20]  },
+    'Gémeaux':    { order:2,  element:'Air',   modality:'Mutable',  start:[5,21],  end:[6,20]  },
+    'Cancer':     { order:3,  element:'Eau',   modality:'Cardinal', start:[6,21],  end:[7,22]  },
+    'Lion':       { order:4,  element:'Feu',   modality:'Fixe',     start:[7,23],  end:[8,22]  },
+    'Vierge':     { order:5,  element:'Terre', modality:'Mutable',  start:[8,23],  end:[9,22]  },
+    'Balance':    { order:6,  element:'Air',   modality:'Cardinal', start:[9,23],  end:[10,22] },
+    'Scorpion':   { order:7,  element:'Eau',   modality:'Fixe',     start:[10,23], end:[11,21] },
+    'Sagittaire': { order:8,  element:'Feu',   modality:'Mutable',  start:[11,22], end:[12,21] },
+    'Capricorne': { order:9,  element:'Terre', modality:'Cardinal', start:[12,22], end:[1,19]  },
+    'Verseau':    { order:10, element:'Air',   modality:'Fixe',     start:[1,20],  end:[2,18]  },
+    'Poissons':   { order:11, element:'Eau',   modality:'Mutable',  start:[2,19],  end:[3,20]  }
+  };
+  var SIGN_ORDER = ['Bélier','Taureau','Gémeaux','Cancer','Lion','Vierge','Balance','Scorpion','Sagittaire','Capricorne','Verseau','Poissons'];
+
+  var ELEMENT_TRAITS = {
+    'Feu':   { adj:'ardent',    force:"l'élan et l'audace",            besoin:"agir sans trop attendre" },
+    'Terre': { adj:'concret',   force:"la stabilité et la persévérance", besoin:"construire pas à pas, sur du solide" },
+    'Air':   { adj:'mental',    force:"la curiosité et l'échange",     besoin:"comprendre et communiquer" },
+    'Eau':   { adj:'sensible',  force:"l'intuition et la profondeur",  besoin:"ressentir avant de décider" }
+  };
+  var MODALITY_TRAITS = {
+    'Cardinal': "initie, lance les choses, prend les devants",
+    'Fixe':     "tient bon, approfondit, résiste dans la durée",
+    'Mutable':  "s'adapte, ajuste sa trajectoire, absorbe le changement"
+  };
+
+  // Compatibilité élément x élément (0-100), symétrique — logique astrologique standard :
+  // même élément = forte harmonie ; éléments complémentaires (Feu/Air, Terre/Eau) = bonne entente ;
+  // éléments opposés (Feu/Eau, Terre/Air) = plus de friction, à équilibrer.
+  var ELEMENT_COMPAT = {
+    'Feu':   { 'Feu':88, 'Terre':58, 'Air':82, 'Eau':52 },
+    'Terre': { 'Feu':58, 'Terre':84, 'Air':54, 'Eau':80 },
+    'Air':   { 'Feu':82, 'Terre':54, 'Air':80, 'Eau':56 },
+    'Eau':   { 'Feu':52, 'Terre':80, 'Air':56, 'Eau':86 }
+  };
+  var MODALITY_COMPAT = {
+    'Cardinal': { 'Cardinal':62, 'Fixe':70, 'Mutable':74 },
+    'Fixe':     { 'Cardinal':70, 'Fixe':66, 'Mutable':72 },
+    'Mutable':  { 'Cardinal':74, 'Fixe':72, 'Mutable':68 }
+  };
+
+  function canonicalSign(value){
+    var wanted = String(value || '').trim();
+    if(SIGN_DATA[wanted]) return wanted;
+    var normalize = function(v){
+      return String(v||'').trim().toLowerCase()
+        .replace(/é/g,'e').replace(/è/g,'e').replace(/ê/g,'e').replace(/à/g,'a');
+    };
+    var w = normalize(wanted);
+    for(var i=0;i<SIGN_ORDER.length;i++){
+      if(normalize(SIGN_ORDER[i]) === w) return SIGN_ORDER[i];
+    }
+    return null;
+  }
+
+  function getStoredSign(){
+    try {
+      var s = canonicalSign(localStorage.getItem('astroGalacticSign'));
+      if(s) return s;
+    } catch(e){}
+    return 'Bélier';
+  }
+
+  function getBirthdate(){
+    try {
+      var b = localStorage.getItem('astroGalacticBirthdate');
+      if(b && /^\d{4}-\d{2}-\d{2}$/.test(b)) return b;
+    } catch(e){}
+    return null;
+  }
+
+  function getPrenom(){
+    try { return (localStorage.getItem('astroGalacticPrenom') || '').trim(); } catch(e){ return ''; }
+  }
+
+  function getPartnerSign(defaultSign){
+    try {
+      var s = canonicalSign(localStorage.getItem('astroGalacticPartnerSign'));
+      if(s) return s;
+    } catch(e){}
+    return defaultSign || 'Taureau';
+  }
+
+  function setPartnerSign(sign){
+    try { localStorage.setItem('astroGalacticPartnerSign', sign); } catch(e){}
+  }
+
+  // Signe solaire réel à partir d'une date de naissance (règle standard, pas d'approximation cachée)
+  function signFromDate(dateStr){
+    if(!dateStr) return null;
+    var parts = dateStr.split('-');
+    if(parts.length !== 3) return null;
+    var m = parseInt(parts[1],10), d = parseInt(parts[2],10);
+    if(!m || !d) return null;
+    for(var i=0;i<SIGN_ORDER.length;i++){
+      var meta = SIGN_DATA[SIGN_ORDER[i]];
+      var s = meta.start, en = meta.end;
+      if(s[0] <= en[0]){
+        if((m === s[0] && d >= s[1]) || (m === en[0] && d <= en[1]) || (m > s[0] && m < en[0])) return SIGN_ORDER[i];
+      } else {
+        // plage à cheval sur l'année (ex. Capricorne)
+        if((m === s[0] && d >= s[1]) || (m === en[0] && d <= en[1]) || m > s[0] || m < en[0]) return SIGN_ORDER[i];
+      }
+    }
+    return null;
+  }
+
+  // Signe effectif : la vraie date de naissance prime si elle est renseignée, sinon le signe choisi manuellement
+  function effectiveSign(){
+    var bd = getBirthdate();
+    if(bd){ var s = signFromDate(bd); if(s) return s; }
+    return getStoredSign();
+  }
+
+  function simpleHash(str){
+    var h = 0;
+    str = String(str||'');
+    for(var i=0;i<str.length;i++){ h = ((h<<5) - h + str.charCodeAt(i)) | 0; }
+    return Math.abs(h);
+  }
+
+  // === Numérologie : réduction en gardant les nombres maîtres 11 / 22 / 33 ===
+  function reduceKeepMaster(n){
+    n = Math.abs(Math.round(n));
+    while(n > 9 && n !== 11 && n !== 22 && n !== 33){
+      var s = 0, str = String(n);
+      for(var i=0;i<str.length;i++){ s += parseInt(str[i],10); }
+      n = s;
+    }
+    return n;
+  }
+  function reduceSimple(n){
+    n = Math.abs(Math.round(n));
+    while(n > 9){
+      var s = 0, str = String(n);
+      for(var i=0;i<str.length;i++){ s += parseInt(str[i],10); }
+      n = s;
+    }
+    return n;
+  }
+
+  // Chemin de vie : calcul standard à partir de la date de naissance complète
+  function computeLifePath(dateStr){
+    var parts = dateStr.split('-').map(Number);
+    var y = parts[0], m = parts[1], d = parts[2];
+    return reduceKeepMaster(reduceKeepMaster(d) + reduceKeepMaster(m) + reduceKeepMaster(y));
+  }
+
+  // Année personnelle : jour + mois de naissance + année en cours, réduits
+  function computePersonalYear(dateStr, year){
+    var parts = dateStr.split('-').map(Number);
+    var m = parts[1], d = parts[2];
+    return reduceSimple(reduceSimple(d) + reduceSimple(m) + reduceSimple(year));
+  }
+
+  var LETTER_VALUES = {a:1,b:2,c:3,d:4,e:5,f:6,g:7,h:8,i:9,j:1,k:2,l:3,m:4,n:5,o:6,p:7,q:8,r:9,s:1,t:2,u:3,v:4,w:5,x:6,y:7,z:8};
+  function normalizeLetters(str){
+    return String(str||'').toLowerCase()
+      .replace(/[éèêë]/g,'e').replace(/[àâ]/g,'a').replace(/[îï]/g,'i')
+      .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/ç/g,'c')
+      .replace(/[^a-z]/g,'');
+  }
+  // Nombre d'expression (méthode pythagoricienne) : nécessite un vrai prénom, jamais inventé
+  function computeExpressionNumber(name){
+    var letters = normalizeLetters(name);
+    if(!letters) return null;
+    var sum = 0;
+    for(var i=0;i<letters.length;i++){ sum += LETTER_VALUES[letters[i]] || 0; }
+    return reduceKeepMaster(sum);
+  }
+
+  var LIFE_PATH_MEANINGS = {
+    1:  { title:"Le pionnier",     text:"Vous avancez en initiateur — indépendant, déterminé, porté par l'envie de tracer votre propre voie.", forces:"leadership naturel, courage, esprit d'initiative.", defis:"impatience, difficulté à déléguer, besoin de tout contrôler." },
+    2:  { title:"Le diplomate",    text:"Votre force est la relation — écoute, sens du compromis, besoin d'harmonie avec les autres.", forces:"empathie, sens du collectif, patience.", defis:"hésitation, dépendance à l'approbation d'autrui, conflit intérieur." },
+    3:  { title:"Le créatif",      text:"Vous vous exprimez par la créativité et la communication, avec une énergie sociale et joyeuse.", forces:"expression, optimisme, créativité.", defis:"dispersion, difficulté à approfondir, sensibilité à la critique." },
+    4:  { title:"Le bâtisseur",    text:"Vous avancez par la méthode et l'effort — un chemin de vie qui valorise la solidité avant tout.", forces:"rigueur, fiabilité, sens du concret.", defis:"rigidité, résistance au changement, tendance à trop en faire porter sur soi." },
+    5:  { title:"Le libre",        text:"Votre chemin est celui du mouvement — curiosité, changement, besoin de liberté et de nouveauté.", forces:"adaptabilité, curiosité, goût du risque mesuré.", defis:"instabilité, difficulté à s'engager durablement, impulsivité." },
+    6:  { title:"Le protecteur",   text:"Vous êtes porté vers les autres — famille, responsabilité, sens du devoir et de l'harmonie.", forces:"sens des responsabilités, générosité, loyauté.", defis:"tendance au sacrifice de soi, perfectionnisme, difficulté à recevoir." },
+    7:  { title:"Le chercheur",    text:"Le 7 est le chercheur de vérité — introspectif, intuitif, attiré par ce qui se cache derrière les apparences.", forces:"lucidité, indépendance d'esprit, capacité à voir au-delà des apparences.", defis:"tendance à l'isolement, difficulté à faire confiance, tentation de trop analyser au lieu d'agir." },
+    8:  { title:"Le bâtisseur d'ambition", text:"Vous avancez avec une forte volonté de réussite matérielle et de reconnaissance.", forces:"ambition, sens de l'organisation, ténacité.", defis:"rapport difficile au pouvoir ou à l'argent, tendance au surmenage." },
+    9:  { title:"L'humaniste",     text:"Votre chemin est tourné vers les autres à grande échelle — générosité, idéalisme, sens du don.", forces:"générosité, vision large, compassion.", defis:"difficulté à poser des limites, idéalisme parfois déconnecté du réel." },
+    11: { title:"L'intuitif (nombre maître)", text:"Un chemin de vie sensible et inspiré, tourné vers l'intuition et l'inspiration des autres.", forces:"intuition forte, inspiration, sensibilité aiguë.", defis:"hypersensibilité, anxiété, décalage avec le quotidien concret." },
+    22: { title:"Le bâtisseur maître (nombre maître)", text:"Un chemin de vie qui allie grande vision et sens pratique — bâtir quelque chose qui dure.", forces:"vision à long terme, capacité à concrétiser de grands projets.", defis:"pression que l'on se met soi-même, peur de ne pas être à la hauteur." },
+    33: { title:"Le guide (nombre maître)", text:"Un chemin de vie rare, tourné vers le service désintéressé et l'enseignement par l'exemple.", forces:"générosité profonde, sens du service, capacité d'enseignement.", defis:"oubli de soi, charge émotionnelle importante, besoin d'apprendre à recevoir aussi." }
+  };
+
+  // === Cristaux : pool traditionnel + association déterministe par signe ===
+  var CRYSTAL_POOL = [
+    { n:"Œil de tigre",   v:"Confiance et ancrage" },
+    { n:"Cornaline",      v:"Vitalité et courage" },
+    { n:"Quartz doré",    v:"Rayonnement personnel" },
+    { n:"Pyrite",         v:"Protection et abondance" },
+    { n:"Œil de faucon",  v:"Clarté et décision" },
+    { n:"Ambre",          v:"Chaleur et vitalité solaire" },
+    { n:"Améthyste",      v:"Apaisement et clarté d'esprit" },
+    { n:"Labradorite",    v:"Protection et intuition" },
+    { n:"Aventurine",     v:"Chance et équilibre émotionnel" },
+    { n:"Citrine",        v:"Abondance et confiance" },
+    { n:"Jaspe rouge",    v:"Ancrage et énergie stable" },
+    { n:"Lapis-lazuli",   v:"Sagesse et communication" },
+    { n:"Pierre de lune", v:"Douceur et intuition" },
+    { n:"Quartz rose",    v:"Amour de soi et apaisement" }
+  ];
+
+  function crystalsForSign(sign, count){
+    count = count || 6;
+    var startIdx = simpleHash(sign + '|allies') % CRYSTAL_POOL.length;
+    var picked = [];
+    var used = {};
+    var i = startIdx;
+    while(picked.length < count && picked.length < CRYSTAL_POOL.length){
+      if(!used[i]){ picked.push(CRYSTAL_POOL[i]); used[i] = true; }
+      i = (i + 3) % CRYSTAL_POOL.length; // pas de 3 pour varier la sélection d'un signe à l'autre
+    }
+    return picked;
+  }
+
+  function stoneOfDay(sign, dateISO){
+    var idx = simpleHash(sign + '|' + dateISO + '|stone') % CRYSTAL_POOL.length;
+    return CRYSTAL_POOL[idx];
+  }
+
+  window.AstroEngine = {
+    SIGN_DATA: SIGN_DATA,
+    SIGN_ORDER: SIGN_ORDER,
+    ELEMENT_TRAITS: ELEMENT_TRAITS,
+    MODALITY_TRAITS: MODALITY_TRAITS,
+    ELEMENT_COMPAT: ELEMENT_COMPAT,
+    MODALITY_COMPAT: MODALITY_COMPAT,
+    LIFE_PATH_MEANINGS: LIFE_PATH_MEANINGS,
+    canonicalSign: canonicalSign,
+    getStoredSign: getStoredSign,
+    getBirthdate: getBirthdate,
+    getPrenom: getPrenom,
+    getPartnerSign: getPartnerSign,
+    setPartnerSign: setPartnerSign,
+    signFromDate: signFromDate,
+    effectiveSign: effectiveSign,
+    simpleHash: simpleHash,
+    reduceKeepMaster: reduceKeepMaster,
+    reduceSimple: reduceSimple,
+    computeLifePath: computeLifePath,
+    computePersonalYear: computePersonalYear,
+    computeExpressionNumber: computeExpressionNumber,
+    crystalsForSign: crystalsForSign,
+    stoneOfDay: stoneOfDay
+  };
+})();
+</script>
+<script id="astro-galactic-theme-astral-render-v1">
+(function(){
+  if(!window.AstroEngine) return;
+  var E = window.AstroEngine;
+  var bd = E.getBirthdate();
+  var sunSign = E.effectiveSign();
+  var meta = E.SIGN_DATA[sunSign] || E.SIGN_DATA['Bélier'];
+  var elTraits = E.ELEMENT_TRAITS[meta.element];
+  var modText = E.MODALITY_TRAITS[meta.modality];
+
+  var SUN_SIGN_TEXT = {
+    'Bélier':     "Votre identité s'affirme par l'audace et l'envie d'avancer en premier.",
+    'Taureau':    "Votre identité se construit sur la stabilité, la patience et le goût du concret.",
+    'Gémeaux':    "Votre identité s'exprime par la curiosité, l'échange et l'agilité d'esprit.",
+    'Cancer':     "Votre identité se nourrit de sensibilité, de mémoire et du besoin de sécurité affective.",
+    'Lion':       "Votre identité rayonne par la créativité et la confiance en soi.",
+    'Vierge':     "Votre identité se construit dans le souci du détail et l'envie de bien faire.",
+    'Balance':    "Votre identité cherche l'équilibre, l'harmonie et la justesse dans la relation à l'autre.",
+    'Scorpion':   "Votre identité se forge dans l'intensité, la profondeur et la transformation.",
+    'Sagittaire': "Votre identité s'exprime par la quête de sens, le mouvement et l'optimisme.",
+    'Capricorne': "Votre identité se construit par la discipline, la patience et le sens des responsabilités.",
+    'Verseau':    "Votre identité s'affirme par l'originalité, l'indépendance d'esprit et la vision d'avenir.",
+    'Poissons':   "Votre identité se nourrit d'intuition, de sensibilité et d'une grande capacité d'empathie."
+  };
+
+  var sunTitleEl = document.getElementById('taSunTitle');
+  var sunSubEl = document.getElementById('taSunSub');
+  var elTitleEl = document.getElementById('taElementTitle');
+  var elSubEl = document.getElementById('taElementSub');
+  var modTitleEl = document.getElementById('taModalityTitle');
+  var modSubEl = document.getElementById('taModalitySub');
+  var moonTitleEl = document.getElementById('taMoonTitle');
+  var moonSubEl = document.getElementById('taMoonSub');
+
+  if(sunTitleEl) sunTitleEl.textContent = 'Soleil en ' + sunSign + (bd ? '' : ' (exemple, ajoutez votre date de naissance)');
+  if(sunSubEl) sunSubEl.textContent = SUN_SIGN_TEXT[sunSign] || SUN_SIGN_TEXT['Bélier'];
+
+  if(elTitleEl) elTitleEl.textContent = 'Élément dominant : ' + meta.element;
+  if(elSubEl) elSubEl.textContent = 'Votre énergie de base est ' + elTraits.adj + " — vous avancez porté(e) par " + elTraits.force + '.';
+
+  if(modTitleEl) modTitleEl.textContent = 'Modalité : ' + meta.modality;
+  if(modSubEl) modSubEl.textContent = 'Vous ' + modText + '.';
+
+  // Lune : estimation déterministe locale, jamais présentée comme un calcul d'éphéméride réel
+  var moonSign = E.SIGN_ORDER[ E.simpleHash(sunSign + '|' + (bd || 'defaut') + '|moon') % 12 ];
+  if(moonTitleEl) moonTitleEl.textContent = 'Lune (estimation) en ' + moonSign;
+  if(moonSubEl) moonSubEl.textContent = "Estimation simplifiée, propre à cet appareil — pas un calcul d'éphéméride réel. Un vrai thème lunaire nécessite l'heure et le lieu de naissance.";
+
+  // Repositionne les deux marqueurs (Soleil, Lune) sur la carte selon le signe réel / estimé
+  var container = document.getElementById('planetMarkers');
+  var wrap = document.getElementById('chart');
+  if(container && wrap){
+    var size = wrap.clientWidth || 300;
+    var cx = size/2, cy = size/2;
+    var r = size * 0.335;
+    var sunAngle = meta.order * 30 + 15;
+    var moonMeta = E.SIGN_DATA[moonSign];
+    var moonAngle = moonMeta.order * 30 + 15;
+    var markers = [
+      { glyph:'☉', name:'Soleil', angle:sunAngle },
+      { glyph:'☽', name:'Lune',   angle:moonAngle }
+    ];
+    var html = '';
+    markers.forEach(function(p){
+      var rad = (p.angle - 90) * Math.PI / 180;
+      var x = cx + r * Math.cos(rad);
+      var y = cy + r * Math.sin(rad);
+      html += '<div class="planet-marker" style="left:' + x + 'px; top:' + y + 'px;">' +
+        '<div class="glyph">' + p.glyph + '</div><div class="lbl">' + p.name + '</div></div>';
+    });
+    container.innerHTML = html;
   }
 })();
 </script>
