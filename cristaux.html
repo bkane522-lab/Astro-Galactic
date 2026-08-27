@@ -121,6 +121,20 @@
     background: linear-gradient(180deg, rgba(14,22,54,0.97), rgba(8,12,28,0.99));
     box-shadow: 0 14px 40px rgba(0,0,0,0.5);
   }
+  /* "Mon espace" a beaucoup plus de contenu qu'un simple menu déroulant : il a besoin
+     de sa propre hauteur/position pour ne jamais couper le contenu sur mobile. */
+  #profilePanel{
+    top:50%; transform:translateX(-50%) translateY(-50%) scale(.97);
+  }
+  #profilePanel.is-open{
+    top:50%;
+    max-height:85vh;
+    transform:translateX(-50%) translateY(-50%) scale(1);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+  }
+  #profilePanel .profile-placeholder{ padding-bottom: clamp(20px,6vw,26px); }
   .dropdown-item{
     display:flex; align-items:center; gap:12px;
     padding: clamp(11px,3vw,13px) clamp(14px,4vw,17px);
@@ -443,14 +457,18 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
   .pp-profile-form{ display:flex; flex-direction:column; gap:6px; width:100%; margin: 10px 0 4px; text-align:left; }
   .pp-profile-label{ font-size: clamp(10.5px,2.7vw,11.5px); color: var(--cream-dim); margin-top:6px; }
   .pp-profile-input{
-    width:100%; padding: 9px 12px; border-radius:10px;
-    border:1px solid rgba(242,205,114,.35); background: rgba(6,10,25,.55);
-    color: var(--cream); font-family:'Jost', sans-serif; font-size: clamp(12.5px,3.2vw,13.5px);
+    width:100%; padding: 11px 12px; border-radius:10px;
+    border:1px solid rgba(242,205,114,.4); background: rgba(6,10,25,.6);
+    color: var(--cream); font-family:'Jost', sans-serif; font-size: clamp(13px,3.4vw,14.5px);
+    min-height:44px; box-sizing:border-box;
   }
-  .pp-profile-input:focus{ outline:none; border-color: rgba(242,205,114,.8); }
+  .pp-profile-input:focus{ outline:none; border-color: rgba(242,205,114,.85); }
+  .pp-profile-input::-webkit-calendar-picker-indicator{ filter: invert(0.8) sepia(1) saturate(3) hue-rotate(5deg); }
+  .pp-profile-save-btn{ width:100%; margin-top:8px; min-height:44px; }
   .pp-profile-note{ font-size: clamp(9.5px,2.5vw,10.5px); color: rgba(243,233,210,.5); margin: 2px 0 0; line-height:1.4; }
-  .pp-profile-saved{ font-size: clamp(9.5px,2.5vw,10.5px); color: var(--gold-2); margin: -2px 0 0; opacity:0; transition: opacity .3s ease; }
+  .pp-profile-saved{ font-size: clamp(11px,2.9vw,12px); color: var(--gold-1); font-weight:600; margin: 4px 0 0; opacity:0; transition: opacity .3s ease; text-align:center; }
   .pp-profile-saved.is-visible{ opacity:1; }
+  .pp-reset-btn{ display:block; width:100%; text-align:center; margin: 4px 0 2px; min-height:40px; }
   .pm-license{ display:flex; flex-direction:column; gap:8px; width:100%; margin-top:10px; }
   .pm-license .pp-input{
     width:100%; padding: 10px 12px; border-radius:10px;
@@ -606,21 +624,24 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
       <p class="pp-status">Mon espace</p>
       <p class="pp-text">Vos favoris et votre historique restent uniquement sur cet appareil.</p>
 
+      <div class="pp-profile-form" id="ppProfileForm">
+        <label class="pp-profile-label" for="ppBirthdate">Date de naissance (optionnelle)</label>
+        <input type="date" class="pp-profile-input" id="ppBirthdate" autocomplete="off" placeholder="jj/mm/aaaa">
+        <label class="pp-profile-label" for="ppPrenom">Prénom (optionnel, pour le nombre d'expression)</label>
+        <input type="text" class="pp-profile-input" id="ppPrenom" placeholder="Votre prénom" autocomplete="off" maxlength="40">
+        <button type="button" class="cta pp-profile-save-btn" id="ppProfileSaveBtn">Enregistrer</button>
+        <p class="pp-profile-saved" id="ppProfileSaved">✓ Enregistré sur cet appareil</p>
+        <p class="pp-profile-note">Utilisés uniquement sur cet appareil pour personnaliser Thème astral, Numérologie, Cristaux et Compatibilité.</p>
+      </div>
+
+      <button type="button" class="pp-form-back pp-reset-btn" id="meResetData">Réinitialiser mes données locales</button>
+
       <div class="me-streak">
         <span class="me-streak-flame">✦</span>
         <span class="me-streak-count" id="meStreakCount">0</span>
         <span class="me-streak-label" id="meStreakLabel">jour à la suite</span>
       </div>
       <span class="pp-premium-flag" id="ppPremiumFlag" style="display:none;">✦ Premium actif</span>
-
-      <div class="pp-profile-form" id="ppProfileForm">
-        <label class="pp-profile-label" for="ppBirthdate">Date de naissance (optionnelle)</label>
-        <input type="date" class="pp-profile-input" id="ppBirthdate" autocomplete="off">
-        <label class="pp-profile-label" for="ppPrenom">Prénom (optionnel, pour le nombre d'expression)</label>
-        <input type="text" class="pp-profile-input" id="ppPrenom" placeholder="Votre prénom" autocomplete="off" maxlength="40">
-        <p class="pp-profile-saved" id="ppProfileSaved">✓ Enregistré sur cet appareil</p>
-        <p class="pp-profile-note">Utilisés uniquement sur cet appareil pour personnaliser Thème astral, Numérologie, Cristaux et Compatibilité.</p>
-      </div>
 
       <div class="me-tabs">
         <button type="button" class="me-tab is-active" id="meTabFavoris" data-me-tab="favoris">Favoris</button>
@@ -635,8 +656,6 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
         <p class="me-empty" id="meHistoriqueEmpty">Votre historique apparaîtra ici au fil des jours.</p>
         <div id="meHistoriqueList"></div>
       </div>
-
-      <button type="button" class="pp-form-back" id="meResetData">Réinitialiser mes données locales</button>
     </div>
   </div>
     <div class="brand">
@@ -1160,31 +1179,38 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     var ppBirthdateEl = document.getElementById('ppBirthdate');
     var ppPrenomEl = document.getElementById('ppPrenom');
     var ppSavedEl = document.getElementById('ppProfileSaved');
+    var ppSaveBtnEl = document.getElementById('ppProfileSaveBtn');
     var ppSavedTimer;
     function flashProfileSaved(){
       if(!ppSavedEl) return;
       ppSavedEl.classList.add('is-visible');
       clearTimeout(ppSavedTimer);
-      ppSavedTimer = setTimeout(function(){ ppSavedEl.classList.remove('is-visible'); }, 1800);
+      ppSavedTimer = setTimeout(function(){ ppSavedEl.classList.remove('is-visible'); }, 2200);
+    }
+    function saveProfileFields(){
+      try {
+        if(ppBirthdateEl) localStorage.setItem('astroGalacticBirthdate', ppBirthdateEl.value || '');
+        if(ppPrenomEl) localStorage.setItem('astroGalacticPrenom', (ppPrenomEl.value || '').trim());
+      } catch(e){}
     }
     if(ppBirthdateEl){
       try { ppBirthdateEl.value = localStorage.getItem('astroGalacticBirthdate') || ''; } catch(e){}
       // 'input' se déclenche dès la sélection dans le picker natif, contrairement à 'change'
       // qui peut être peu fiable dans certains contextes mobiles/PWA — plus robuste ainsi.
       ['input','change'].forEach(function(evt){
-        ppBirthdateEl.addEventListener(evt, function(){
-          try { localStorage.setItem('astroGalacticBirthdate', ppBirthdateEl.value || ''); } catch(e){}
-          flashProfileSaved();
-        });
+        ppBirthdateEl.addEventListener(evt, saveProfileFields);
       });
     }
     if(ppPrenomEl){
       try { ppPrenomEl.value = localStorage.getItem('astroGalacticPrenom') || ''; } catch(e){}
       ['input','change'].forEach(function(evt){
-        ppPrenomEl.addEventListener(evt, function(){
-          try { localStorage.setItem('astroGalacticPrenom', ppPrenomEl.value.trim()); } catch(e){}
-          flashProfileSaved();
-        });
+        ppPrenomEl.addEventListener(evt, saveProfileFields);
+      });
+    }
+    if(ppSaveBtnEl){
+      ppSaveBtnEl.addEventListener('click', function(){
+        saveProfileFields();
+        flashProfileSaved();
       });
     }
   }
