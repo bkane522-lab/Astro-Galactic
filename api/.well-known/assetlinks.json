@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.astro_galactic.twa",
+      "sha256_cert_fingerprints": [
+        "68:0B:6E:D2:57:CE:DC:5E:2D:A5:12:99:66:DC:FF:04:8C:DA:60:71:2C:E3:2E:B9:09:79:55:3E:2B:CA:7A:8E"
+      ]
+    }
+  }
+]
