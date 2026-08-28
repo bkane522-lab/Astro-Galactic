@@ -1477,7 +1477,7 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     </button>
   </div>
   <div class="reveal-panel cta-reveal" id="ctaReveal">
-    <p>Aujourd'hui, ralentissez avant de trancher. Votre sensibilité capte des signaux que la logique seule ne verrait pas — laissez-lui le temps de vous guider vers la bonne décision.</p>
+    <p id="ctaRevealText">Aujourd'hui, ralentissez avant de trancher. Votre sensibilité capte des signaux que la logique seule ne verrait pas — laissez-lui le temps de vous guider vers la bonne décision.</p>
   </div>
 
   <button class="share-btn" id="shareBtn" type="button" aria-label="Partager votre message du jour">
@@ -1726,6 +1726,59 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     return CENTER_MESSAGES[idx];
   }
 
+  // ---------- Textes dépliables (affinité détaillée + conseil complet) ----------
+  // Même principe déterministe que dailyLucky / dailyMessage ci-dessus :
+  // seedé par signe (+ affinité pour le premier bloc) + date du jour, donc
+  // même signe + même jour = même texte, et ça change dès que l'un des deux change.
+  // {sign} / {affinity} sont remplacés par les noms réels des signes concernés.
+  const AFFINITY_REVEAL_TEMPLATES = [
+    "Cette affinité entre {sign} et {affinity} se nourrit d'un respect mutuel : deux énergies qui avancent à leur rythme, sans se presser l'une l'autre. Le moment est propice pour renforcer un lien déjà installé.",
+    "{sign} et {affinity} partagent aujourd'hui une complicité discrète mais solide. Cette connexion invite à écouter plus qu'à convaincre, et à laisser l'autre venir à son propre rythme.",
+    "Entre {sign} et {affinity}, l'échange gagne à rester simple aujourd'hui. Une parole sincère compte plus qu'un grand geste, et la confiance s'installe dans les petits détails.",
+    "L'affinité {sign}-{affinity} du jour favorise l'écoute plutôt que la démonstration. Ce lien se renforce quand chacun laisse à l'autre l'espace d'exister à sa manière.",
+    "Aujourd'hui, {sign} trouve en {affinity} un miroir rassurant : deux façons différentes d'avancer vers un même besoin de sincérité. La patience sera la clé de cette journée.",
+    "Cette rencontre entre {sign} et {affinity} met en valeur la complémentarité plus que la ressemblance. Ce qui vous distingue peut aujourd'hui devenir une force commune.",
+    "{sign} et {affinity} sont invités à ralentir ensemble aujourd'hui. Un accord tacite se construit mieux dans le calme que dans l'urgence de vouloir tout régler d'un coup.",
+    "L'énergie du jour rapproche {sign} de {affinity} autour d'une même envie de stabilité. Ce lien se nourrit de gestes constants plutôt que de promesses.",
+    "Entre {sign} et {affinity}, la journée s'annonce propice aux conversations vraies. Dire ce qui compte, sans le déguiser, ouvre la voie à une compréhension plus profonde.",
+    "{sign} et {affinity} avancent aujourd'hui sur une même longueur d'onde émotionnelle. Cette affinité se consolide quand l'un accepte de suivre le tempo de l'autre.",
+    "Cette affinité invite {sign} à faire confiance à {affinity} sans chercher à tout contrôler. Le lien se renforce précisément là où chacun accepte de lâcher un peu de prise.",
+    "Aujourd'hui, {sign} et {affinity} partagent une énergie propice aux retrouvailles, qu'elles soient anciennes ou toutes récentes. La sincérité prime sur la perfection du moment."
+  ];
+
+  const CTA_REVEAL_TEMPLATES = [
+    "Aujourd'hui, {sign}, ralentissez avant de trancher. Votre sensibilité capte des signaux que la logique seule ne verrait pas — laissez-lui le temps de vous guider vers la bonne décision.",
+    "{sign}, cette journée récompense la patience plus que la précipitation. Observez avant d'agir : la réponse la plus juste n'est pas toujours la plus rapide.",
+    "Pour {sign}, le conseil du jour est simple : dites ce que vous ressentez, sans l'enrober. La clarté d'aujourd'hui évitera bien des malentendus demain.",
+    "{sign}, une occasion discrète se présente aujourd'hui. Restez attentif à ce qui sort de l'ordinaire, même si cela ne ressemble pas à ce que vous attendiez.",
+    "Le conseil du jour pour {sign} : accordez-vous une pause avant de répondre. Ce silence n'est pas une faiblesse, c'est l'espace où votre meilleure décision se forme.",
+    "{sign}, faites confiance à ce que vous savez déjà. La réponse que vous cherchez à l'extérieur se trouve souvent dans une intuition que vous avez trop vite écartée.",
+    "Aujourd'hui, {sign}, un petit pas cohérent vaut mieux qu'un grand geste précipité. Avancez à votre rythme, sans vous comparer à celui des autres.",
+    "{sign}, le moment est propice pour clore ce qui traîne. Une conversation reportée depuis trop longtemps mérite d'être reprise, même imparfaitement.",
+    "Pour {sign} aujourd'hui : écoutez plus que vous ne parlez. Ce que l'on vous confie en confiance éclairera une décision que vous portez depuis un moment.",
+    "{sign}, votre énergie du jour est mieux investie dans la constance que dans l'intensité. Un effort régulier, même modeste, portera plus loin qu'un élan isolé.",
+    "Le conseil du jour pour {sign} : ne forcez rien qui résiste. Ce qui est destiné à se faire trouvera son chemin sans que vous ayez à pousser plus fort.",
+    "{sign}, aujourd'hui privilégiez la qualité d'un seul échange à la quantité de vos sollicitations. Une conversation sincère vaut plus que dix messages pressés."
+  ];
+
+  function fillTemplate(template, sign, affinity){
+    return template
+      .replace(/\{sign\}/g, sign)
+      .replace(/\{affinity\}/g, affinity || sign);
+  }
+
+  function dailyAffinityReveal(sign, affinity){
+    const seed = sign + "|" + affinity + "|" + todayISO() + "|affinityReveal";
+    const template = AFFINITY_REVEAL_TEMPLATES[simpleHash(seed) % AFFINITY_REVEAL_TEMPLATES.length];
+    return fillTemplate(template, sign, affinity);
+  }
+
+  function dailyCtaReveal(sign){
+    const seed = sign + "|" + todayISO() + "|ctaReveal";
+    const template = CTA_REVEAL_TEMPLATES[simpleHash(seed) % CTA_REVEAL_TEMPLATES.length];
+    return fillTemplate(template, sign, sign);
+  }
+
   const normalize = value => String(value || "")
     .trim()
     .toLowerCase()
@@ -1789,6 +1842,13 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
       title.innerHTML = `Affinité du jour : <span id="affinitySignNameSecondary">${affinity}</span>`;
     }
     if(sub) sub.textContent = meta.text;
+
+    const affinityRevealEl = document.getElementById("affinityRevealText");
+    if(affinityRevealEl) affinityRevealEl.textContent = dailyAffinityReveal(sign, affinity);
+
+    const ctaRevealEl = document.getElementById("ctaRevealText");
+    if(ctaRevealEl) ctaRevealEl.textContent = dailyCtaReveal(sign);
+
 
     const labels = ["Amour", "Argent", "Humeur", "Énergie"];
     const values = meta.stats || [90,70,82,74];
