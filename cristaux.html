@@ -764,6 +764,7 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
   const ctx = canvas.getContext('2d');
   let stars = [];
   function resize(){
+    if(!ctx) return;
     canvas.width = window.innerWidth; canvas.height = document.body.scrollHeight;
     stars = [];
     const n = Math.floor((canvas.width*canvas.height)/9000);
@@ -773,6 +774,7 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     }
   }
   function draw(){
+    if(!ctx) return;
     ctx.clearRect(0,0,canvas.width,canvas.height);
     for(const s of stars){
       s.a += s.speed;

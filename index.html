@@ -1504,6 +1504,7 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
   const ctx = canvas.getContext('2d');
   let stars = [];
   function resize(){
+    if(!ctx) return;
     canvas.width = window.innerWidth;
     canvas.height = document.body.scrollHeight;
     stars = [];
@@ -1514,6 +1515,7 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
     }
   }
   function draw(){
+    if(!ctx) return;
     ctx.clearRect(0,0,canvas.width,canvas.height);
     for(const s of stars){
       s.a += s.speed;
@@ -1739,6 +1741,10 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
       || "Poissons";
   }
 
+  function readStoredSign(){
+    try { return localStorage.getItem('astroGalacticSign'); } catch(e){ return null; }
+  }
+
   function currentSign(){
     return canonicalSign(
       window.ASTRO_ACTIVE_SIGN ||
@@ -1746,8 +1752,20 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
       window.selectedSign ||
       window.activeSign ||
       document.querySelector(".sign.is-selected .name")?.textContent ||
+      readStoredSign() ||
       "Poissons"
     );
+  }
+
+  // Applique visuellement la classe is-selected sur le bon label de la roue,
+  // pour que la roue reflète toujours le signe actif (au chargement, après
+  // restauration localStorage, ou après une régénération des labels au resize).
+  function markWheelSelection(sign){
+    const target = Array.from(document.querySelectorAll("#signLabels .sign"))
+      .find(el => canonicalSign(el.querySelector(".name")?.textContent) === sign);
+    if(!target) return;
+    document.querySelectorAll("#signLabels .sign").forEach(x => x.classList.remove("is-selected"));
+    target.classList.add("is-selected");
   }
 
   function showAffinityFor(activeSign){
@@ -1904,13 +1922,17 @@ body:before{background:radial-gradient(circle at 8% 15%,rgba(242,205,114,.12),tr
 
   function init(){
     bindWheelSigns();
-    showAffinityFor(currentSign());
+    const sign = currentSign();
+    markWheelSelection(sign);
+    showAffinityFor(sign);
 
     const labels = document.getElementById("signLabels");
     if(labels){
       new MutationObserver(() => {
         bindWheelSigns();
-        showAffinityFor(currentSign());
+        const s = currentSign();
+        markWheelSelection(s);
+        showAffinityFor(s);
       }).observe(labels, {childList:true});
     }
   }
